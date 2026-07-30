@@ -139,6 +139,8 @@
 </div>
 
 <script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqL3eN7G-I0KiUQ8W2mUWSz8MWy-V_Ma0s2RvnM_eh8pQNVY5nu0nuxegRT0XRkqwZ/exec';
+
   const CAMPOS = [
     {key:'conteudo', label:'Conte\u00fado'},
     {key:'aulas', label:'Aulas do Material Digital'},
@@ -198,18 +200,27 @@
     document.getElementById('submitBtn').disabled = true;
     setStatus('Gerando PDF e enviando para o Drive...', '');
 
-    google.script.run
-      .withSuccessHandler(onSuccess)
-      .withFailureHandler(onFailure)
-      .submitForm(data);
+    // Content-Type "text/plain" evita o preflight OPTIONS,
+    // que o Web App do Apps Script não trata por padrão.
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      })
+      .then(onSuccess)
+      .catch(onFailure);
   }
 
   function onSuccess(res) {
     document.getElementById('submitBtn').disabled = false;
-    if (res.success) {
+    if (res && res.success) {
       setStatus('Enviado! Arquivo salvo como "' + res.fileName + '". <a href="' + res.fileUrl + '" target="_blank">Abrir PDF</a>', 'success');
     } else {
-      setStatus('Erro: ' + res.error, 'error');
+      setStatus('Erro: ' + (res && res.error ? res.error : 'resposta inesperada do servidor'), 'error');
     }
   }
 
