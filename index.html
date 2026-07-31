@@ -3,6 +3,7 @@
 <head>
   <base target="_top">
   <meta charset="utf-8">
+  <title>Gestão Escolar - Cronograma e Plano Quinzenal</title>
   <style>
     :root {
       --navy: #1f2a44;
@@ -199,7 +200,7 @@
 <div id="cronogramaView" class="tab-content active">
   <div class="wrap">
 
-    <img class="banner" id="banner-cr" alt="Banner Cronograma Bimestre">
+    <img class="banner" id="banner-cr" alt="Banner Cronograma do Bimestre">
 
     <div class="info">
       <div>
@@ -356,19 +357,19 @@
      ======================================================== -->
 <script>
   /* -------------------------------------------------------
-     BANNERS ESPECÍFICOS PARA CADA ABA
+     URL DO GOOGLE APPS SCRIPT WEBAPP
      ------------------------------------------------------- */
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6BKzm6cM8_Aq6_kKRGxtDD-9Yu5xU86yxnGIcgSp_EhtzGDxx5LiT9dPqt6eHeNUP/exec";
+
+  /* Banners */
   var BANNER_CRONOGRAMA = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUyj03Ik7TMq7_76BKG5bvpZtW9GdwBlT8BrOFMEJDFr3mJfhDE2UpYU43fCwcqhx6nJxKBIRSvBOfSnPP_EIvhQ5A0fF97bGfY1AII0z5ads6caA-ikLkvLtkAhNGwgX5SWTrIAwkuhs-2EORMNFuwW9DjMTns5S67XCr66bD1XjOeVtwbdU3g2KnuOJU/s574/banner.PNG";
-  
-  var BANNER_PLANO = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXoiovnp5j0FDCU6NnJ0C7KPa2svT6_I7NsGboVhQMH_HyjIQyylcVIC7YytKYXvCRAOoYpAm6iwqREkj8FIUY0R69bI_kavhFlwuDZboNvjaXYTvfibmBdO8q9tmZ7uR7QxLseKO8TeLyuqm4vDe-uhZi-T7ItnPfPayfqwKDq58f6rjmrqkpVwQZE4i7/s733/Plano%20Quinzenal.PNG";
+  var BANNER_PLANO      = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXoiovnp5j0FDCU6NnJ0C7KPa2svT6_I7NsGboVhQMH_HyjIQyylcVIC7YytKYXvCRAOoYpAm6iwqREkj8FIUY0R69bI_kavhFlwuDZboNvjaXYTvfibmBdO8q9tmZ7uR7QxLseKO8TeLyuqm4vDe-uhZi-T7ItnPfPayfqwKDq58f6rjmrqkpVwQZE4i7/s733/Plano%20Quinzenal.PNG";
 
-  /* Aplica os banners correspondentes ao carregar a página */
   document.addEventListener('DOMContentLoaded', function() {
-    var bannerCr = document.getElementById('banner-cr');
-    var bannerPl = document.getElementById('banner-pl');
-
-    if (bannerCr) bannerCr.src = BANNER_CRONOGRAMA;
-    if (bannerPl) bannerPl.src = BANNER_PLANO;
+    var imgCr = document.getElementById('banner-cr');
+    var imgPl = document.getElementById('banner-pl');
+    if (imgCr) imgCr.src = BANNER_CRONOGRAMA;
+    if (imgPl) imgPl.src = BANNER_PLANO;
   });
 
   /* -------------------------------------------------------
@@ -413,9 +414,6 @@
     }
   })();
 
-  /* -------------------------------------------------------
-     ACCORDION
-     ------------------------------------------------------- */
   function toggleWeek(n) {
     var body = document.getElementById('body' + n);
     var chev = document.getElementById('chev' + n);
@@ -424,9 +422,6 @@
     chev.classList.toggle('open-chevron', !aberto);
   }
 
-  /* -------------------------------------------------------
-     TROCA DE ABAS
-     ------------------------------------------------------- */
   function openTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
     document.querySelectorAll('.tab-nav').forEach(function(el) { el.classList.remove('active'); });
@@ -434,9 +429,6 @@
     btn.classList.add('active');
   }
 
-  /* -------------------------------------------------------
-     COLETAR DADOS — CRONOGRAMA
-     ------------------------------------------------------- */
   function coletarCronograma() {
     var d = {
       professor:  document.getElementById('cr_professor').value,
@@ -453,9 +445,6 @@
     return d;
   }
 
-  /* -------------------------------------------------------
-     COLETAR DADOS — PLANO QUINZENAL
-     ------------------------------------------------------- */
   function coletarPlano() {
     return {
       professor:            document.getElementById('pl_professor').value,
@@ -477,8 +466,29 @@
   }
 
   /* -------------------------------------------------------
-     ENVIAR CRONOGRAMA → PDF
+     COMUNICAÇÃO COM O SERVIDOR (GITHUB + GOOGLE APPS SCRIPT)
      ------------------------------------------------------- */
+  function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
+    // Se estiver rodando dentro do Apps Script (google.script.run)
+    if (typeof google !== 'undefined' && google && google.script && google.script.run) {
+      if (acao === 'cronograma') {
+        google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro).gerarPdfCronograma(dados);
+      } else {
+        google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro).gerarPdfPlanoQuinzenal(dados);
+      }
+    } else {
+      // Se estiver rodando fora (Ex: GitHub Pages)
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ acao: acao, dados: dados })
+      })
+      .then(function(res) { return res.json(); })
+      .then(callbackSucesso)
+      .catch(callbackErro);
+    }
+  }
+
   function enviarCronograma() {
     var status = document.getElementById('status-cr');
     var btn    = document.getElementById('btn-cr');
@@ -487,29 +497,24 @@
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
-    google.script.run
-      .withSuccessHandler(function(r) {
-        btn.disabled = false;
-        if (r.sucesso) {
-          status.className = 'status-area success';
-          status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! ' +
-            '<a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
-        } else {
-          status.className = 'status-area error';
-          status.innerHTML = '❌ Erro: ' + r.mensagem;
-        }
-      })
-      .withFailureHandler(function(e) {
-        btn.disabled = false;
+
+    enviarServidor('cronograma', dados, function(r) {
+      btn.disabled = false;
+      if (r && r.sucesso) {
+        status.className = 'status-area success';
+        status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! ' +
+          '<a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
+      } else {
         status.className = 'status-area error';
-        status.innerHTML = '❌ Erro inesperado: ' + e.toString();
-      })
-      .gerarPdfCronograma(dados);
+        status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
+      }
+    }, function(e) {
+      btn.disabled = false;
+      status.className = 'status-area error';
+      status.innerHTML = '❌ Erro inesperado: ' + e.toString();
+    });
   }
 
-  /* -------------------------------------------------------
-     ENVIAR PLANO → PDF
-     ------------------------------------------------------- */
   function enviarPlano() {
     var status = document.getElementById('status-pl');
     var btn    = document.getElementById('btn-pl');
@@ -518,24 +523,22 @@
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
-    google.script.run
-      .withSuccessHandler(function(r) {
-        btn.disabled = false;
-        if (r.sucesso) {
-          status.className = 'status-area success';
-          status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! ' +
-            '<a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
-        } else {
-          status.className = 'status-area error';
-          status.innerHTML = '❌ Erro: ' + r.mensagem;
-        }
-      })
-      .withFailureHandler(function(e) {
-        btn.disabled = false;
+
+    enviarServidor('plano', dados, function(r) {
+      btn.disabled = false;
+      if (r && r.sucesso) {
+        status.className = 'status-area success';
+        status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! ' +
+          '<a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
+      } else {
         status.className = 'status-area error';
-        status.innerHTML = '❌ Erro inesperado: ' + e.toString();
-      })
-      .gerarPdfPlanoQuinzenal(dados);
+        status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
+      }
+    }, function(e) {
+      btn.disabled = false;
+      status.className = 'status-area error';
+      status.innerHTML = '❌ Erro inesperado: ' + e.toString();
+    });
   }
 </script>
 
