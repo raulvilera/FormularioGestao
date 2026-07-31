@@ -199,7 +199,7 @@
 <div id="cronogramaView" class="tab-content active">
   <div class="wrap">
 
-    <img class="banner" id="banner-cr" alt="Banner EE Wanda Mascagni de Sá">
+    <img class="banner" id="banner-cr" alt="Banner Cronograma Bimestre">
 
     <div class="info">
       <div>
@@ -240,7 +240,7 @@
 <div id="planoView" class="tab-content">
   <div class="wrap">
 
-    <img class="banner" id="banner-pl" alt="Banner EE Wanda Mascagni de Sá">
+    <img class="banner" id="banner-pl" alt="Banner Plano Quinzenal / Mensal">
 
     <!-- LINHA 1: Professor, Componente, Turma, Qtd Aulas -->
     <div class="info">
@@ -356,17 +356,19 @@
      ======================================================== -->
 <script>
   /* -------------------------------------------------------
-     BANNER BASE64 — Carregado via google.script.run
-     para evitar limite de tamanho do HTML
+     BANNERS ESPECÍFICOS PARA CADA ABA
      ------------------------------------------------------- */
-  var BANNER_SRC = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUyj03Ik7TMq7_76BKG5bvpZtW9GdwBlT8BrOFMEJDFr3mJfhDE2UpYU43fCwcqhx6nJxKBIRSvBOfSnPP_EIvhQ5A0fF97bGfY1AII0z5ads6caA-ikLkvLtkAhNGwgX5SWTrIAwkuhs-2EORMNFuwW9DjMTns5S67XCr66bD1XjOeVtwbdU3g2KnuOJU/s574/banner.PNG" +
-    "COLE_AQUI_O_RESTANTE_DO_BASE64";
+  var BANNER_CRONOGRAMA = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUyj03Ik7TMq7_76BKG5bvpZtW9GdwBlT8BrOFMEJDFr3mJfhDE2UpYU43fCwcqhx6nJxKBIRSvBOfSnPP_EIvhQ5A0fF97bGfY1AII0z5ads6caA-ikLkvLtkAhNGwgX5SWTrIAwkuhs-2EORMNFuwW9DjMTns5S67XCr66bD1XjOeVtwbdU3g2KnuOJU/s574/banner.PNG";
+  
+  var BANNER_PLANO = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXoiovnp5j0FDCU6NnJ0C7KPa2svT6_I7NsGboVhQMH_HyjIQyylcVIC7YytKYXvCRAOoYpAm6iwqREkj8FIUY0R69bI_kavhFlwuDZboNvjaXYTvfibmBdO8q9tmZ7uR7QxLseKO8TeLyuqm4vDe-uhZi-T7ItnPfPayfqwKDq58f6rjmrqkpVwQZE4i7/s733/Plano%20Quinzenal.PNG";
 
-  /* Aplica o banner em todos os <img> de banner */
+  /* Aplica os banners correspondentes ao carregar a página */
   document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('img.banner').forEach(function(img) {
-      img.src = BANNER_SRC;
-    });
+    var bannerCr = document.getElementById('banner-cr');
+    var bannerPl = document.getElementById('banner-pl');
+
+    if (bannerCr) bannerCr.src = BANNER_CRONOGRAMA;
+    if (bannerPl) bannerPl.src = BANNER_PLANO;
   });
 
   /* -------------------------------------------------------
@@ -539,4 +541,3 @@
 
 </body>
 </html>
-
