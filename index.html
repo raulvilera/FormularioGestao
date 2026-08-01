@@ -208,11 +208,11 @@
         <input type="text" id="cr_professor" placeholder="Nome completo do professor(a)">
       </div>
       <div>
-        <label>Componente Curricular</label>
+        <label>Componente</label>
         <input type="text" id="cr_componente" placeholder="Ex: Ciências">
       </div>
       <div>
-        <label>Ano / Série / Turma</label>
+        <label>Ano/Série/Turma</label>
         <input type="text" id="cr_turma" placeholder="Ex: 8º Ano A">
       </div>
       <div>
@@ -243,44 +243,40 @@
 
     <img class="banner" id="banner-pl" alt="Banner Plano Quinzenal / Mensal">
 
-    <!-- LINHA 1: Professor, Componente, Turma, Qtd Aulas -->
+    <!-- CABEÇALHO DE INFORMAÇÕES: Professor, Componente, Turma -->
     <div class="info">
-      <div>
+      <div style="flex: 2;">
         <label>Professor(a)</label>
         <input type="text" id="pl_professor" placeholder="Nome completo do professor(a)">
       </div>
-      <div>
-        <label>Componente Curricular</label>
+      <div style="flex: 2;">
+        <label>Componente</label>
         <input type="text" id="pl_componente" placeholder="Ex: Matemática">
       </div>
-      <div>
-        <label>Ano / Série / Turma</label>
+      <div style="flex: 2;">
+        <label>Ano/Série/Turma</label>
         <input type="text" id="pl_turma" placeholder="Ex: 9º Ano B">
-      </div>
-      <div>
-        <label>Quantidade de Aulas</label>
-        <input type="text" id="pl_qtdAulas" placeholder="Ex: 12 a 13 aulas">
       </div>
     </div>
 
-    <!-- LINHA 2: Período, Fonte da Recuperação -->
+    <!-- LINHA DE DADOS COMPLEMENTARES: Quantidade de aulas, Período realização -->
     <div class="info">
-      <div style="flex:2;">
-        <label>Período de Realização</label>
-        <input type="text" id="pl_periodo" placeholder="Ex: 24/07/2026 a 24/08/2026">
+      <div>
+        <label>Quantidade de aulas</label>
+        <input type="text" id="pl_qtdAulas" placeholder="Ex: 12 a 13 aulas">
       </div>
-      <div style="flex:2;">
-        <label>Fonte da Recuperação</label>
-        <input type="text" id="pl_fonte" placeholder="Ex: Plano de Recuperação 1º Semestre">
+      <div>
+        <label>Período realização</label>
+        <input type="text" id="pl_periodo" placeholder="Ex: 24/07/2026 a 24/08/2026">
       </div>
     </div>
 
     <div class="content">
 
       <div class="section-block">
-        <div class="section-title">Conteúdo / Aulas (Reformulado)</div>
+        <div class="section-title">Conteúdo/Aulas</div>
         <div class="section-body">
-          <textarea id="pl_conteudo" rows="3" placeholder="Descreva o conteúdo reformulado das aulas..."></textarea>
+          <textarea id="pl_conteudo" rows="3" placeholder="Descreva os conteúdos/aulas..."></textarea>
         </div>
       </div>
 
@@ -292,23 +288,23 @@
       </div>
 
       <div class="section-block">
-        <div class="section-title">Aprendizagens Essenciais (3º bimestre + retomada de recuperação)</div>
+        <div class="section-title">Aprendizagens essenciais</div>
         <div class="section-body">
           <textarea id="pl_aprendizagens" rows="3" placeholder="Liste as aprendizagens essenciais..."></textarea>
         </div>
       </div>
 
       <div class="section-block">
-        <div class="section-title">Habilidade Priorizada</div>
+        <div class="section-title">Habilidade priorizada</div>
         <div class="section-body">
           <textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01 — ..."></textarea>
         </div>
       </div>
 
       <div class="section-block">
-        <div class="section-title">Conhecimentos Prévios / Lacunas do 1º Semestre a Retomar</div>
+        <div class="section-title">Conhecimentos Prévios</div>
         <div class="section-body">
-          <textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios e lacunas identificadas..."></textarea>
+          <textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios..."></textarea>
         </div>
       </div>
 
@@ -320,7 +316,7 @@
       </div>
 
       <div class="section-block">
-        <div class="section-title">Metodologia (Desenvolvimento / Estratégias)</div>
+        <div class="section-title">Metodologia (Desenvolvimento/Estratégias)</div>
         <div class="section-body">
           <textarea id="pl_metodologia" rows="5" placeholder="Descreva as estratégias e o desenvolvimento das aulas..."></textarea>
         </div>
@@ -396,11 +392,11 @@
               '<textarea id="s' + i + '_conteudo" rows="2"></textarea>',
             '</div>',
             '<div>',
-              '<label>Habilidades / AEs Priorizadas</label>',
+              '<label>Habilidade priorizada / Aprendizagens essenciais</label>',
               '<textarea id="s' + i + '_habilidades" rows="2"></textarea>',
             '</div>',
             '<div class="full">',
-              '<label>Metodologia / Desenvolvimento / Recursos Didáticos</label>',
+              '<label>Metodologia (Desenvolvimento/Estratégias) / Recursos Didáticos</label>',
               '<textarea id="s' + i + '_metodologia" rows="3"></textarea>',
             '</div>',
             '<div class="full">',
@@ -446,13 +442,14 @@
   }
 
   function coletarPlano() {
+    var valQtd = document.getElementById('pl_qtdAulas').value;
     return {
       professor:            document.getElementById('pl_professor').value,
       componente:           document.getElementById('pl_componente').value,
       turma:                document.getElementById('pl_turma').value,
-      quantidadeAulas:      document.getElementById('pl_qtdAulas').value,
+      quantidadeAulas:      valQtd,
+      qtdAulas:             valQtd,
       periodo:              document.getElementById('pl_periodo').value,
-      fonteRecuperacao:     document.getElementById('pl_fonte').value,
       conteudo:             document.getElementById('pl_conteudo').value,
       objetivos:            document.getElementById('pl_objetivos').value,
       aprendizagens:        document.getElementById('pl_aprendizagens').value,
@@ -469,7 +466,6 @@
      COMUNICAÇÃO COM O SERVIDOR (GITHUB + GOOGLE APPS SCRIPT)
      ------------------------------------------------------- */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
-    // Se estiver rodando dentro do Apps Script (google.script.run)
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       if (acao === 'cronograma') {
         google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro).gerarPdfCronograma(dados);
@@ -477,7 +473,6 @@
         google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro).gerarPdfPlanoQuinzenal(dados);
       }
     } else {
-      // Se estiver rodando fora (Ex: GitHub Pages)
       fetch(SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
