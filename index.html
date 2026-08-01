@@ -90,6 +90,58 @@
     }
     textarea { resize: vertical; min-height: 52px; }
 
+    /* ---- DROPDOWN MULTI-SELEÇÃO DE TURMAS ---- */
+    .multiselect-wrap {
+      position: relative;
+    }
+    .multiselect-btn {
+      width: 100%;
+      padding: 8px 9px;
+      border: 1px solid #d7dbe4;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #fbfbfd;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #1f2a44;
+    }
+    .multiselect-btn:after {
+      content: "▼";
+      font-size: 10px;
+      color: var(--navy-light);
+    }
+    .multiselect-options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #d7dbe4;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 6px;
+    }
+    .multiselect-options.active { display: block; }
+    .multiselect-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 13px;
+      user-select: none;
+    }
+    .multiselect-item:hover { background: #f4f5f8; }
+    .multiselect-item input[type=checkbox] { width: auto; margin: 0; cursor: pointer; }
+
     /* ---- ÁREA DE CONTEÚDO ---- */
     .content { padding: 20px 24px; }
     .field-wrap { margin-bottom: 14px; }
@@ -176,9 +228,7 @@
       border-bottom: 1px solid #e3e6ee;
     }
     .section-body { padding: 12px 14px; }
-    .section-body textarea {
-      min-height: 60px;
-    }
+    .section-body textarea { min-height: 60px; }
   </style>
 </head>
 <body>
@@ -199,21 +249,25 @@
      ======================================================== -->
 <div id="cronogramaView" class="tab-content active">
   <div class="wrap">
-
     <img class="banner" id="banner-cr" alt="Banner Cronograma do Bimestre">
 
     <div class="info">
       <div>
         <label>Professor(a)</label>
-        <input type="text" id="cr_professor" placeholder="Nome completo do professor(a)">
+        <select id="cr_professor" onchange="carregarTurmasProfessor('cr')">
+          <option value="">-- Selecione o Professor(a) --</option>
+        </select>
       </div>
       <div>
         <label>Componente</label>
         <input type="text" id="cr_componente" placeholder="Ex: Ciências">
       </div>
       <div>
-        <label>Ano/Série/Turma</label>
-        <input type="text" id="cr_turma" placeholder="Ex: 8º Ano A">
+        <label>Ano/Série/Turma(s)</label>
+        <div class="multiselect-wrap">
+          <button class="multiselect-btn" id="cr_turma_btn" onclick="toggleMultiSelect('cr')">Selecione o professor primeiro</button>
+          <div class="multiselect-options" id="cr_turma_options"></div>
+        </div>
       </div>
       <div>
         <label>Bimestre / Período</label>
@@ -230,7 +284,6 @@
         <div id="status-cr" class="status-area"></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -240,26 +293,28 @@
      ======================================================== -->
 <div id="planoView" class="tab-content">
   <div class="wrap">
-
     <img class="banner" id="banner-pl" alt="Banner Plano Quinzenal / Mensal">
 
-    <!-- CABEÇALHO DE INFORMAÇÕES: Professor, Componente, Turma -->
     <div class="info">
       <div style="flex: 2;">
         <label>Professor(a)</label>
-        <input type="text" id="pl_professor" placeholder="Nome completo do professor(a)">
+        <select id="pl_professor" onchange="carregarTurmasProfessor('pl')">
+          <option value="">-- Selecione o Professor(a) --</option>
+        </select>
       </div>
       <div style="flex: 2;">
         <label>Componente</label>
         <input type="text" id="pl_componente" placeholder="Ex: Matemática">
       </div>
       <div style="flex: 2;">
-        <label>Ano/Série/Turma</label>
-        <input type="text" id="pl_turma" placeholder="Ex: 9º Ano B">
+        <label>Ano/Série/Turma(s)</label>
+        <div class="multiselect-wrap">
+          <button class="multiselect-btn" id="pl_turma_btn" onclick="toggleMultiSelect('pl')">Selecione o professor primeiro</button>
+          <div class="multiselect-options" id="pl_turma_options"></div>
+        </div>
       </div>
     </div>
 
-    <!-- LINHA DE DADOS COMPLEMENTARES: Quantidade de aulas, Período realização -->
     <div class="info">
       <div>
         <label>Quantidade de aulas</label>
@@ -275,65 +330,47 @@
 
       <div class="section-block">
         <div class="section-title">Conteúdo/Aulas</div>
-        <div class="section-body">
-          <textarea id="pl_conteudo" rows="3" placeholder="Descreva os conteúdos/aulas..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_conteudo" rows="3" placeholder="Descreva os conteúdos/aulas..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Objetivo(s)</div>
-        <div class="section-body">
-          <textarea id="pl_objetivos" rows="3" placeholder="Descreva os objetivos de aprendizagem..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_objetivos" rows="3" placeholder="Descreva os objetivos de aprendizagem..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Aprendizagens essenciais</div>
-        <div class="section-body">
-          <textarea id="pl_aprendizagens" rows="3" placeholder="Liste as aprendizagens essenciais..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_aprendizagens" rows="3" placeholder="Liste as aprendizagens essenciais..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Habilidade priorizada</div>
-        <div class="section-body">
-          <textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01 — ..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01 — ..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Conhecimentos Prévios</div>
-        <div class="section-body">
-          <textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Recursos Didáticos</div>
-        <div class="section-body">
-          <textarea id="pl_recursos" rows="2" placeholder="Ex: Livro didático, Caderno, Projetor, Material impresso..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_recursos" rows="2" placeholder="Ex: Livro didático, Projetor..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Metodologia (Desenvolvimento/Estratégias)</div>
-        <div class="section-body">
-          <textarea id="pl_metodologia" rows="5" placeholder="Descreva as estratégias e o desenvolvimento das aulas..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_metodologia" rows="5" placeholder="Descreva as estratégias..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Avaliação</div>
-        <div class="section-body">
-          <textarea id="pl_avaliacao" rows="3" placeholder="Descreva os instrumentos e critérios de avaliação..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_avaliacao" rows="3" placeholder="Descreva os critérios de avaliação..."></textarea></div>
       </div>
 
       <div class="section-block">
         <div class="section-title">Observação</div>
-        <div class="section-body">
-          <textarea id="pl_observacao" rows="2" placeholder="Observações adicionais..."></textarea>
-        </div>
+        <div class="section-body"><textarea id="pl_observacao" rows="2" placeholder="Observações adicionais..."></textarea></div>
       </div>
 
       <div class="actions">
@@ -352,25 +389,121 @@
      SCRIPTS
      ======================================================== -->
 <script>
-  /* -------------------------------------------------------
-     URL DO GOOGLE APPS SCRIPT WEBAPP
-     ------------------------------------------------------- */
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6BKzm6cM8_Aq6_kKRGxtDD-9Yu5xU86yxnGIcgSp_EhtzGDxx5LiT9dPqt6eHeNUP/exec";
 
-  /* Banners */
   var BANNER_CRONOGRAMA = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_dmEIYCdQI_iKemFP39LCt6_W-oCZIwyaj739FZ5fnm9qj9Yjcg7iG4VxuT8cabt1xtY-ufV9o7G-RmOeIyp5Vht8EM0706xWPxeL0-arHzauTFyjAG9GwCEBLgFCWKUJm37WLKnP771C-89ZVqJpN5gD7K3I_scmoztvQs4MWAuNQ-xUwfRvTiLqS3Qx/s1003/CABE%C3%87ALHO%20WANDA.PNG";
   var BANNER_PLANO      = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6-_gDlLXVxcBlr66NbmGN0BdBxkZWNgcNnK6cPs6TAGNLv8S9wWa9Bc7shBzGtW7Rqpb8x0YiNR6pUwpKwOjcO9oNw6wgZwOzAV5wKm0-kEh8qgS6JxVxmJMaYUcVqH3iuKeMLAUbosKDCDxuX3u8X85s_L4_JEu97TnD6atqNE5Sx2P2dhTlkt6EVgum/s1037/Logo%20S%C3%A3o.PNG";
+
+  /* ---- MAPA PROFESSOR -> TURMAS ---- */
+  var MAPA_PROFESSORES = {
+    "ADRIANA": ["2º C (Noturno)", "3º F (Noturno)"],
+    "AILTON": ["1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "ALEXANDRE": ["2º A (Noturno)", "2º C (Noturno)", "3º D (Noturno)", "3º F (Noturno)"],
+    "BERNADETE": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "2º C (Noturno)", "3º F (Noturno)", "1º TMA (Noturno)"],
+    "CELINA": ["2º C (Noturno)", "3º F (Noturno)"],
+    "CIDO": ["9º Ano A", "9º Ano B"],
+    "CLOVIS": ["2º A (Noturno)", "2º C (Noturno)", "3º E (Noturno)", "1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "ELAINE": ["1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "EMERSON": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "8º Ano B"],
+    "GERSON": ["6º Ano A", "6º Ano C", "7º Ano B", "8º Ano B", "9º Ano A", "1º TMA (Noturno)"],
+    "GIL": ["2º A (Noturno)", "3º D (Noturno)", "3º E (Noturno)", "1º TMA (Noturno)"],
+    "HELOISA": ["3º D (Noturno)"],
+    "HÉLIO": ["2º C (Noturno)", "3º F (Noturno)"],
+    "JOSE": ["2º A (Noturno)", "3º D (Noturno)", "3º E (Noturno)", "1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "JULIANA": ["8º Ano B", "9º Ano B"],
+    "KALED": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "8º Ano B", "9º Ano A", "9º Ano B"],
+    "KIKO": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "8º Ano B", "9º Ano A"],
+    "LUCIANA L": ["8º Ano B"],
+    "MANTOVANI": ["2º A (Noturno)", "3º D (Noturno)", "3º E (Noturno)", "1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "MARCIA L": ["6º Ano A", "6º Ano C", "7º Ano B", "8º Ano A", "9º Ano A", "9º Ano B"],
+    "MARGÔ": ["9º Ano B", "2º A (Noturno)", "3º D (Noturno)", "3º E (Noturno)", "1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "MÁRCIO": ["1º TMA (Noturno)", "3º TMA (Noturno)"],
+    "NICOLE": ["6º Ano A", "6º Ano C", "8º Ano A", "8º Ano B", "9º Ano A", "2º A (Noturno)"],
+    "PAULO": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "9º Ano B"],
+    "RAUL": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "8º Ano B", "9º Ano A", "9º Ano B", "2º C (Noturno)", "3º F (Noturno)"],
+    "RICARDO": ["8º Ano A", "8º Ano B", "9º Ano A"],
+    "ROSE": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "9º Ano A", "9º Ano B"],
+    "SONIA": ["7º Ano A"],
+    "VICENTE": ["3º F (Noturno)"],
+    "WALERIA": ["6º Ano A", "6º Ano C", "7º Ano A", "7º Ano B", "8º Ano A", "8º Ano B", "9º Ano A", "9º Ano B", "2º C (Noturno)", "3º D (Noturno)", "3º E (Noturno)", "3º F (Noturno)", "1º TMA (Noturno)", "3º TMA (Noturno)"]
+  };
 
   document.addEventListener('DOMContentLoaded', function() {
     var imgCr = document.getElementById('banner-cr');
     var imgPl = document.getElementById('banner-pl');
     if (imgCr) imgCr.src = BANNER_CRONOGRAMA;
     if (imgPl) imgPl.src = BANNER_PLANO;
+
+    inicializarProfessores('cr_professor');
+    inicializarProfessores('pl_professor');
+
+    // Fechar dropdowns de turmas ao clicar fora
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.multiselect-wrap')) {
+        document.querySelectorAll('.multiselect-options').forEach(function(el){ el.classList.remove('active'); });
+      }
+    });
   });
 
-  /* -------------------------------------------------------
-     GERAR 8 SEMANAS DO CRONOGRAMA
-     ------------------------------------------------------- */
+  function inicializarProfessores(idSelect) {
+    var select = document.getElementById(idSelect);
+    var nomes = Object.keys(MAPA_PROFESSORES).sort();
+    nomes.forEach(function(nome) {
+      var opt = document.createElement('option');
+      opt.value = nome;
+      opt.textContent = nome;
+      select.appendChild(opt);
+    });
+  }
+
+  function carregarTurmasProfessor(prefixo) {
+    var prof = document.getElementById(prefixo + '_professor').value;
+    var container = document.getElementById(prefixo + '_turma_options');
+    var btn = document.getElementById(prefixo + '_turma_btn');
+    container.innerHTML = '';
+    
+    if (!prof || !MAPA_PROFESSORES[prof]) {
+      btn.textContent = 'Selecione o professor primeiro';
+      return;
+    }
+
+    var turmas = MAPA_PROFESSORES[prof];
+    turmas.forEach(function(t) {
+      var item = document.createElement('label');
+      item.className = 'multiselect-item';
+      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoTurmas(\'' + prefixo + '\')"> ' + t;
+      container.appendChild(item);
+    });
+
+    atualizarTextoTurmas(prefixo);
+  }
+
+  function toggleMultiSelect(prefixo) {
+    var opt = document.getElementById(prefixo + '_turma_options');
+    var aberto = opt.classList.contains('active');
+    document.querySelectorAll('.multiselect-options').forEach(function(el){ el.classList.remove('active'); });
+    if (!aberto) opt.classList.add('active');
+  }
+
+  function atualizarTextoTurmas(prefixo) {
+    var selecionados = coletarTurmasSelecionadas(prefixo);
+    var btn = document.getElementById(prefixo + '_turma_btn');
+    if (selecionados.length === 0) {
+      btn.textContent = 'Selecione uma ou mais turmas';
+    } else {
+      btn.textContent = selecionados.join(', ');
+    }
+  }
+
+  function coletarTurmasSelecionadas(prefixo) {
+    var container = document.getElementById(prefixo + '_turma_options');
+    var checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+    var res = [];
+    checkboxes.forEach(function(cb) { res.push(cb.value); });
+    return res;
+  }
+
+  /* ---- GERAR 8 SEMANAS DO CRONOGRAMA ---- */
   (function() {
     var cores = ['w1','w2','w3','w4','w5','w6','w7','w8'];
     var cont  = document.getElementById('semanas-container');
@@ -381,28 +514,13 @@
         '<div class="week">',
           '<div class="week-head ' + c + '" onclick="toggleWeek(' + i + ')">',
             '<span>SEMANA ' + i + '</span>',
-            '<svg id="chev' + i + '" class="chevron" width="18" height="18" viewBox="0 0 24 24"',
-                 'fill="none" stroke="currentColor" stroke-width="2.5">',
-              '<polyline points="6 9 12 15 18 9"/>',
-            '</svg>',
+            '<svg id="chev' + i + '" class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>',
           '</div>',
           '<div class="week-body" id="body' + i + '">',
-            '<div>',
-              '<label>Conteúdo / Objeto de Conhecimento</label>',
-              '<textarea id="s' + i + '_conteudo" rows="2"></textarea>',
-            '</div>',
-            '<div>',
-              '<label>Habilidade priorizada / Aprendizagens essenciais</label>',
-              '<textarea id="s' + i + '_habilidades" rows="2"></textarea>',
-            '</div>',
-            '<div class="full">',
-              '<label>Metodologia (Desenvolvimento/Estratégias) / Recursos Didáticos</label>',
-              '<textarea id="s' + i + '_metodologia" rows="3"></textarea>',
-            '</div>',
-            '<div class="full">',
-              '<label>Avaliação / Entregáveis do Aluno</label>',
-              '<textarea id="s' + i + '_avaliacao" rows="2"></textarea>',
-            '</div>',
+            '<div><label>Conteúdo / Objeto de Conhecimento</label><textarea id="s' + i + '_conteudo" rows="2"></textarea></div>',
+            '<div><label>Habilidade priorizada / Aprendizagens essenciais</label><textarea id="s' + i + '_habilidades" rows="2"></textarea></div>',
+            '<div class="full"><label>Metodologia / Recursos Didáticos</label><textarea id="s' + i + '_metodologia" rows="3"></textarea></div>',
+            '<div class="full"><label>Avaliação / Entregáveis do Aluno</label><textarea id="s' + i + '_avaliacao" rows="2"></textarea></div>',
           '</div>',
         '</div>'
       ].join('');
@@ -426,10 +544,11 @@
   }
 
   function coletarCronograma() {
+    var turmas = coletarTurmasSelecionadas('cr');
     var d = {
       professor:  document.getElementById('cr_professor').value,
       componente: document.getElementById('cr_componente').value,
-      turma:      document.getElementById('cr_turma').value,
+      turma:      turmas.join(', '), // Envia as turmas juntas (ex: 6º Ano A, 6º Ano C)
       bimestre:   document.getElementById('cr_bimestre').value
     };
     for (var i = 1; i <= 8; i++) {
@@ -442,11 +561,12 @@
   }
 
   function coletarPlano() {
+    var turmas = coletarTurmasSelecionadas('pl');
     var valQtd = document.getElementById('pl_qtdAulas').value;
     return {
       professor:            document.getElementById('pl_professor').value,
       componente:           document.getElementById('pl_componente').value,
-      turma:                document.getElementById('pl_turma').value,
+      turma:                turmas.join(', '), // Envia as turmas juntas (ex: 6º Ano A, 6º Ano C)
       quantidadeAulas:      valQtd,
       qtdAulas:             valQtd,
       periodo:              document.getElementById('pl_periodo').value,
@@ -462,9 +582,7 @@
     };
   }
 
-  /* -------------------------------------------------------
-     COMUNICAÇÃO COM O SERVIDOR (GITHUB + GOOGLE APPS SCRIPT)
-     ------------------------------------------------------- */
+  /* ---- ENVIO ---- */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       if (acao === 'cronograma') {
@@ -488,7 +606,9 @@
     var status = document.getElementById('status-cr');
     var btn    = document.getElementById('btn-cr');
     var dados  = coletarCronograma();
-    if (!dados.professor.trim()) { alert('Preencha o nome do professor(a).'); return; }
+    if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
+    if (!dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
+
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
@@ -514,7 +634,9 @@
     var status = document.getElementById('status-pl');
     var btn    = document.getElementById('btn-pl');
     var dados  = coletarPlano();
-    if (!dados.professor.trim()) { alert('Preencha o nome do professor(a).'); return; }
+    if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
+    if (!dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
+
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
@@ -536,6 +658,5 @@
     });
   }
 </script>
-
 </body>
 </html>
