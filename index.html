@@ -656,11 +656,14 @@
         }
       },
       function(e) {
+        // ── ALTERAÇÃO: mostra o motivo real do erro em vez do texto genérico ──
         loadBar.classList.remove('ativo');
         loadHab.classList.remove('ativo');
         taAp.disabled  = false;
         taHab.disabled = false;
-        taAp.placeholder = '⚠️ Erro de conexão. Preencha manualmente.';
+        var msgErro = (e && e.message) ? e.message : (typeof e === 'string' ? e : 'Falha na comunicação com o servidor');
+        taAp.placeholder = '⚠️ ' + msgErro + '. Preencha manualmente.';
+        console.error('Erro ao buscar aprendizagens/habilidades:', e);
       }
     );
   }
