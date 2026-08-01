@@ -90,6 +90,12 @@
     }
     textarea { resize: vertical; min-height: 52px; }
 
+    /* Campo oculto por padrão para novos professores */
+    .campo-novo-prof {
+      margin-top: 6px;
+      display: none;
+    }
+
     /* ---- DROPDOWN MULTI-SELEÇÃO DE TURMAS ---- */
     .multiselect-wrap {
       position: relative;
@@ -253,9 +259,10 @@
     <div class="info">
       <div>
         <label>Professor(a)</label>
-        <select id="cr_professor" onchange="carregarTurmasProfessor('cr')">
+        <select id="cr_professor" onchange="tratarSelecaoProfessor('cr')">
           <option value="">-- Selecione o Professor(a) --</option>
         </select>
+        <input type="text" id="cr_professor_novo" class="campo-novo-prof" placeholder="Digite seu nome completo...">
       </div>
       <div>
         <label>Ano/Série/Turma(s)</label>
@@ -266,9 +273,11 @@
       </div>
       <div>
         <label>Componente / Disciplina</label>
-        <select id="cr_componente">
-          <option value="">-- Selecione a turma primeiro --</option>
-        </select>
+        <div id="cr_componente_wrap">
+          <select id="cr_componente">
+            <option value="">-- Selecione a turma primeiro --</option>
+          </select>
+        </div>
       </div>
       <div>
         <label>Bimestre / Período</label>
@@ -299,9 +308,10 @@
     <div class="info">
       <div style="flex: 2;">
         <label>Professor(a)</label>
-        <select id="pl_professor" onchange="carregarTurmasProfessor('pl')">
+        <select id="pl_professor" onchange="tratarSelecaoProfessor('pl')">
           <option value="">-- Selecione o Professor(a) --</option>
         </select>
+        <input type="text" id="pl_professor_novo" class="campo-novo-prof" placeholder="Digite seu nome completo...">
       </div>
       <div style="flex: 2;">
         <label>Ano/Série/Turma(s)</label>
@@ -312,9 +322,11 @@
       </div>
       <div style="flex: 2;">
         <label>Componente / Disciplina</label>
-        <select id="pl_componente">
-          <option value="">-- Selecione a turma primeiro --</option>
-        </select>
+        <div id="pl_componente_wrap">
+          <select id="pl_componente">
+            <option value="">-- Selecione a turma primeiro --</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -397,203 +409,48 @@
   var BANNER_CRONOGRAMA = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_dmEIYCdQI_iKemFP39LCt6_W-oCZIwyaj739FZ5fnm9qj9Yjcg7iG4VxuT8cabt1xtY-ufV9o7G-RmOeIyp5Vht8EM0706xWPxeL0-arHzauTFyjAG9GwCEBLgFCWKUJm37WLKnP771C-89ZVqJpN5gD7K3I_scmoztvQs4MWAuNQ-xUwfRvTiLqS3Qx/s1003/CABE%C3%87ALHO%20WANDA.PNG";
   var BANNER_PLANO      = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6-_gDlLXVxcBlr66NbmGN0BdBxkZWNgcNnK6cPs6TAGNLv8S9wWa9Bc7shBzGtW7Rqpb8x0YiNR6pUwpKwOjcO9oNw6wgZwOzAV5wKm0-kEh8qgS6JxVxmJMaYUcVqH3iuKeMLAUbosKDCDxuX3u8X85s_L4_JEu97TnD6atqNE5Sx2P2dhTlkt6EVgum/s1037/Logo%20S%C3%A3o.PNG";
 
-  /* ---- MAPA COMPLETO PROFESSOR -> TURMAS & DISCIPLINAS ---- */
+  /* ---- LISTA GERAL DE TURMAS DA ESCOLA (para novos professores) ---- */
+  var TODAS_TURMAS_ESCOLA = [
+    "6º Ano A", "6º Ano B", "6º Ano C", 
+    "7º Ano A", "7º Ano B", "7º Ano C", 
+    "8º Ano A", "8º Ano B", "8º Ano C", 
+    "9º Ano A", "9º Ano B", "9º Ano C", 
+    "1º TMA (Noturno)", "2º A (Noturno)", "2º C (Noturno)", 
+    "3º D (Noturno)", "3º E (Noturno)", "3º F (Noturno)", "3º TMA (Noturno)"
+  ];
+
+  /* ---- MAPA PROFESSOR -> TURMAS & DISCIPLINAS ---- */
   var MAPA_DOCENTE = {
-    "ADRIANA": { 
-      "2º C (Noturno)": ["Redação", "Português"], 
-      "3º F (Noturno)": ["Redação"] 
-    },
-    "AILTON": { 
-      "1º TMA (Noturno)": ["Redação"], 
-      "3º TMA (Noturno)": ["Redação"] 
-    },
-    "ALEXANDRE": { 
-      "2º A (Noturno)": ["Física"], 
-      "2º C (Noturno)": ["Física"], 
-      "3º D (Noturno)": ["Física"], 
-      "3º F (Noturno)": ["Matemática", "Física"] 
-    },
-    "BERNADETE": { 
-      "6º Ano A": ["OEM", "Matemática", "Tecnologia"], 
-      "6º Ano C": ["OEM", "Matemática", "Tecnologia"], 
-      "7º Ano A": ["Matemática", "Tecnologia"], 
-      "7º Ano B": ["Educação Financeira", "Matemática", "Tecnologia"], 
-      "8º Ano A": ["Tecnologia"], 
-      "2º C (Noturno)": ["Matemática"], 
-      "3º F (Noturno)": ["OEM"], 
-      "1º TMA (Noturno)": ["Educação Financeira"] 
-    },
-    "CELINA": { 
-      "2º C (Noturno)": ["História"], 
-      "3º F (Noturno)": ["História"] 
-    },
-    "CIDO": { 
-      "9º Ano A": ["Educação Física"], 
-      "9º Ano B": ["Educação Física"] 
-    },
-    "CLOVIS": { 
-      "2º A (Noturno)": ["Redação", "Inglês"], 
-      "2º C (Noturno)": ["Inglês"], 
-      "3º E (Noturno)": ["Redação"], 
-      "1º TMA (Noturno)": ["Inglês"], 
-      "3º TMA (Noturno)": ["Inglês"] 
-    },
-    "ELAINE": { 
-      "1º TMA (Noturno)": ["Química"], 
-      "3º TMA (Noturno)": ["Química"] 
-    },
-    "EMERSON": { 
-      "6º Ano A": ["Educação Física"], 
-      "6º Ano C": ["Educação Física"], 
-      "7º Ano A": ["Educação Física"], 
-      "7º Ano B": ["Educação Física"], 
-      "8º Ano A": ["Educação Física"], 
-      "8º Ano B": ["Educação Física"] 
-    },
-    "GERSON": { 
-      "6º Ano A": ["Português", "Redação"], 
-      "6º Ano C": ["Português"], 
-      "7º Ano B": ["Português"], 
-      "8º Ano B": ["Redação"], 
-      "9º Ano A": ["Português", "Redação"], 
-      "1º TMA (Noturno)": ["Português"] 
-    },
-    "GIL": { 
-      "2º A (Noturno)": ["Matemática", "Educação Física"], 
-      "3º D (Noturno)": ["Matemática"], 
-      "3º E (Noturno)": ["Matemática"], 
-      "1º TMA (Noturno)": ["Matemática"] 
-    },
-    "HELOISA": { 
-      "3º D (Noturno)": ["OEP"] 
-    },
-    "HÉLIO": { 
-      "2º C (Noturno)": ["Sociologia"], 
-      "3º F (Noturno)": ["Geografia"] 
-    },
-    "JOSE": { 
-      "2º A (Noturno)": ["História"], 
-      "3º D (Noturno)": ["História"], 
-      "3º E (Noturno)": ["História"], 
-      "1º TMA (Noturno)": ["Filosofia"], 
-      "3º TMA (Noturno)": ["Filosofia"] 
-    },
-    "JULIANA": { 
-      "8º Ano B": ["Matemática"], 
-      "9º Ano B": ["Matemática"] 
-    },
-    "KALED": { 
-      "6º Ano A": ["Arte"], 
-      "6º Ano C": ["Arte"], 
-      "7º Ano A": ["Arte"], 
-      "7º Ano B": ["Arte"], 
-      "8º Ano A": ["Arte"], 
-      "8º Ano B": ["Arte"], 
-      "9º Ano A": ["Arte"], 
-      "9º Ano B": ["Arte"] 
-    },
-    "KIKO": { 
-      "6º Ano A": ["Inglês"], 
-      "6º Ano C": ["Inglês"], 
-      "7º Ano A": ["Inglês"], 
-      "7º Ano B": ["Inglês"], 
-      "8º Ano A": ["Inglês"], 
-      "8º Ano B": ["Inglês"], 
-      "9º Ano A": ["Inglês"] 
-    },
-    "LUCIANA L": { 
-      "8º Ano B": ["Português"] 
-    },
-    "MANTOVANI": { 
-      "2º A (Noturno)": ["Química", "Biologia"], 
-      "3º D (Noturno)": ["Biologia", "Química"], 
-      "3º E (Noturno)": ["Biologia", "Química"], 
-      "1º TMA (Noturno)": ["Biologia"], 
-      "3º TMA (Noturno)": ["Biologia", "Física"] 
-    },
-    "MARCIA L": { 
-      "6º Ano A": ["Matemática"], 
-      "6º Ano C": ["Matemática"], 
-      "7º Ano B": ["Matemática"], 
-      "8º Ano A": ["Matemática"], 
-      "9º Ano A": ["OEM"], 
-      "9º Ano B": ["OEM"] 
-    },
-    "MARGÔ": { 
-      "9º Ano B": ["OEP", "Redação"], 
-      "2º A (Noturno)": ["Português"], 
-      "3º D (Noturno)": ["Português"], 
-      "3º E (Noturno)": ["Português"], 
-      "1º TMA (Noturno)": ["Português"], 
-      "3º TMA (Noturno)": ["Português"] 
-    },
-    "MÁRCIO": { 
-      "1º TMA (Noturno)": ["Sociologia", "Oratória e Liderança"], 
-      "3º TMA (Noturno)": ["Sociologia", "Oratória e Liderança"] 
-    },
-    "NICOLE": { 
-      "6º Ano A": ["Geografia", "Projeto de Vida"], 
-      "6º Ano C": ["Geografia"], 
-      "8º Ano A": ["História"], 
-      "8º Ano B": ["História"], 
-      "9º Ano A": ["História"], 
-      "2º A (Noturno)": ["Sociologia"] 
-    },
-    "PAULO": { 
-      "6º Ano A": ["História"], 
-      "6º Ano C": ["História"], 
-      "7º Ano A": ["História"], 
-      "7º Ano B": ["História"], 
-      "9º Ano B": ["História"] 
-    },
-    "RAUL": { 
-      "6º Ano A": ["Ciências"], 
-      "6º Ano C": ["Ciências"], 
-      "7º Ano A": ["Ciências"], 
-      "7º Ano B": ["Ciências"], 
-      "8º Ano A": ["Ciências"], 
-      "8º Ano B": ["Ciências", "Tecnologia"], 
-      "9º Ano A": ["Ciências"], 
-      "9º Ano B": ["Ciências"], 
-      "2º C (Noturno)": ["Biologia", "Química"], 
-      "3º F (Noturno)": ["Biologia", "Química"] 
-    },
-    "RICARDO": { 
-      "8º Ano A": ["Educação Financeira"], 
-      "8º Ano B": ["Matemática", "Educação Financeira"], 
-      "9º Ano A": ["Matemática"] 
-    },
-    "ROSE": { 
-      "6º Ano A": ["OEP"], 
-      "6º Ano C": ["OEP"], 
-      "7º Ano A": ["Português"], 
-      "7º Ano B": ["Português"], 
-      "8º Ano A": ["Português"], 
-      "9º Ano A": ["OEP"], 
-      "9º Ano B": ["Português"] 
-    },
-    "SONIA": { 
-      "7º Ano A": ["Educação Financeira"] 
-    },
-    "VICENTE": { 
-      "3º F (Noturno)": ["OEP", "Português"] 
-    },
-    "WALERIA": { 
-      "6º Ano A": ["Geografia"], 
-      "6º Ano C": ["Projeto de Vida"], 
-      "7º Ano A": ["Geografia"], 
-      "7º Ano B": ["Geografia", "Projeto de Vida"], 
-      "8º Ano A": ["Geografia"], 
-      "8º Ano B": ["Geografia"], 
-      "9º Ano A": ["Geografia"], 
-      "9º Ano B": ["Geografia", "Projeto de Vida"], 
-      "2º C (Noturno)": ["Geografia"], 
-      "3º D (Noturno)": ["Geografia"], 
-      "3º E (Noturno)": ["Geografia"], 
-      "3º F (Noturno)": ["Geografia"], 
-      "1º TMA (Noturno)": ["Atualidades", "Geografia"], 
-      "3º TMA (Noturno)": ["Geografia"] 
-    }
+    "ADRIANA": { "2º C (Noturno)": ["Redação", "Português"], "3º F (Noturno)": ["Redação"] },
+    "AILTON": { "1º TMA (Noturno)": ["Redação"], "3º TMA (Noturno)": ["Redação"] },
+    "ALEXANDRE": { "2º A (Noturno)": ["Física"], "2º C (Noturno)": ["Física"], "3º D (Noturno)": ["Física"], "3º F (Noturno)": ["Matemática", "Física"] },
+    "BERNADETE": { "6º Ano A": ["OEM", "Matemática", "Tecnologia"], "6º Ano C": ["OEM", "Matemática", "Tecnologia"], "7º Ano A": ["Matemática", "Tecnologia"], "7º Ano B": ["Educação Financeira", "Matemática", "Tecnologia"], "8º Ano A": ["Tecnologia"], "2º C (Noturno)": ["Matemática"], "3º F (Noturno)": ["OEM"], "1º TMA (Noturno)": ["Educação Financeira"] },
+    "CELINA": { "2º C (Noturno)": ["História"], "3º F (Noturno)": ["História"] },
+    "CIDO": { "9º Ano A": ["Educação Física"], "9º Ano B": ["Educação Física"] },
+    "CLOVIS": { "2º A (Noturno)": ["Redação", "Inglês"], "2º C (Noturno)": ["Inglês"], "3º E (Noturno)": ["Redação"], "1º TMA (Noturno)": ["Inglês"], "3º TMA (Noturno)": ["Inglês"] },
+    "ELAINE": { "1º TMA (Noturno)": ["Química"], "3º TMA (Noturno)": ["Química"] },
+    "EMERSON": { "6º Ano A": ["Educação Física"], "6º Ano C": ["Educação Física"], "7º Ano A": ["Educação Física"], "7º Ano B": ["Educação Física"], "8º Ano A": ["Educação Física"], "8º Ano B": ["Educação Física"] },
+    "GERSON": { "6º Ano A": ["Português", "Redação"], "6º Ano C": ["Português"], "7º Ano B": ["Português"], "8º Ano B": ["Redação"], "9º Ano A": ["Português", "Redação"], "1º TMA (Noturno)": ["Português"] },
+    "GIL": { "2º A (Noturno)": ["Matemática", "Educação Física"], "3º D (Noturno)": ["Matemática"], "3º E (Noturno)": ["Matemática"], "1º TMA (Noturno)": ["Matemática"] },
+    "HELOISA": { "3º D (Noturno)": ["OEP"] },
+    "HÉLIO": { "2º C (Noturno)": ["Sociologia"], "3º F (Noturno)": ["Geografia"] },
+    "JOSE": { "2º A (Noturno)": ["História"], "3º D (Noturno)": ["História"], "3º E (Noturno)": ["História"], "1º TMA (Noturno)": ["Filosofia"], "3º TMA (Noturno)": ["Filosofia"] },
+    "JULIANA": { "8º Ano B": ["Matemática"], "9º Ano B": ["Matemática"] },
+    "KALED": { "6º Ano A": ["Arte"], "6º Ano C": ["Arte"], "7º Ano A": ["Arte"], "7º Ano B": ["Arte"], "8º Ano A": ["Arte"], "8º Ano B": ["Arte"], "9º Ano A": ["Arte"], "9º Ano B": ["Arte"] },
+    "KIKO": { "6º Ano A": ["Inglês"], "6º Ano C": ["Inglês"], "7º Ano A": ["Inglês"], "7º Ano B": ["Inglês"], "8º Ano A": ["Inglês"], "8º Ano B": ["Inglês"], "9º Ano A": ["Inglês"] },
+    "LUCIANA L": { "8º Ano B": ["Português"] },
+    "MANTOVANI": { "2º A (Noturno)": ["Química", "Biologia"], "3º D (Noturno)": ["Biologia", "Química"], "3º E (Noturno)": ["Biologia", "Química"], "1º TMA (Noturno)": ["Biologia"], "3º TMA (Noturno)": ["Biologia", "Física"] },
+    "MARCIA L": { "6º Ano A": ["Matemática"], "6º Ano C": ["Matemática"], "7º Ano B": ["Matemática"], "8º Ano A": ["Matemática"], "9º Ano A": ["OEM"], "9º Ano B": ["OEM"] },
+    "MARGÔ": { "9º Ano B": ["OEP", "Redação"], "2º A (Noturno)": ["Português"], "3º D (Noturno)": ["Português"], "3º E (Noturno)": ["Português"], "1º TMA (Noturno)": ["Português"], "3º TMA (Noturno)": ["Português"] },
+    "MÁRCIO": { "1º TMA (Noturno)": ["Sociologia", "Oratória e Liderança"], "3º TMA (Noturno)": ["Sociologia", "Oratória e Liderança"] },
+    "NICOLE": { "6º Ano A": ["Geografia", "Projeto de Vida"], "6º Ano C": ["Geografia"], "8º Ano A": ["História"], "8º Ano B": ["História"], "9º Ano A": ["História"], "2º A (Noturno)": ["Sociologia"] },
+    "PAULO": { "6º Ano A": ["História"], "6º Ano C": ["História"], "7º Ano A": ["História"], "7º Ano B": ["História"], "9º Ano B": ["História"] },
+    "RAUL": { "6º Ano A": ["Ciências"], "6º Ano C": ["Ciências"], "7º Ano A": ["Ciências"], "7º Ano B": ["Ciências"], "8º Ano A": ["Ciências"], "8º Ano B": ["Ciências", "Tecnologia"], "9º Ano A": ["Ciências"], "9º Ano B": ["Ciências"], "2º C (Noturno)": ["Biologia", "Química"], "3º F (Noturno)": ["Biologia", "Química"] },
+    "RICARDO": { "8º Ano A": ["Educação Financeira"], "8º Ano B": ["Matemática", "Educação Financeira"], "9º Ano A": ["Matemática"] },
+    "ROSE": { "6º Ano A": ["OEP"], "6º Ano C": ["OEP"], "7º Ano A": ["Português"], "7º Ano B": ["Português"], "8º Ano A": ["Português"], "9º Ano A": ["OEP"], "9º Ano B": ["Português"] },
+    "SONIA": { "7º Ano A": ["Educação Financeira"] },
+    "VICENTE": { "3º F (Noturno)": ["OEP", "Português"] },
+    "WALERIA": { "6º Ano A": ["Geografia"], "6º Ano C": ["Projeto de Vida"], "7º Ano A": ["Geografia"], "7º Ano B": ["Geografia", "Projeto de Vida"], "8º Ano A": ["Geografia"], "8º Ano B": ["Geografia"], "9º Ano A": ["Geografia"], "9º Ano B": ["Geografia", "Projeto de Vida"], "2º C (Noturno)": ["Geografia"], "3º D (Noturno)": ["Geografia"], "3º E (Noturno)": ["Geografia"], "3º F (Noturno)": ["Geografia"], "1º TMA (Noturno)": ["Atualidades", "Geografia"], "3º TMA (Noturno)": ["Geografia"] }
   };
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -614,6 +471,8 @@
 
   function inicializarProfessores(idSelect) {
     var select = document.getElementById(idSelect);
+    select.innerHTML = '<option value="">-- Selecione o Professor(a) --</option>';
+    
     var nomes = Object.keys(MAPA_DOCENTE).sort();
     nomes.forEach(function(nome) {
       var opt = document.createElement('option');
@@ -621,19 +480,38 @@
       opt.textContent = nome;
       select.appendChild(opt);
     });
+
+    // Adiciona a opção para NOVO PROFESSOR
+    var optNovo = document.createElement('option');
+    optNovo.value = "OUTRO";
+    optNovo.textContent = "➕ Outro Professor (Digitar nome...)";
+    select.appendChild(optNovo);
+  }
+
+  function tratarSelecaoProfessor(prefixo) {
+    var val = document.getElementById(prefixo + '_professor').value;
+    var inputNovo = document.getElementById(prefixo + '_professor_novo');
+
+    if (val === 'OUTRO') {
+      inputNovo.style.display = 'block';
+      carregarTurmasParaNovoProfessor(prefixo);
+    } else {
+      inputNovo.style.display = 'none';
+      inputNovo.value = '';
+      carregarTurmasProfessor(prefixo);
+    }
   }
 
   function carregarTurmasProfessor(prefixo) {
     var prof = document.getElementById(prefixo + '_professor').value;
     var container = document.getElementById(prefixo + '_turma_options');
     var btn = document.getElementById(prefixo + '_turma_btn');
-    var compSelect = document.getElementById(prefixo + '_componente');
     
     container.innerHTML = '';
-    compSelect.innerHTML = '<option value="">-- Selecione a turma primeiro --</option>';
     
-    if (!prof || !MAPA_DOCENTE[prof]) {
+    if (!prof || prof === 'OUTRO' || !MAPA_DOCENTE[prof]) {
       btn.textContent = 'Selecione o professor primeiro';
+      atualizarComponente(prefixo);
       return;
     }
 
@@ -648,6 +526,23 @@
     atualizarTextoETurmas(prefixo);
   }
 
+  function carregarTurmasParaNovoProfessor(prefixo) {
+    var container = document.getElementById(prefixo + '_turma_options');
+    var btn = document.getElementById(prefixo + '_turma_btn');
+    container.innerHTML = '';
+
+    // Carrega todas as turmas da escola
+    TODAS_TURMAS_ESCOLA.forEach(function(t) {
+      var item = document.createElement('label');
+      item.className = 'multiselect-item';
+      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoETurmas(\'' + prefixo + '\')"> ' + t;
+      container.appendChild(item);
+    });
+
+    btn.textContent = 'Selecione uma ou mais turmas';
+    atualizarComponente(prefixo);
+  }
+
   function toggleMultiSelect(prefixo) {
     var opt = document.getElementById(prefixo + '_turma_options');
     var aberto = opt.classList.contains('active');
@@ -656,67 +551,60 @@
   }
 
   function atualizarTextoETurmas(prefixo) {
-    var prof = document.getElementById(prefixo + '_professor').value;
     var selecionados = coletarTurmasSelecionadas(prefixo);
     var btn = document.getElementById(prefixo + '_turma_btn');
-    var compSelect = document.getElementById(prefixo + '_componente');
-
-    compSelect.innerHTML = '';
 
     if (selecionados.length === 0) {
       btn.textContent = 'Selecione uma ou mais turmas';
-      var opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = '-- Selecione a turma primeiro --';
-      compSelect.appendChild(opt);
     } else {
       btn.textContent = selecionados.join(', ');
+    }
 
-      // Coletar todas as disciplinas disponíveis para a(s) turma(s) selecionada(s)
+    atualizarComponente(prefixo);
+  }
+
+  function atualizarComponente(prefixo) {
+    var profSelect = document.getElementById(prefixo + '_professor').value;
+    var compWrap = document.getElementById(prefixo + '_componente_wrap');
+    var selecionados = coletarTurmasSelecionadas(prefixo);
+
+    // Se for Novo Professor ("OUTRO"), exibe CAIXA DE TEXTO LIVRE para digitar a disciplina
+    if (profSelect === 'OUTRO') {
+      compWrap.innerHTML = '<input type="text" id="' + prefixo + '_componente" placeholder="Digite o nome da disciplina (ex: Robótica)">';
+      return;
+    }
+
+    // Se for professor cadastrado, exibe o SELECT com as disciplinas mapeadas
+    var html = '<select id="' + prefixo + '_componente">';
+    if (selecionados.length === 0 || !profSelect || !MAPA_DOCENTE[profSelect]) {
+      html += '<option value="">-- Selecione a turma primeiro --</option>';
+    } else {
       var disciplinasSet = [];
-      if (prof && MAPA_DOCENTE[prof]) {
-        selecionados.forEach(function(t) {
-          var listaDisc = MAPA_DOCENTE[prof][t];
-          if (listaDisc && Array.isArray(listaDisc)) {
-            listaDisc.forEach(function(d) {
-              if (disciplinasSet.indexOf(d) === -1) {
-                disciplinasSet.push(d);
-              }
-            });
-          }
-        });
-      }
+      selecionados.forEach(function(t) {
+        var listaDisc = MAPA_DOCENTE[profSelect][t];
+        if (listaDisc && Array.isArray(listaDisc)) {
+          listaDisc.forEach(function(d) {
+            if (disciplinasSet.indexOf(d) === -1) disciplinasSet.push(d);
+          });
+        }
+      });
 
       if (disciplinasSet.length === 0) {
-        var opt = document.createElement('option');
-        opt.value = '';
-        opt.textContent = '-- Nenhuma disciplina encontrada --';
-        compSelect.appendChild(opt);
+        html += '<option value="">-- Nenhuma disciplina encontrada --</option>';
       } else {
-        // Se houver mais de 1 disciplina, adiciona a opção neutra de seleção
         if (disciplinasSet.length > 1) {
-          var optDefault = document.createElement('option');
-          optDefault.value = '';
-          optDefault.textContent = '-- Selecione a Disciplina --';
-          compSelect.appendChild(optDefault);
+          html += '<option value="">-- Selecione a Disciplina --</option>';
         }
-
         disciplinasSet.forEach(function(d) {
-          var opt = document.createElement('option');
-          opt.value = d;
-          opt.textContent = d;
-          compSelect.appendChild(opt);
+          html += '<option value="' + d + '">' + d + '</option>';
         });
-
-        // Opção extra para enviar as duas disciplinas juntas caso deseje
         if (disciplinasSet.length > 1) {
-          var optAmbas = document.createElement('option');
-          optAmbas.value = disciplinasSet.join(' / ');
-          optAmbas.textContent = disciplinasSet.join(' / ') + ' (Ambas)';
-          compSelect.appendChild(optAmbas);
+          html += '<option value="' + disciplinasSet.join(' / ') + '">' + disciplinasSet.join(' / ') + ' (Ambas)</option>';
         }
       }
     }
+    html += '</select>';
+    compWrap.innerHTML = html;
   }
 
   function coletarTurmasSelecionadas(prefixo) {
@@ -725,6 +613,19 @@
     var res = [];
     checkboxes.forEach(function(cb) { res.push(cb.value); });
     return res;
+  }
+
+  function obterNomeProfessor(prefixo) {
+    var profVal = document.getElementById(prefixo + '_professor').value;
+    if (profVal === 'OUTRO') {
+      return document.getElementById(prefixo + '_professor_novo').value;
+    }
+    return profVal;
+  }
+
+  function obterComponenteCurricular(prefixo) {
+    var compElem = document.getElementById(prefixo + '_componente');
+    return compElem ? compElem.value : '';
   }
 
   /* ---- GERAR 8 SEMANAS DO CRONOGRAMA ---- */
@@ -770,8 +671,8 @@
   function coletarCronograma() {
     var turmas = coletarTurmasSelecionadas('cr');
     var d = {
-      professor:  document.getElementById('cr_professor').value,
-      componente: document.getElementById('cr_componente').value,
+      professor:  obterNomeProfessor('cr'),
+      componente: obterComponenteCurricular('cr'),
       turma:      turmas.join(', '),
       bimestre:   document.getElementById('cr_bimestre').value
     };
@@ -788,8 +689,8 @@
     var turmas = coletarTurmasSelecionadas('pl');
     var valQtd = document.getElementById('pl_qtdAulas').value;
     return {
-      professor:            document.getElementById('pl_professor').value,
-      componente:           document.getElementById('pl_componente').value,
+      professor:            obterNomeProfessor('pl'),
+      componente:           obterComponenteCurricular('pl'),
       turma:                turmas.join(', '),
       quantidadeAulas:      valQtd,
       qtdAulas:             valQtd,
@@ -829,9 +730,10 @@
     var status = document.getElementById('status-cr');
     var btn    = document.getElementById('btn-cr');
     var dados  = coletarCronograma();
-    if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
-    if (!dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
-    if (!dados.componente.trim()) { alert('Selecione a disciplina/componente curricular.'); return; }
+
+    if (!dados.professor || !dados.professor.trim()) { alert('Preencha/selecione o nome do professor(a).'); return; }
+    if (!dados.turma || !dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
+    if (!dados.componente || !dados.componente.trim()) { alert('Preencha/selecione a disciplina/componente curricular.'); return; }
 
     btn.disabled = true;
     status.className = 'status-area';
@@ -858,9 +760,10 @@
     var status = document.getElementById('status-pl');
     var btn    = document.getElementById('btn-pl');
     var dados  = coletarPlano();
-    if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
-    if (!dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
-    if (!dados.componente.trim()) { alert('Selecione a disciplina/componente curricular.'); return; }
+
+    if (!dados.professor || !dados.professor.trim()) { alert('Preencha/selecione o nome do professor(a).'); return; }
+    if (!dados.turma || !dados.turma.trim()) { alert('Selecione pelo menos uma turma.'); return; }
+    if (!dados.componente || !dados.componente.trim()) { alert('Preencha/selecione a disciplina/componente curricular.'); return; }
 
     btn.disabled = true;
     status.className = 'status-area';
