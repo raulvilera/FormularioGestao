@@ -618,6 +618,8 @@
     var loadHab   = document.getElementById('loading-habilidades');
     var badgeAp   = document.getElementById('badge-aprendizagens');
     var badgeHab  = document.getElementById('badge-habilidades');
+    var taConteudo  = document.getElementById('pl_conteudo');
+    var taObjetivos = document.getElementById('pl_objetivos');
     var taAp      = document.getElementById('pl_aprendizagens');
     var taHab     = document.getElementById('pl_habilidades');
 
@@ -642,6 +644,8 @@
         taHab.disabled = false;
 
         if (r && r.sucesso) {
+          if (r.conteudo)  taConteudo.value  = r.conteudo;
+          if (r.objetivos) taObjetivos.value = r.objetivos;
           if (r.aprendizagens) {
             taAp.value = r.aprendizagens;
             badgeAp.style.display = 'inline-block';
