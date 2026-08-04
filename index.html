@@ -149,43 +149,6 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .content { padding: 20px 24px; }
-
-    /* ===== BARRA DE NAVEGAÇÃO POR SEMANA ===== */
-    .nav-bar-semana {
-      display: flex;
-      background: var(--navy);
-      overflow: hidden;
-      margin: 0;
-      border-bottom: 3px solid var(--accent);
-    }
-    .nav-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 9.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .3px;
-      padding: 8px 3px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      transition: background .2s;
-      border-right: 1px solid rgba(255,255,255,0.15);
-      line-height: 1.15;
-      text-align: center;
-    }
-    .nav-btn:last-child { border-right: none; }
-    .nav-btn:hover { background: rgba(255,255,255,0.12); }
-    .nav-btn .nav-icon {
-      font-size: 17px;
-      line-height: 1;
-    }
-    .nav-btn.active { background: rgba(255,255,255,0.2); box-shadow: inset 0 -3px 0 var(--accent); }
-
     .week {
       border-radius: 10px;
       margin-bottom: 14px;
@@ -205,10 +168,10 @@
     .week-body {
       padding: 14px 16px;
       background: #fff;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: none;
       gap: 10px;
     }
+    .week-body.open { display: grid; grid-template-columns: 1fr 1fr; }
     .week-body .full { grid-column: 1 / -1; }
     .w1 { background: #dbeeff; } .w2 { background: #e9e2f9; }
     .w3 { background: #fdf3d9; } .w4 { background: #e6f4ea; }
@@ -279,16 +242,7 @@
     .badge-auto.carregando {
       background: var(--navy-light);
     }
-
-    .campo-destacado {
-      animation: pulseBorder 1.5s ease;
-    }
-    @keyframes pulseBorder {
-      0%   { box-shadow: 0 0 0 3px rgba(199,139,108,0.4); border-radius: 6px; }
-      100% { box-shadow: 0 0 0 0 transparent; }
-    }
   </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -570,7 +524,7 @@
     Object.keys(MAPA_DOCENTE[prof]).forEach(function(t) {
       var item = document.createElement('label');
       item.className = 'multiselect-item';
-      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoETurmas(' + "'" + prefixo + "'" + ')"> ' + t;
+      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoETurmas(\'' + prefixo + '\')"> ' + t;
       container.appendChild(item);
     });
     atualizarTextoETurmas(prefixo);
@@ -582,7 +536,7 @@
     TODAS_TURMAS_ESCOLA.forEach(function(t) {
       var item = document.createElement('label');
       item.className = 'multiselect-item';
-      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoETurmas(' + "'" + prefixo + "'" + ')"> ' + t;
+      item.innerHTML = '<input type="checkbox" value="' + t + '" onchange="atualizarTextoETurmas(\'' + prefixo + '\')"> ' + t;
       container.appendChild(item);
     });
     document.getElementById(prefixo + '_turma_btn').textContent = 'Selecione uma ou mais turmas';
@@ -635,16 +589,24 @@
     var sel = document.getElementById(prefixo + '_componente');
     if (sel) {
       sel.addEventListener('change', function() { tentarCarregarAprendizagens(prefixo); });
+      // Tenta carregar sempre que a turma/disciplina muda (mesmo com múltiplas
+      // disciplinas na turma) — a função abaixo já verifica se o campo está
+      // vazio antes de disparar a busca, então é seguro chamar sempre.
       tentarCarregarAprendizagens(prefixo);
     }
   }
 
+  /* -------------------------------------------------------
+     CARREGAMENTO AUTOMÁTICO DO GUIA PRIORIZADO (4 campos)
+     ------------------------------------------------------- */
   function tentarCarregarAprendizagens(prefixo) {
-    if (prefixo !== 'pl') return;
+    if (prefixo !== 'pl') return; // só a aba do Plano tem esses campos
+
     var turmas = coletarTurmasSelecionadas(prefixo);
     var comp   = obterComponenteCurricular(prefixo);
     var bimElem = document.getElementById(prefixo + '_bimestre');
     var bimestre = bimElem ? bimElem.value : '';
+
     if (turmas.length === 0 || !comp || !comp.trim() || !bimestre) return;
 
     var loadBar   = document.getElementById('loading-aprendizagens');
@@ -667,7 +629,11 @@
     taAp.disabled = true;
     taHab.disabled = true;
 
-    var dadosBusca = { disciplina: comp, turma: turmas[0], bimestre: bimestre };
+    var dadosBusca = {
+      disciplina: comp,
+      turma:      turmas[0],
+      bimestre:   bimestre
+    };
 
     enviarServidor('buscarAprendizagens', dadosBusca,
       function(r) {
@@ -675,13 +641,15 @@
         loadHab.classList.remove('ativo');
         taAp.disabled  = false;
         taHab.disabled = false;
+
         if (r && r.sucesso) {
           if (r.conteudo)  { taConteudo.value  = r.conteudo;  badgeConteudo.style.display  = 'inline-block'; }
           if (r.objetivos) { taObjetivos.value = r.objetivos; badgeObjetivos.style.display = 'inline-block'; }
           if (r.aprendizagens) { taAp.value  = r.aprendizagens; badgeAp.style.display  = 'inline-block'; }
           if (r.habilidades)   { taHab.value = r.habilidades;   badgeHab.style.display = 'inline-block'; }
         } else {
-          taAp.value  = ''; taHab.value = '';
+          taAp.value  = '';
+          taHab.value = '';
           var msg = r ? r.mensagem : 'Erro desconhecido';
           taAp.placeholder = '⚠️ Não foi possível carregar: ' + msg + '. Preencha manualmente.';
         }
@@ -689,7 +657,8 @@
       function(e) {
         loadBar.classList.remove('ativo');
         loadHab.classList.remove('ativo');
-        taAp.disabled  = false; taHab.disabled = false;
+        taAp.disabled  = false;
+        taHab.disabled = false;
         var msgErro = (e && e.message) ? e.message : (typeof e === 'string' ? e : 'Falha na comunicação com o servidor');
         taAp.placeholder = '⚠️ ' + msgErro + '. Preencha manualmente.';
         console.error('Erro ao buscar aprendizagens/habilidades:', e);
@@ -714,74 +683,14 @@
     return el ? el.value : '';
   }
 
-  /* ---- GERAR 8 SEMANAS COM BARRA DE NAVEGAÇÃO ---- */
+  /* ---- GERAR 8 SEMANAS ---- */
   (function() {
     var cores = ['w1','w2','w3','w4','w5','w6','w7','w8'];
     var cont = document.getElementById('semanas-container');
     for (var i = 1; i <= 8; i++) {
       var c = cores[i-1];
       var div = document.createElement('div');
-      div.innerHTML =
-        '<div class="week" id="week-' + i + '">' +
-          '<div class="week-head ' + c + '" onclick="toggleWeek(' + i + ')">' +
-            '<span>SEMANA ' + i + '</span>' +
-            '<svg id="chev' + i + '" class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>' +
-          '</div>' +
-          '<div class="nav-bar-semana">' +
-            '<button class="nav-btn active" onclick="scrollToCampo(' + i + ', ' + "'" + 'topo' + "'" + ', this)" title="Topo da semana">' +
-              '<span class="nav-icon">📅</span>SEMANA' +
-            '</button>' +
-            '<button class="nav-btn" onclick="scrollToCampo(' + i + ', ' + "'" + 'conteudo' + "'" + ', this)" title="Ir para Conteúdo">' +
-              '<span class="nav-icon" style="color:#f4a261">📖</span>CONTEÚDO' +
-            '</button>' +
-            '<button class="nav-btn" onclick="scrollToCampo(' + i + ', ' + "'" + 'material' + "'" + ', this)" title="Ir para Material Digital">' +
-              '<span class="nav-icon" style="color:#e76f51">💻</span>AULAS DO<br>MATERIAL DIGITAL' +
-            '</button>' +
-            '<button class="nav-btn" onclick="scrollToCampo(' + i + ', ' + "'" + 'livro' + "'" + ', this)" title="Ir para Livro do Estudante">' +
-              '<span class="nav-icon" style="color:#9b5de5">📚</span>PÁGINAS DO<br>LIVRO DO ESTUDANTE' +
-            '</button>' +
-            '<button class="nav-btn" onclick="scrollToCampo(' + i + ', ' + "'" + 'plataformas' + "'" + ', this)" title="Ir para Plataformas">' +
-              '<span class="nav-icon" style="color:#00bbf9">🖥️</span>PLATAFORMAS E<br>TAREFAS DIGITAIS' +
-            '</button>' +
-            '<button class="nav-btn" onclick="scrollToCampo(' + i + ', ' + "'" + 'observacoes' + "'" + ', this)" title="Ir para Observações">' +
-              '<span class="nav-icon" style="color:#fee440">💬</span>OBSERVAÇÕES' +
-            '</button>' +
-          '</div>' +
-          '<div class="week-body" id="body' + i + '">' +
-            '<div class="full" id="campo-conteudo-' + i + '">' +
-              '<label>Conteúdo / Objeto de Conhecimento</label>' +
-              '<textarea id="s' + i + '_conteudo" rows="2"></textarea>' +
-            '</div>' +
-            '<div class="full" id="campo-material-' + i + '">' +
-              '<label>Aulas do Material Digital</label>' +
-              '<textarea id="s' + i + '_material_digital" rows="2" placeholder="Ex: Aula 1 - Introdução às Células (vídeo 5min)"></textarea>' +
-            '</div>' +
-            '<div class="full" id="campo-livro-' + i + '">' +
-              '<label>Páginas do Livro do Estudante</label>' +
-              '<textarea id="s' + i + '_livro_estudante" rows="2" placeholder="Ex: Páginas 45 a 52"></textarea>' +
-            '</div>' +
-            '<div class="full" id="campo-plataformas-' + i + '">' +
-              '<label>Plataformas e Tarefas Digitais</label>' +
-              '<textarea id="s' + i + '_plataformas" rows="2" placeholder="Ex: Khan Academy - exercícios de frações; Google Classroom - entrega até sexta"></textarea>' +
-            '</div>' +
-            '<div id="campo-habilidades-' + i + '">' +
-              '<label>Habilidade priorizada / AEs</label>' +
-              '<textarea id="s' + i + '_habilidades" rows="2"></textarea>' +
-            '</div>' +
-            '<div>' +
-              '<label>Metodologia / Recursos Didáticos</label>' +
-              '<textarea id="s' + i + '_metodologia" rows="3"></textarea>' +
-            '</div>' +
-            '<div class="full" id="campo-observacoes-' + i + '">' +
-              '<label>Observações</label>' +
-              '<textarea id="s' + i + '_observacoes" rows="2" placeholder="Observações adicionais sobre a semana..."></textarea>' +
-            '</div>' +
-            '<div class="full">' +
-              '<label>Avaliação / Entregáveis</label>' +
-              '<textarea id="s' + i + '_avaliacao" rows="2"></textarea>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
+      div.innerHTML = '<div class="week"><div class="week-head ' + c + '" onclick="toggleWeek(' + i + ')"><span>SEMANA ' + i + '</span><svg id="chev' + i + '" class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="week-body" id="body' + i + '"><div><label>Conteúdo / Objeto de Conhecimento</label><textarea id="s' + i + '_conteudo" rows="2"></textarea></div><div><label>Habilidade priorizada / AEs</label><textarea id="s' + i + '_habilidades" rows="2"></textarea></div><div class="full"><label>Metodologia / Recursos Didáticos</label><textarea id="s' + i + '_metodologia" rows="3"></textarea></div><div class="full"><label>Avaliação / Entregáveis</label><textarea id="s' + i + '_avaliacao" rows="2"></textarea></div></div></div>';
       cont.appendChild(div.firstChild);
     }
   })();
@@ -791,31 +700,6 @@
     var chev = document.getElementById('chev' + n);
     body.classList.toggle('open', !body.classList.contains('open'));
     chev.classList.toggle('open-chevron', body.classList.contains('open'));
-  }
-
-  function scrollToCampo(semana, tipo, btn) {
-    var idMap = {
-      'topo': 'week-' + semana,
-      'conteudo': 'campo-conteudo-' + semana,
-      'material': 'campo-material-' + semana,
-      'livro': 'campo-livro-' + semana,
-      'plataformas': 'campo-plataformas-' + semana,
-      'observacoes': 'campo-observacoes-' + semana
-    };
-    var alvo = document.getElementById(idMap[tipo] || idMap['topo']);
-    if (alvo) {
-      var body = document.getElementById('body' + semana);
-      if (!body.classList.contains('open')) {
-        toggleWeek(semana);
-      }
-      alvo.classList.remove('campo-destacado');
-      void alvo.offsetWidth;
-      alvo.classList.add('campo-destacado');
-      alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      var navBar = btn.parentElement;
-      navBar.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-    }
   }
 
   function openTab(id, btn) {
@@ -834,14 +718,10 @@
       bimestre:   document.getElementById('cr_bimestre').value
     };
     for (var i = 1; i <= 8; i++) {
-      d['semana_'+i+'_conteudo']          = document.getElementById('s'+i+'_conteudo').value;
-      d['semana_'+i+'_habilidades']       = document.getElementById('s'+i+'_habilidades').value;
-      d['semana_'+i+'_metodologia']       = document.getElementById('s'+i+'_metodologia').value;
-      d['semana_'+i+'_avaliacao']         = document.getElementById('s'+i+'_avaliacao').value;
-      d['semana_'+i+'_material_digital']  = document.getElementById('s'+i+'_material_digital').value;
-      d['semana_'+i+'_livro_estudante']   = document.getElementById('s'+i+'_livro_estudante').value;
-      d['semana_'+i+'_plataformas']       = document.getElementById('s'+i+'_plataformas').value;
-      d['semana_'+i+'_observacoes']       = document.getElementById('s'+i+'_observacoes').value;
+      d['semana_'+i+'_conteudo']    = document.getElementById('s'+i+'_conteudo').value;
+      d['semana_'+i+'_habilidades'] = document.getElementById('s'+i+'_habilidades').value;
+      d['semana_'+i+'_metodologia'] = document.getElementById('s'+i+'_metodologia').value;
+      d['semana_'+i+'_avaliacao']   = document.getElementById('s'+i+'_avaliacao').value;
     }
     return d;
   }
@@ -869,6 +749,13 @@
     };
   }
 
+  /* -------------------------------------------------------
+     TRANSPORTE
+     - buscarAprendizagens: payload pequeno → GET (evita o downgrade
+       de método POST→GET que o Apps Script sofre em redirecionamento)
+     - plano/cronograma: payload grande → POST (GET estouraria o
+       limite de tamanho de URL)
+     ------------------------------------------------------- */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       var runner = google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro);
