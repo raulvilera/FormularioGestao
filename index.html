@@ -760,11 +760,14 @@
       else if (acao === 'plano')             runner.gerarPdfPlanoQuinzenal(dados);
       else if (acao === 'buscarAprendizagens') runner.buscarAprendizagens(dados);
     } else {
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ acao: acao, dados: dados })
-      })
+      // CORRIGIDO: usa GET em vez de POST. O Apps Script às vezes
+      // redireciona a requisição internamente, e o navegador converte
+      // POST em GET nesse redirecionamento, perdendo o corpo da
+      // requisição — a chamada acaba caindo no doGet() em vez do
+      // doPost() e devolve texto simples em vez de JSON. GET não sofre
+      // essa conversão de método, então resolve de forma definitiva.
+      var url = SCRIPT_URL + '?acao=' + encodeURIComponent(acao) + '&dados=' + encodeURIComponent(JSON.stringify(dados));
+      fetch(url, { method: 'GET' })
       .then(function(res){ return res.json(); })
       .then(callbackSucesso)
       .catch(callbackErro);
