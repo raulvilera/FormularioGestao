@@ -84,7 +84,6 @@
     textarea { resize: vertical; min-height: 52px; }
     .campo-novo-prof { margin-top: 6px; display: none; }
 
-    /* ---- MULTI-SELECT TURMAS ---- */
     .multiselect-wrap { position: relative; }
     .multiselect-btn {
       width: 100%;
@@ -130,7 +129,6 @@
     .multiselect-item:hover { background: #f4f5f8; }
     .multiselect-item input[type=checkbox] { width: auto; margin: 0; cursor: pointer; }
 
-    /* ---- INDICADOR DE CARREGAMENTO ---- */
     .loading-bar {
       display: none;
       align-items: center;
@@ -150,7 +148,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ---- SEMANAS ---- */
     .content { padding: 20px 24px; }
     .week {
       border-radius: 10px;
@@ -183,7 +180,6 @@
     .chevron { transition: transform .2s; flex-shrink: 0; }
     .open-chevron { transform: rotate(180deg); }
 
-    /* ---- AÇÕES ---- */
     .actions {
       display: flex;
       align-items: center;
@@ -209,9 +205,9 @@
     .status-area { font-size: 13px; font-weight: 700; }
     .status-area.error   { color: #b3261e; }
     .status-area.success { color: #1e7a35; }
+    .status-area.warning { color: #a6710a; }
     .status-area a { color: var(--navy); font-weight: 700; }
 
-    /* ---- SEÇÕES DO PLANO ---- */
     .section-block {
       border: 1px solid #e3e6ee;
       border-radius: 8px;
@@ -234,7 +230,6 @@
     .section-body { padding: 12px 14px; }
     .section-body textarea { min-height: 60px; }
 
-    /* ---- BADGE CARREGADO AUTOMATICAMENTE ---- */
     .badge-auto {
       font-size: 10px;
       background: #1e7a35;
@@ -354,16 +349,21 @@
     <div class="content">
 
       <div class="section-block">
-        <div class="section-title">Conteúdo/Aulas</div>
-        <div class="section-body"><textarea id="pl_conteudo" rows="3" placeholder="Descreva os conteúdos/aulas..."></textarea></div>
+        <div class="section-title">
+          Conteúdo/Aulas
+          <span class="badge-auto" id="badge-conteudo" style="display:none">✅ Carregado do Guia</span>
+        </div>
+        <div class="section-body"><textarea id="pl_conteudo" rows="4" placeholder="Descreva os conteúdos/aulas..."></textarea></div>
       </div>
 
       <div class="section-block">
-        <div class="section-title">Objetivo(s)</div>
-        <div class="section-body"><textarea id="pl_objetivos" rows="3" placeholder="Descreva os objetivos de aprendizagem..."></textarea></div>
+        <div class="section-title">
+          Objetivo(s)
+          <span class="badge-auto" id="badge-objetivos" style="display:none">✅ Carregado do Guia</span>
+        </div>
+        <div class="section-body"><textarea id="pl_objetivos" rows="4" placeholder="Descreva os objetivos de aprendizagem..."></textarea></div>
       </div>
 
-      <!-- APRENDIZAGENS ESSENCIAIS — Auto-preenchida pelo Guia Priorizado -->
       <div class="section-block">
         <div class="section-title">
           Aprendizagens Essenciais
@@ -372,13 +372,12 @@
         <div class="section-body">
           <div class="loading-bar" id="loading-aprendizagens">
             <div class="spinner"></div>
-            <span>Buscando habilidades no Guia Priorizado...</span>
+            <span>Buscando no Guia Priorizado...</span>
           </div>
           <textarea id="pl_aprendizagens" rows="5" placeholder="Selecione turma, disciplina e bimestre para carregar automaticamente do Guia Priorizado..."></textarea>
         </div>
       </div>
 
-      <!-- HABILIDADE PRIORIZADA — Auto-preenchida pelo Guia Priorizado -->
       <div class="section-block">
         <div class="section-title">
           Habilidade Priorizada
@@ -389,7 +388,7 @@
             <div class="spinner"></div>
             <span>Buscando habilidades priorizadas...</span>
           </div>
-          <textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01 — ..."></textarea>
+          <textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01"></textarea>
         </div>
       </div>
 
@@ -587,35 +586,33 @@
     html += '</select>';
     compWrap.innerHTML = html;
 
-    // Listener para acionar o carregamento ao trocar disciplina
     var sel = document.getElementById(prefixo + '_componente');
     if (sel) {
       sel.addEventListener('change', function() { tentarCarregarAprendizagens(prefixo); });
-      // CORRIGIDO: tenta carregar sempre que a turma muda, nao so quando
-      // ha 1 disciplina — a propria funcao ja verifica se o campo esta
-      // vazio antes de disparar a busca, entao e seguro chamar sempre.
+      // Tenta carregar sempre que a turma/disciplina muda (mesmo com múltiplas
+      // disciplinas na turma) — a função abaixo já verifica se o campo está
+      // vazio antes de disparar a busca, então é seguro chamar sempre.
       tentarCarregarAprendizagens(prefixo);
     }
   }
 
   /* -------------------------------------------------------
-     CARREGAMENTO AUTOMÁTICO DAS APRENDIZAGENS ESSENCIAIS
+     CARREGAMENTO AUTOMÁTICO DO GUIA PRIORIZADO (4 campos)
      ------------------------------------------------------- */
   function tentarCarregarAprendizagens(prefixo) {
-    // Só funciona no Plano (prefixo 'pl')
-    if (prefixo !== 'pl') return;
+    if (prefixo !== 'pl') return; // só a aba do Plano tem esses campos
 
     var turmas = coletarTurmasSelecionadas(prefixo);
     var comp   = obterComponenteCurricular(prefixo);
     var bimElem = document.getElementById(prefixo + '_bimestre');
     var bimestre = bimElem ? bimElem.value : '';
 
-    // Aguarda os três campos preenchidos
     if (turmas.length === 0 || !comp || !comp.trim() || !bimestre) return;
 
-    // Mostra indicador de carregamento
     var loadBar   = document.getElementById('loading-aprendizagens');
     var loadHab   = document.getElementById('loading-habilidades');
+    var badgeConteudo   = document.getElementById('badge-conteudo');
+    var badgeObjetivos  = document.getElementById('badge-objetivos');
     var badgeAp   = document.getElementById('badge-aprendizagens');
     var badgeHab  = document.getElementById('badge-habilidades');
     var taConteudo  = document.getElementById('pl_conteudo');
@@ -625,6 +622,8 @@
 
     loadBar.classList.add('ativo');
     loadHab.classList.add('ativo');
+    badgeConteudo.style.display  = 'none';
+    badgeObjetivos.style.display = 'none';
     badgeAp.style.display  = 'none';
     badgeHab.style.display = 'none';
     taAp.disabled = true;
@@ -632,7 +631,7 @@
 
     var dadosBusca = {
       disciplina: comp,
-      turma:      turmas[0],  // Primeira turma para determinar EF ou EM
+      turma:      turmas[0],
       bimestre:   bimestre
     };
 
@@ -644,16 +643,10 @@
         taHab.disabled = false;
 
         if (r && r.sucesso) {
-          if (r.conteudo)  taConteudo.value  = r.conteudo;
-          if (r.objetivos) taObjetivos.value = r.objetivos;
-          if (r.aprendizagens) {
-            taAp.value = r.aprendizagens;
-            badgeAp.style.display = 'inline-block';
-          }
-          if (r.habilidades) {
-            taHab.value = r.habilidades;
-            badgeHab.style.display = 'inline-block';
-          }
+          if (r.conteudo)  { taConteudo.value  = r.conteudo;  badgeConteudo.style.display  = 'inline-block'; }
+          if (r.objetivos) { taObjetivos.value = r.objetivos; badgeObjetivos.style.display = 'inline-block'; }
+          if (r.aprendizagens) { taAp.value  = r.aprendizagens; badgeAp.style.display  = 'inline-block'; }
+          if (r.habilidades)   { taHab.value = r.habilidades;   badgeHab.style.display = 'inline-block'; }
         } else {
           taAp.value  = '';
           taHab.value = '';
@@ -662,7 +655,6 @@
         }
       },
       function(e) {
-        // ── ALTERAÇÃO: mostra o motivo real do erro em vez do texto genérico ──
         loadBar.classList.remove('ativo');
         loadHab.classList.remove('ativo');
         taAp.disabled  = false;
@@ -757,6 +749,13 @@
     };
   }
 
+  /* -------------------------------------------------------
+     TRANSPORTE
+     - buscarAprendizagens: payload pequeno → GET (evita o downgrade
+       de método POST→GET que o Apps Script sofre em redirecionamento)
+     - plano/cronograma: payload grande → POST (GET estouraria o
+       limite de tamanho de URL)
+     ------------------------------------------------------- */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       var runner = google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro);
@@ -767,16 +766,12 @@
     }
 
     if (acao === 'buscarAprendizagens') {
-      // Payload pequeno (disciplina/turma/bimestre): usa GET, que evita
-      // o downgrade de método POST→GET em redirecionamento do Apps Script.
       var url = SCRIPT_URL + '?acao=' + encodeURIComponent(acao) + '&dados=' + encodeURIComponent(JSON.stringify(dados));
       fetch(url, { method: 'GET' })
         .then(function(res){ return res.json(); })
         .then(callbackSucesso)
         .catch(callbackErro);
     } else {
-      // Payload grande (plano/cronograma completos): POST, para não
-      // estourar o limite de tamanho de URL do GET.
       fetch(SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -804,6 +799,10 @@
       if (r && r.sucesso) {
         status.className = 'status-area success';
         status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! <a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
+        if (r.avisoPlanilha) {
+          status.className = 'status-area warning';
+          status.innerHTML += '<br>⚠️ ' + r.avisoPlanilha;
+        }
       } else {
         status.className = 'status-area error';
         status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
@@ -826,6 +825,10 @@
       if (r && r.sucesso) {
         status.className = 'status-area success';
         status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! <a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
+        if (r.avisoPlanilha) {
+          status.className = 'status-area warning';
+          status.innerHTML += '<br>⚠️ ' + r.avisoPlanilha;
+        }
       } else {
         status.className = 'status-area error';
         status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
