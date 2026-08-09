@@ -499,6 +499,75 @@
     }
     .codigo-tag .remove-tag:hover { opacity: 1; }
 
+    /* ── ORGANIZADOR DE AULAS DE 14 DIAS ÚTEIS ── */
+    .organizador-aulas-panel {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .organizador-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--navy);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .organizador-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .organizador-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 130px;
+    }
+    .organizador-field label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      color: var(--navy-light);
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .organizador-field input[type=date],
+    .organizador-field select {
+      font-size: 12px;
+      padding: 7px 8px;
+    }
+    .btn-organizar-aulas {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .btn-organizar-aulas:hover { opacity: .9; transform: translateY(-1px); }
+    .organizador-info-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--success);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     /* ── HABILIDADES PRIORIZADAS ── */
     .habilidades-lista {
       display: flex;
@@ -794,10 +863,51 @@
 
       <div class="section-block">
         <div class="section-title">
-          Conteúdo/Aulas
+          Conteúdo / Aulas (Organizado por Dias Úteis)
           <span class="badge-auto" id="badge-conteudo" style="display:none">✅ Carregado do Guia</span>
         </div>
-        <div class="section-body"><textarea id="pl_conteudo" rows="4" placeholder="Descreva os conteúdos/aulas..."></textarea></div>
+        <div class="section-body">
+          <!-- Painel Organizador de Aulas (14 Dias Úteis) -->
+          <div class="organizador-aulas-panel">
+            <div class="organizador-title">
+              📅 Organizar Temas por Aulas e Dias Úteis (14 Dias)
+            </div>
+            <div class="organizador-row">
+              <div class="organizador-field">
+                <label>Data de Início</label>
+                <input type="date" id="org_data_inicio">
+              </div>
+              <div class="organizador-field">
+                <label>Nº de Aulas por Dia</label>
+                <select id="org_aulas_por_dia">
+                  <option value="1">1 Aula por dia (14 Aulas)</option>
+                  <option value="2" selected>2 Aulas por dia (28 Aulas)</option>
+                  <option value="3">3 Aulas por dia (42 Aulas)</option>
+                  <option value="4">4 Aulas por dia (56 Aulas)</option>
+                </select>
+              </div>
+              <div class="organizador-field">
+                <label>Horário / Ordem da Aula</label>
+                <select id="org_ordem_aula">
+                  <option value="1ª Aula">1ª Aula</option>
+                  <option value="2ª Aula">2ª Aula</option>
+                  <option value="1ª e 2ª Aulas" selected>1ª e 2ª Aulas (Bloco duplo)</option>
+                  <option value="3ª Aula">3ª Aula</option>
+                  <option value="4ª Aula">4ª Aula</option>
+                  <option value="3ª e 4ª Aulas">3ª e 4ª Aulas (Bloco duplo)</option>
+                  <option value="5ª Aula">5ª Aula</option>
+                  <option value="6ª Aula">6ª Aula</option>
+                </select>
+              </div>
+              <button class="btn-organizar-aulas" onclick="organizarConteudo14DiasUteis()">
+                ✨ Organizar em 14 Dias Úteis
+              </button>
+            </div>
+            <div class="organizador-info-badge" id="org_status_badge" style="display:none"></div>
+          </div>
+
+          <textarea id="pl_conteudo" rows="6" placeholder="Descreva os conteúdos/aulas ou use o organizador acima para estruturar automaticamente em 14 dias úteis..."></textarea>
+        </div>
       </div>
 
       <!-- OBJETIVOS COM SELETOR DE DESCRITORES SAEB -->
@@ -1601,6 +1711,124 @@
   }
 
   /* =================================================================
+     ORGANIZADOR DE AULAS (14 DIAS ÚTEIS)
+  ================================================================= */
+  function obterProximosDiasUteis(dataInicioStr, quantidadeDias) {
+    var dias = [];
+    var data;
+    if (dataInicioStr) {
+      var partes = dataInicioStr.split('-');
+      if (partes.length === 3) {
+        data = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+      } else {
+        data = new Date();
+      }
+    } else {
+      var valPer = (document.getElementById('pl_periodo') || {}).value || '';
+      var m = valPer.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+      if (m) {
+        data = new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
+      } else {
+        data = new Date();
+      }
+    }
+
+    var nomesDias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+
+    while (dias.length < quantidadeDias) {
+      var diaSem = data.getDay();
+      if (diaSem !== 0 && diaSem !== 6) { // Pula Sábado (6) e Domingo (0)
+        var diaFmt = String(data.getDate()).padStart(2, '0');
+        var mesFmt = String(data.getMonth() + 1).padStart(2, '0');
+        var anoFmt = data.getFullYear();
+        dias.push({
+          dataFmt: diaFmt + '/' + mesFmt + '/' + anoFmt,
+          diaSemana: nomesDias[diaSem],
+          numDia: dias.length + 1
+        });
+      }
+      data.setDate(data.getDate() + 1);
+    }
+    return dias;
+  }
+
+  function extrairTopicosConteudo(textoRaw) {
+    if (!textoRaw || !textoRaw.trim()) return [];
+
+    var texto = textoRaw
+      .replace(/\[\.\.\.texto cortado automaticamente.*$/g, '')
+      .replace(/\d+º\s*\d+º\s*\d+º\s*\d+º\s*\d+º\s*Habilidades Relacionadas.*/gi, '')
+      .replace(/De Olho na Prova Paulista.*/gi, '')
+      .replace(/De Olho no SARESP.*/gi, '')
+      .replace(/Não há\./gi, '');
+
+    var topicos = [];
+    var linhas = texto.split(/\n|•/);
+    linhas.forEach(function(l) {
+      var item = l.trim();
+      if (item && item.length > 5 && !item.match(/^Volume \d+/i) && !item.match(/^3º bim/i)) {
+        topicos.push(item);
+      }
+    });
+
+    if (topicos.length < 3) {
+      var frases = texto.split(/\.|\;/);
+      topicos = [];
+      frases.forEach(function(f) {
+        var item = f.trim();
+        if (item && item.length > 10) topicos.push(item);
+      });
+    }
+
+    return topicos;
+  }
+
+  function organizarConteudo14DiasUteis() {
+    var dataInicioInput = document.getElementById('org_data_inicio').value;
+    var ordAulaSel      = document.getElementById('org_ordem_aula').value || '1ª e 2ª Aulas';
+    var taConteudo       = document.getElementById('pl_conteudo');
+    var statusBadge      = document.getElementById('org_status_badge');
+
+    var textoAtual = taConteudo.value.trim();
+    if (!textoAtual) {
+      alert('Preencha ou carregue primeiro o conteúdo no campo antes de organizar.');
+      return;
+    }
+
+    var diasUteis = obterProximosDiasUteis(dataInicioInput, 14);
+    var topicos   = extrairTopicosConteudo(textoAtual);
+
+    if (topicos.length === 0) {
+      topicos = [textoAtual];
+    }
+
+    var resultadoLines = [];
+    resultadoLines.push('============================================================');
+    resultadoLines.push('📅 CRONOGRAMA DE AULAS — PERÍODO DE 14 DIAS ÚTEIS');
+    resultadoLines.push('============================================================\n');
+
+    for (var i = 0; i < 14; i++) {
+      var d = diasUteis[i];
+      var numAula = (i + 1) + 'ª Aula';
+      var ordemStr = ordAulaSel ? ' | ' + ordAulaSel : ' | ' + numAula;
+      var topicoDaAula = topicos[i % topicos.length];
+
+      resultadoLines.push('📅 DIA ' + d.numDia + ' — ' + d.dataFmt + ' (' + d.diaSemana + ')' + ordemStr);
+      resultadoLines.push('• Tema / Conteúdo: ' + topicoDaAula);
+      resultadoLines.push('');
+    }
+
+    taConteudo.value = resultadoLines.join('\n');
+    taConteudo.style.height = 'auto';
+    taConteudo.style.height = (taConteudo.scrollHeight + 10) + 'px';
+
+    if (statusBadge) {
+      statusBadge.style.display = 'flex';
+      statusBadge.innerHTML = '✅ Organizado com sucesso para 14 dias úteis (de ' + diasUteis[0].dataFmt + ' a ' + diasUteis[13].dataFmt + ')!';
+    }
+  }
+
+  /* =================================================================
      CARREGAMENTO DO GUIA PRIORIZADO (4 campos)
   ================================================================= */
   function tentarCarregarAprendizagens(prefixo) {
@@ -1642,7 +1870,11 @@
         taHab.disabled = false;
 
         if (r && r.sucesso) {
-          if (r.conteudo)  { taConteudo.value  = r.conteudo;  badgeConteudo.style.display  = 'inline-block'; }
+          if (r.conteudo)  {
+            taConteudo.value = r.conteudo;
+            badgeConteudo.style.display = 'inline-block';
+            organizarConteudo14DiasUteis();
+          }
           if (r.objetivos) { taObjetivos.value = r.objetivos; badgeObjetivos.style.display = 'inline-block'; }
           if (r.aprendizagens) { taAp.value = r.aprendizagens; badgeAp.style.display = 'inline-block'; }
 
