@@ -19,7 +19,7 @@
       --success:    #1e7a35;
       --danger:     #b3261e;
       --warning:    #a6710a;
-      --border:     #e3e6ee;
+      --border:     #1f2a44;
       --muted:      #64748b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,169 +63,113 @@
       max-width: 1020px;
       margin: 0 auto;
       background: var(--white);
-      border-radius: 14px;
+      border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,.09);
+      border: 2px solid var(--navy);
     }
 
-    /* ── CABEÇALHO VIVO DA PLATAFORMA ── */
-    .doc-header {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #344a7f 100%);
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+    /* ── CABEÇALHO OFICIAL (PLANO QUINZENAL) ── */
+    .official-header {
+      background: #fff;
+      padding: 16px 20px 12px 20px;
+      border-bottom: 2px solid var(--navy);
+      text-align: center;
     }
-    .doc-header::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(212,168,67,0.08);
-      pointer-events: none;
-    }
-    .doc-header::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: -30px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: rgba(212,168,67,0.05);
-      pointer-events: none;
-    }
-    .doc-header-inner {
+    .header-logo-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 20px 28px 16px 28px;
-      position: relative;
-      z-index: 2;
-    }
-    .doc-header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .doc-header-logo {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      object-fit: cover;
-      background: rgba(255,255,255,0.1);
-      flex-shrink: 0;
-    }
-    .doc-header-logo-placeholder {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; font-weight: 800;
-      color: var(--navy);
-      flex-shrink: 0;
-    }
-    .doc-header-brand h1 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: .02em;
-      margin-bottom: 2px;
-    }
-    .doc-header-brand p {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.65);
-      font-weight: 500;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-    .doc-header-title {
-      text-align: right;
-    }
-    .doc-header-title h2 {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--gold-light);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-    .doc-header-title p {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.5);
-      margin-top: 2px;
-    }
-    .doc-header-divider {
-      height: 4px;
-      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-    .doc-header-meta {
-      background: rgba(255,255,255,0.04);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 28px;
-      display: flex;
+      justify-content: center;
       gap: 20px;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.7);
-      position: relative;
-      z-index: 2;
+      margin-bottom: 8px;
     }
-    .doc-header-meta span strong {
-      color: var(--gold-light);
-      font-weight: 700;
+    .sp-logo {
+      height: 62px;
+      object-fit: contain;
     }
-
-    /* ── CAMPOS DO FORMULÁRIO ── */
-    .info {
-      display: flex;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
+    .header-text {
+      text-align: center;
+      color: #000;
     }
-    .info div {
-      flex: 1;
-      min-width: 200px;
-      padding: 12px 16px;
-      border-right: 1px solid var(--border);
+    .header-text h2 {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .info div:last-child { border-right: none; }
-    label {
-      display: block;
+    .header-text h3 {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: .5px;
-      color: var(--navy-light);
-      margin-bottom: 5px;
+      color: #333;
     }
-    input[type=text], select, textarea {
+    .header-text h1 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #000;
+      margin: 2px 0;
+    }
+    .header-text p {
+      font-size: 11px;
+      color: #555;
+    }
+    .header-title-box {
+      background: #000;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 6px 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* ── TABELA FIEL AO DOCUMENTO DE MODELO ── */
+    .plano-table {
       width: 100%;
-      padding: 8px 9px;
-      border: 1px solid #d7dbe4;
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      background: #fbfbfd;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    .plano-table td, .plano-table th {
+      border: 1px solid var(--navy);
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+    .plano-table label {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
       color: var(--navy);
+      margin-bottom: 4px;
     }
-    input[type=text]:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--navy-light);
-      box-shadow: 0 0 0 3px rgba(44,58,95,0.12);
+    .plano-table input[type=text],
+    .plano-table select,
+    .plano-table textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #fdfdfd;
+      color: #000;
     }
-    textarea { resize: vertical; min-height: 52px; }
-    .campo-novo-prof { margin-top: 6px; display: none; }
+    .plano-table textarea {
+      resize: vertical;
+    }
 
     /* ── MULTISELECT ── */
     .multiselect-wrap { position: relative; }
     .multiselect-btn {
       width: 100%;
-      padding: 8px 9px;
-      border: 1px solid #d7dbe4;
-      border-radius: 6px;
-      font-size: 14px;
-      background: #fbfbfd;
+      padding: 6px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 13px;
+      background: #fdfdfd;
       text-align: left;
       cursor: pointer;
       display: flex;
@@ -240,8 +184,8 @@
       position: absolute;
       top: 100%; left: 0; right: 0;
       background: #fff;
-      border: 1px solid #d7dbe4;
-      border-radius: 6px;
+      border: 1px solid var(--navy);
+      border-radius: 4px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       max-height: 220px;
       overflow-y: auto;
@@ -260,69 +204,105 @@
       user-select: none;
     }
     .multiselect-item:hover { background: var(--bg); }
-    .multiselect-item input[type=checkbox] { width: auto; margin: 0; cursor: pointer; }
 
-    /* ── BADGE TURMAS SELECIONADAS ── */
     .turmas-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 6px;
-      min-height: 0;
+      gap: 4px;
+      margin-top: 4px;
     }
     .turma-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
+
+    /* ── BOTÃO DE GERAR POR GRADE HORÁRIA ── */
+    .btn-gerar-grade {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
       color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 99px;
-      border: 1px solid var(--gold);
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-    .turma-badge::before { content: "📌"; font-size: 10px; }
-
-    /* ── BARRA DE LOADING ── */
-    .loading-bar {
-      display: none;
+      cursor: pointer;
+      font-family: inherit;
+      margin-bottom: 6px;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 0;
-      font-size: 12px;
-      color: var(--navy-light);
-      font-weight: 600;
+      gap: 6px;
     }
-    .loading-bar.ativo { display: flex; }
-    .spinner {
-      width: 14px; height: 14px;
-      border: 2px solid #d7dbe4;
-      border-top-color: var(--navy);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-gerar-grade:hover { opacity: 0.9; }
 
-    /* ── CONTEÚDO E SEMANAS ── */
+    /* ── SELETOR DE DESCRITORES SAEB ── */
+    .saeb-selector {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+    }
+    .saeb-selector-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .saeb-selector-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .saeb-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 120px;
+    }
+    .saeb-input-group label {
+      font-size: 9px;
+      margin: 0;
+    }
+    .saeb-input-group select {
+      font-size: 11px;
+      padding: 4px 6px;
+    }
+    .btn-add-descritor {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ── CRONOGRAMA DE 8 SEMANAS (RESTAURADO) ── */
     .content { padding: 20px 24px; }
     .week {
-      border-radius: 10px;
-      margin-bottom: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
       overflow: hidden;
       border: 1px solid var(--border);
     }
     .week-head {
       padding: 10px 16px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--navy);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       user-select: none;
+      font-size: 13px;
     }
     .week-body {
       padding: 14px 16px;
@@ -352,406 +332,224 @@
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
       color: #fff;
       border: none;
-      padding: 13px 28px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .5px;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
       cursor: pointer;
       transition: all .2s;
-      font-family: inherit;
     }
-    .btn-main:hover { opacity: .9; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(31,42,68,.3); }
-    .btn-main:disabled { opacity: .6; cursor: default; transform: none; }
+    .btn-main:hover { opacity: .9; }
     .status-area { font-size: 13px; font-weight: 700; }
     .status-area.error   { color: var(--danger); }
     .status-area.success { color: var(--success); }
-    .status-area.warning { color: var(--warning); }
-    .status-area a { color: var(--navy); font-weight: 700; }
 
-    /* ── SEÇÕES DO PLANO ── */
-    .section-block {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .section-title {
-      background: var(--bg);
-      padding: 8px 14px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      color: var(--navy-light);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .section-body { padding: 12px 14px; }
-    .section-body textarea { min-height: 60px; }
-
-    /* ── BADGE AUTO (do servidor) ── */
-    .badge-auto {
-      font-size: 10px;
-      background: var(--success);
-      color: #fff;
-      padding: 2px 7px;
-      border-radius: 10px;
-      font-weight: 700;
-      letter-spacing: .3px;
-    }
-    .badge-auto.carregando { background: var(--navy-light); }
-
-    /* ── SELETOR DE DESCRITORES SAEB ── */
-    .saeb-selector {
-      background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
-      border: 1px solid #c5d3f0;
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin-bottom: 8px;
-    }
-    .saeb-selector-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      color: var(--navy-light);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .saeb-selector-row {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .saeb-input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 160px;
-    }
-    .saeb-input-group label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .4px;
-      color: var(--navy-light);
-      text-transform: uppercase;
-      margin: 0;
-    }
-    .saeb-input-group select {
-      font-size: 13px;
-    }
-    .btn-add-descritor {
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      align-self: flex-end;
-      font-family: inherit;
-      transition: background .2s;
-      white-space: nowrap;
-    }
-    .btn-add-descritor:hover { background: var(--navy-light); }
-    .btn-limpar-descritores {
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid var(--danger);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      align-self: flex-end;
-      font-family: inherit;
-    }
-    .codigos-selecionados {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 6px;
-    }
-    .codigo-tag {
-      background: var(--navy);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 99px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .codigo-tag .remove-tag {
-      cursor: pointer;
-      opacity: .7;
-      font-size: 12px;
-      line-height: 1;
-    }
-    .codigo-tag .remove-tag:hover { opacity: 1; }
-
-    /* ── ORGANIZADOR DE AULAS DE 14 DIAS ÚTEIS ── */
-    .organizador-aulas-panel {
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-    }
-    .organizador-title {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      color: var(--navy);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .organizador-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-    .organizador-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 130px;
-    }
-    .organizador-field label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .4px;
-      color: var(--navy-light);
-      text-transform: uppercase;
-      margin: 0;
-    }
-    .organizador-field input[type=date],
-    .organizador-field select {
-      font-size: 12px;
-      padding: 7px 8px;
-    }
-    .btn-organizar-aulas {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-      color: #fff;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: all .2s;
-    }
-    .btn-organizar-aulas:hover { opacity: .9; transform: translateY(-1px); }
-    .organizador-info-badge {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--success);
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* ── HABILIDADES PRIORIZADAS ── */
-    .habilidades-lista {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .habilidade-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 6px;
-      font-size: 13px;
-      border: 1px solid var(--border);
-      background: #fff;
-    }
-    .habilidade-item.nao-atingida {
-      border-color: #fca5a5;
-      background: #fff5f5;
-    }
-    .habilidade-item.atingida {
-      border-color: #86efac;
-      background: #f0fdf4;
-      opacity: .7;
-    }
-    .habilidade-badge-status {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 99px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .habilidade-badge-status.nao-atingida {
-      background: #fca5a5;
-      color: #7f1d1d;
-    }
-    .habilidade-badge-status.atingida {
-      background: #86efac;
-      color: #14532d;
-    }
-    .habilidade-codigo {
-      font-weight: 800;
-      color: var(--navy);
-      font-size: 12px;
-      min-width: 80px;
-      flex-shrink: 0;
-    }
-    .habilidade-descricao {
-      flex: 1;
-      color: #374151;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-    .habilidades-filtro-info {
-      font-size: 11px;
-      color: var(--muted);
-      font-style: italic;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .habilidades-filtro-toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .toggle-btn-filtro {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      color: var(--navy-light);
-      font-family: inherit;
-    }
-    .toggle-btn-filtro.ativo {
-      background: var(--navy);
-      color: #fff;
-      border-color: var(--navy);
-    }
-
-    /* ── IMPRESSÃO ── */
+    /* ── REGRAS DE IMPRESSÃO ── */
     @media print {
-      @page { size: A4 portrait; margin: 8mm 10mm; }
-
+      @page { size: A4 portrait; margin: 6mm; }
       *, *::before, *::after {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        color-adjust: exact !important;
       }
-
       body { background: #fff !important; padding: 0 !important; }
-      .tabs-bar { display: none !important; }
+      .tabs-bar, .actions, .saeb-selector, .btn-gerar-grade { display: none !important; }
       .tab-content { display: block !important; }
-      .actions { display: none !important; }
-      .saeb-selector { display: none !important; }
-      .habilidades-filtro-toggle { display: none !important; }
-
-      .doc-header {
-        background: linear-gradient(135deg, #1f2a44 0%, #2c3a5f 60%, #344a7f 100%) !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .doc-header-divider {
-        background: linear-gradient(90deg, #d4a843 0%, #f0c96a 50%, #d4a843 100%) !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .turma-badge {
-        background: linear-gradient(135deg, #1f2a44 0%, #2c3a5f 100%) !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .habilidade-item.nao-atingida {
-        background: #fff5f5 !important;
-        border-color: #fca5a5 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .habilidade-badge-status.nao-atingida {
-        background: #fca5a5 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .wrap { box-shadow: none !important; }
+      .wrap { box-shadow: none !important; border: 1px solid #000 !important; }
+      .plano-table td { border: 1px solid #000 !important; }
       .week-body { display: grid !important; grid-template-columns: 1fr 1fr; }
-      .week-body .full { grid-column: 1 / -1; }
-      .w1, .w5 { background: #dbeeff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      .w2, .w6 { background: #e9e2f9 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      .w3, .w7 { background: #fdf3d9 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      .w4, .w8 { background: #e6f4ea !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
   </style>
 </head>
 <body>
 
 <div class="tabs-bar">
-  <button class="tab-nav active" onclick="openTab('cronogramaView', this)">📅 Cronograma do Bimestre</button>
-  <button class="tab-nav" onclick="openTab('planoView', this)">📝 Plano Quinzenal / Mensal</button>
+  <button class="tab-nav active" onclick="openTab('planoView', this)">📝 Plano Quinzenal (Modelo Oficial)</button>
+  <button class="tab-nav" onclick="openTab('cronogramaView', this)">📅 Cronograma do Bimestre (8 Semanas)</button>
 </div>
 
-<!-- ===================== ABA 1: CRONOGRAMA ===================== -->
-<div id="cronogramaView" class="tab-content active">
+<!-- ===================== ABA 1: PLANO QUINZENAL (MODELO OFICIAL) ===================== -->
+<div id="planoView" class="tab-content active">
   <div class="wrap">
 
-    <!-- Cabeçalho Vivo -->
-    <div class="doc-header" id="header-cr">
-      <div class="doc-header-inner">
-        <div class="doc-header-left">
-          <div class="doc-header-logo-placeholder">📅</div>
-          <div class="doc-header-brand">
-            <h1>E.E. Prof.ª Wanda de Moraes</h1>
-            <p>Formulário de Gestão Pedagógica</p>
-          </div>
-        </div>
-        <div class="doc-header-title">
-          <h2>Cronograma do Bimestre</h2>
-          <p id="cr-data-header">Preencha os campos abaixo</p>
+    <!-- CABEÇALHO OFICIAL MODELO -->
+    <div class="official-header">
+      <div class="header-logo-row">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6-_gDlLXVxcBlr66NbmGN0BdBxkZWNgcNnK6cPs6TAGNLv8S9wWa9Bc7shBzGtW7Rqpb8x0YiNR6pUwpKwOjcO9oNw6wgZwOzAV5wKm0-kEh8qgS6JxVxmJMaYUcVqH3iuKeMLAUbosKDCDxuX3u8X85s_L4_JEu97TnD6atqNE5Sx2P2dhTlkt6EVgum/s1037/Logo%20S%C3%A3o.PNG" alt="Governo SP Logo" class="sp-logo">
+        <div class="header-text">
+          <h2>GOVERNO DO ESTADO DE SÃO PAULO</h2>
+          <h3>UNIDADE REGIONAL DE ENSINO GUARULHOS NORTE</h3>
+          <h1>E. E. WANDA MASCAGNI DE SÁ</h1>
+          <p>e-mail:e908459p@educacao.sp.gov.br</p>
         </div>
       </div>
-      <div class="doc-header-divider"></div>
-      <div class="doc-header-meta" id="cr-meta-header">
-        <span>👤 Professor(a): <strong id="cr-meta-prof">—</strong></span>
-        <span>📚 Componente: <strong id="cr-meta-comp">—</strong></span>
-        <span>📋 Bimestre: <strong id="cr-meta-bim">—</strong></span>
+      <div class="header-title-box">
+        PLANO DE AULA QUINZENAL - MODELO
       </div>
     </div>
 
-    <div class="info">
-      <div>
+    <!-- TABELA FIEL AO PDF MODELO -->
+    <table class="plano-table">
+      <tr>
+        <td style="width: 50%;">
+          <label>Professor(a):</label>
+          <select id="pl_professor" onchange="tratarSelecaoProfessor('pl')">
+            <option value="">-- Selecione o Professor(a) --</option>
+          </select>
+          <input type="text" id="pl_professor_novo" class="campo-novo-prof" placeholder="Digite seu nome completo...">
+        </td>
+        <td style="width: 50%;">
+          <label>Componente:</label>
+          <div id="pl_componente_wrap">
+            <select id="pl_componente" onchange="tentarCarregarAprendizagens('pl')"><option value="">-- Selecione a turma primeiro --</option></select>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="3" style="width: 50%;">
+          <label>Conteúdo/Aulas:</label>
+          <textarea id="pl_conteudo" rows="7" placeholder="Ex: Frase e oração; Introdução aos tipos de sujeito."></textarea>
+        </td>
+        <td style="width: 50%;">
+          <label>Ano/Série/Turma:</label>
+          <div class="multiselect-wrap">
+            <button class="multiselect-btn" id="pl_turma_btn" onclick="toggleMultiSelect('pl')">Selecione o professor primeiro</button>
+            <div class="multiselect-options" id="pl_turma_options"></div>
+          </div>
+          <div class="turmas-badges" id="pl_turmas_badges"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 50%;">
+          <label>Quantidade de aulas:</label>
+          <input type="text" id="pl_qtdAulas" placeholder="Ex: 4">
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 50%;">
+          <label>Período realização:</label>
+          <input type="text" id="pl_periodo" placeholder="Ex: 3 a 7/08" onchange="gerarAulasPorGradeHoraria()">
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Objetivo(s):</label>
+          <!-- Seletor de Descritores SAEB/BNCC -->
+          <div class="saeb-selector">
+            <div class="saeb-selector-title">🎯 Descritores SAEB/BNCC</div>
+            <div class="saeb-selector-row">
+              <div class="saeb-input-group">
+                <label>Disciplina</label>
+                <select id="saeb_disciplina" onchange="atualizarCodigosSAEB()">
+                  <option value="">-- Selecione --</option>
+                  <option value="LP">Língua Portuguesa</option>
+                  <option value="MAT">Matemática</option>
+                  <option value="CIE">Ciências</option>
+                  <option value="GEO">Geografia</option>
+                  <option value="HIS">História</option>
+                  <option value="ING">Inglês</option>
+                </select>
+              </div>
+              <div class="saeb-input-group">
+                <label>Ano/Série</label>
+                <select id="saeb_ano" onchange="atualizarCodigosSAEB()">
+                  <option value="">-- Ano --</option>
+                  <option value="6">6º Ano</option>
+                  <option value="7">7º Ano</option>
+                  <option value="8">8º Ano</option>
+                  <option value="9">9º Ano</option>
+                  <option value="EM1">1ª Série EM</option>
+                </select>
+              </div>
+              <div class="saeb-input-group">
+                <label>Código</label>
+                <select id="saeb_codigo"><option value="">-- Selecione --</option></select>
+              </div>
+              <button type="button" class="btn-add-descritor" onclick="adicionarDescritor()">+ Adicionar</button>
+            </div>
+            <div class="codigos-selecionados" id="codigos-selecionados-tags"></div>
+          </div>
+          <textarea id="pl_objetivos" rows="4" placeholder="Ex: Analisar como frases e orações contribuem para a construção de sentido..."></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Aprendizagens essenciais:</label>
+          <textarea id="pl_aprendizagens" rows="3" placeholder="Ex: AE2 - Identificar usos adequados de regras gramaticais..."></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 50%;">
+          <label>Habilidade priorizada:</label>
+          <textarea id="pl_habilidades" rows="2" placeholder="Ex: EF07LP10"></textarea>
+        </td>
+        <td style="width: 50%;">
+          <label>Conhecimentos Prévios:</label>
+          <textarea id="pl_conhecimentos" rows="2" placeholder="Ex: EF03LP08; EF04LP07; EF04LP06; EF05LP06"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Recursos Didáticos:</label>
+          <textarea id="pl_recursos" rows="2" placeholder="Ex: Material Digital, Material Impresso do aluno, Atividade em folha."></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Metodologia (Desenvolvimento/Estratégias):</label>
+          <button type="button" class="btn-gerar-grade" onclick="gerarAulasPorGradeHoraria()">
+            ⚡ Preencher Aulas Cruzando Grade do Professor
+          </button>
+          <textarea id="pl_metodologia" rows="12" placeholder="- Aula 1 (MD Aula 2): Prefácio, porta de entrada...&#10;Recomposição: Antes de falar em sujeito...&#10;1- Após fazer a retomada...&#10;2- Após a explicação..."></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Avaliação:</label>
+          <textarea id="pl_avaliacao" rows="3" placeholder="Ex: Aula 1- Será avaliado se os alunos conseguiram se apropriar dos conceitos..."></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <label>Observação:</label>
+          <textarea id="pl_observacao" rows="2" placeholder="Ex: Acompanhar os alunos abaixo do básico listado em registro."></textarea>
+        </td>
+      </tr>
+    </table>
+
+    <div class="actions" style="padding: 16px 20px;">
+      <button class="btn-main" id="btn-pl" onclick="enviarPlano()">📄 Gerar PDF &amp; Salvar no Drive</button>
+      <div id="status-pl" class="status-area"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ABA 2: CRONOGRAMA DE 8 SEMANAS (RESTAURADO) ===================== -->
+<div id="cronogramaView" class="tab-content">
+  <div class="wrap">
+    <div class="official-header" style="border-bottom: 2px solid var(--navy);">
+      <h2>E. E. WANDA MASCAGNI DE SÁ</h2>
+      <h1 style="font-size: 15px; font-weight: 800; margin-top: 4px;">CRONOGRAMA DO BIMESTRE — 8 SEMANAS</h1>
+    </div>
+
+    <div class="info" style="display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #cbd5e1;">
+      <div style="flex: 1;">
         <label>Professor(a)</label>
         <select id="cr_professor" onchange="tratarSelecaoProfessor('cr')">
           <option value="">-- Selecione o Professor(a) --</option>
         </select>
         <input type="text" id="cr_professor_novo" class="campo-novo-prof" placeholder="Digite seu nome completo...">
       </div>
-      <div>
+      <div style="flex: 1;">
         <label>Ano/Série/Turma(s)</label>
         <div class="multiselect-wrap">
           <button class="multiselect-btn" id="cr_turma_btn" onclick="toggleMultiSelect('cr')">Selecione o professor primeiro</button>
@@ -759,15 +557,15 @@
         </div>
         <div class="turmas-badges" id="cr_turmas_badges"></div>
       </div>
-      <div>
+      <div style="flex: 1;">
         <label>Componente / Disciplina</label>
         <div id="cr_componente_wrap">
-          <select id="cr_componente" onchange="atualizarMetaHeader('cr')"><option value="">-- Selecione a turma primeiro --</option></select>
+          <select id="cr_componente"><option value="">-- Selecione a turma primeiro --</option></select>
         </div>
       </div>
-      <div>
+      <div style="flex: 1;">
         <label>Bimestre</label>
-        <select id="cr_bimestre" onchange="atualizarMetaHeader('cr')">
+        <select id="cr_bimestre">
           <option value="">-- Selecione --</option>
           <option value="1º Bimestre">1º Bimestre</option>
           <option value="2º Bimestre">2º Bimestre</option>
@@ -787,479 +585,212 @@
   </div>
 </div>
 
-<!-- ===================== ABA 2: PLANO QUINZENAL ===================== -->
-<div id="planoView" class="tab-content">
-  <div class="wrap">
-
-    <!-- Cabeçalho Vivo -->
-    <div class="doc-header" id="header-pl">
-      <div class="doc-header-inner">
-        <div class="doc-header-left">
-          <div class="doc-header-logo-placeholder">📝</div>
-          <div class="doc-header-brand">
-            <h1>E.E. Prof.ª Wanda de Moraes</h1>
-            <p>Formulário de Gestão Pedagógica</p>
-          </div>
-        </div>
-        <div class="doc-header-title">
-          <h2>Plano Quinzenal / Mensal</h2>
-          <p id="pl-data-header">Preencha os campos abaixo</p>
-        </div>
-      </div>
-      <div class="doc-header-divider"></div>
-      <div class="doc-header-meta" id="pl-meta-header">
-        <span>👤 Professor(a): <strong id="pl-meta-prof">—</strong></span>
-        <span>📚 Componente: <strong id="pl-meta-comp">—</strong></span>
-        <span>📋 Bimestre: <strong id="pl-meta-bim">—</strong></span>
-      </div>
-    </div>
-
-    <div class="info">
-      <div style="flex: 2;">
-        <label>Professor(a)</label>
-        <select id="pl_professor" onchange="tratarSelecaoProfessor('pl')">
-          <option value="">-- Selecione o Professor(a) --</option>
-        </select>
-        <input type="text" id="pl_professor_novo" class="campo-novo-prof" placeholder="Digite seu nome completo...">
-      </div>
-      <div style="flex: 2;">
-        <label>Ano/Série/Turma(s)</label>
-        <div class="multiselect-wrap">
-          <button class="multiselect-btn" id="pl_turma_btn" onclick="toggleMultiSelect('pl')">Selecione o professor primeiro</button>
-          <div class="multiselect-options" id="pl_turma_options"></div>
-        </div>
-        <div class="turmas-badges" id="pl_turmas_badges"></div>
-      </div>
-      <div style="flex: 2;">
-        <label>Componente / Disciplina</label>
-        <div id="pl_componente_wrap">
-          <select id="pl_componente" onchange="tentarCarregarAprendizagens('pl')"><option value="">-- Selecione a turma primeiro --</option></select>
-        </div>
-      </div>
-      <div style="flex: 1;">
-        <label>Bimestre</label>
-        <select id="pl_bimestre" onchange="tentarCarregarAprendizagens('pl')">
-          <option value="">-- Selecione --</option>
-          <option value="1º Bimestre">1º Bimestre</option>
-          <option value="2º Bimestre">2º Bimestre</option>
-          <option value="3º Bimestre">3º Bimestre</option>
-          <option value="4º Bimestre">4º Bimestre</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="info">
-      <div>
-        <label>Quantidade de aulas</label>
-        <input type="text" id="pl_qtdAulas" placeholder="Ex: 12 a 13 aulas">
-      </div>
-      <div>
-        <label>Período realização</label>
-        <input type="text" id="pl_periodo" placeholder="Ex: 24/07/2026 a 24/08/2026">
-      </div>
-    </div>
-
-    <div class="content">
-
-      <div class="section-block">
-        <div class="section-title">
-          Conteúdo / Aulas (Organizado por Dias Úteis)
-          <span class="badge-auto" id="badge-conteudo" style="display:none">✅ Carregado do Guia</span>
-        </div>
-        <div class="section-body">
-          <!-- Painel Organizador de Aulas (14 Dias Úteis) -->
-          <div class="organizador-aulas-panel">
-            <div class="organizador-title">
-              📅 Organizar Temas por Aulas e Dias Úteis (14 Dias)
-            </div>
-            <div class="organizador-row">
-              <div class="organizador-field">
-                <label>Data de Início</label>
-                <input type="date" id="org_data_inicio">
-              </div>
-              <div class="organizador-field">
-                <label>Nº de Aulas por Dia</label>
-                <select id="org_aulas_por_dia">
-                  <option value="1">1 Aula por dia (14 Aulas)</option>
-                  <option value="2" selected>2 Aulas por dia (28 Aulas)</option>
-                  <option value="3">3 Aulas por dia (42 Aulas)</option>
-                  <option value="4">4 Aulas por dia (56 Aulas)</option>
-                </select>
-              </div>
-              <div class="organizador-field">
-                <label>Horário / Ordem da Aula</label>
-                <select id="org_ordem_aula">
-                  <option value="1ª Aula">1ª Aula</option>
-                  <option value="2ª Aula">2ª Aula</option>
-                  <option value="1ª e 2ª Aulas" selected>1ª e 2ª Aulas (Bloco duplo)</option>
-                  <option value="3ª Aula">3ª Aula</option>
-                  <option value="4ª Aula">4ª Aula</option>
-                  <option value="3ª e 4ª Aulas">3ª e 4ª Aulas (Bloco duplo)</option>
-                  <option value="5ª Aula">5ª Aula</option>
-                  <option value="6ª Aula">6ª Aula</option>
-                </select>
-              </div>
-              <button class="btn-organizar-aulas" onclick="organizarConteudo14DiasUteis()">
-                ✨ Organizar em 14 Dias Úteis
-              </button>
-            </div>
-            <div class="organizador-info-badge" id="org_status_badge" style="display:none"></div>
-          </div>
-
-          <textarea id="pl_conteudo" rows="6" placeholder="Descreva os conteúdos/aulas ou use o organizador acima para estruturar automaticamente em 14 dias úteis..."></textarea>
-        </div>
-      </div>
-
-      <!-- OBJETIVOS COM SELETOR DE DESCRITORES SAEB -->
-      <div class="section-block">
-        <div class="section-title">
-          Objetivo(s) — Descritores SAEB/BNCC
-          <span class="badge-auto" id="badge-objetivos" style="display:none">✅ Carregado do Guia</span>
-        </div>
-        <div class="section-body">
-          <!-- Seletor SAEB -->
-          <div class="saeb-selector">
-            <div class="saeb-selector-title">
-              🎯 Adicionar Descritores por Código SAEB/BNCC
-            </div>
-            <div class="saeb-selector-row">
-              <div class="saeb-input-group">
-                <label>Disciplina</label>
-                <select id="saeb_disciplina" onchange="atualizarCodigosSAEB()">
-                  <option value="">-- Disciplina --</option>
-                  <option value="LP">Língua Portuguesa</option>
-                  <option value="MAT">Matemática</option>
-                  <option value="CIE">Ciências</option>
-                  <option value="GEO">Geografia</option>
-                  <option value="HIS">História</option>
-                  <option value="ING">Inglês</option>
-                  <option value="ART">Arte</option>
-                  <option value="EF">Educação Física</option>
-                </select>
-              </div>
-              <div class="saeb-input-group">
-                <label>Ano/Série</label>
-                <select id="saeb_ano" onchange="atualizarCodigosSAEB()">
-                  <option value="">-- Ano --</option>
-                  <option value="6">6º Ano</option>
-                  <option value="7">7º Ano</option>
-                  <option value="8">8º Ano</option>
-                  <option value="9">9º Ano</option>
-                  <option value="EM1">1ª Série EM</option>
-                  <option value="EM2">2ª Série EM</option>
-                  <option value="EM3">3ª Série EM</option>
-                </select>
-              </div>
-              <div class="saeb-input-group">
-                <label>Código</label>
-                <select id="saeb_codigo">
-                  <option value="">-- Selecione disciplina e ano --</option>
-                </select>
-              </div>
-              <button class="btn-add-descritor" onclick="adicionarDescritor()">+ Adicionar</button>
-              <button class="btn-limpar-descritores" onclick="limparDescritores()">🗑 Limpar</button>
-            </div>
-            <div class="codigos-selecionados" id="codigos-selecionados-tags"></div>
-          </div>
-          <textarea id="pl_objetivos" rows="5" placeholder="Descritores adicionados aparecem aqui automaticamente. Você também pode digitar manualmente..."></textarea>
-        </div>
-      </div>
-
-      <!-- APRENDIZAGENS ESSENCIAIS -->
-      <div class="section-block">
-        <div class="section-title">
-          Aprendizagens Essenciais
-          <span class="badge-auto" id="badge-aprendizagens" style="display:none">✅ Carregado do Guia</span>
-        </div>
-        <div class="section-body">
-          <div class="loading-bar" id="loading-aprendizagens">
-            <div class="spinner"></div>
-            <span>Buscando no Guia Priorizado...</span>
-          </div>
-          <textarea id="pl_aprendizagens" rows="5" placeholder="Selecione turma, disciplina e bimestre para carregar automaticamente do Guia Priorizado..."></textarea>
-        </div>
-      </div>
-
-      <!-- HABILIDADE PRIORIZADA COM FILTRO POR ÍNDICE DO ESTADO -->
-      <div class="section-block">
-        <div class="section-title">
-          Habilidade Priorizada
-          <span class="badge-auto" id="badge-habilidades" style="display:none">✅ Carregado do Guia</span>
-        </div>
-        <div class="section-body">
-          <div class="loading-bar" id="loading-habilidades">
-            <div class="spinner"></div>
-            <span>Buscando habilidades priorizadas...</span>
-          </div>
-
-          <!-- Filtro por índice do Estado -->
-          <div class="habilidades-filtro-toggle" id="habilidades-filtro-area" style="display:none">
-            <span style="font-size:12px;font-weight:600;color:var(--navy-light);">Exibir:</span>
-            <button class="toggle-btn-filtro ativo" id="btn-filtro-nao-atingidas" onclick="filtrarHabilidades('nao-atingidas')">
-              ⚠️ Não atingiram índice do Estado
-            </button>
-            <button class="toggle-btn-filtro" id="btn-filtro-todas" onclick="filtrarHabilidades('todas')">
-              📋 Todas
-            </button>
-            <span class="habilidades-filtro-info" id="habilidades-filtro-count"></span>
-          </div>
-
-          <!-- Lista visual de habilidades -->
-          <div class="habilidades-lista" id="habilidades-lista-visual" style="display:none"></div>
-
-          <!-- Textarea (fallback / edição manual) -->
-          <textarea id="pl_habilidades" rows="3" placeholder="Ex: EF08CI01"></textarea>
-        </div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-title">Conhecimentos Prévios</div>
-        <div class="section-body"><textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios..."></textarea></div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-title">Recursos Didáticos</div>
-        <div class="section-body"><textarea id="pl_recursos" rows="2" placeholder="Ex: Livro didático, Projetor..."></textarea></div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-title">Metodologia (Desenvolvimento/Estratégias)</div>
-        <div class="section-body"><textarea id="pl_metodologia" rows="5" placeholder="Descreva as estratégias..."></textarea></div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-title">Avaliação</div>
-        <div class="section-body"><textarea id="pl_avaliacao" rows="3" placeholder="Descreva os critérios de avaliação..."></textarea></div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-title">Observação</div>
-        <div class="section-body"><textarea id="pl_observacao" rows="2" placeholder="Observações adicionais..."></textarea></div>
-      </div>
-
-      <div class="actions">
-        <button class="btn-main" id="btn-pl" onclick="enviarPlano()">📄 Gerar PDF &amp; Salvar no Drive</button>
-        <div id="status-pl" class="status-area"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpJDflxXfNcQi-C2fT_F0XTv6iSNjKdmsu6oo8sgsr_qpr7x1VjzDAIbcYac1eS3Op/exec";
 
   /* =================================================================
-     BANCO DE DADOS — DESCRITORES SAEB/BNCC
-     Mapeamento: disciplina → ano → código → descritor
+     DATASET COMPLETO DAS GRADES HORÁRIAS DOS PROFESSORES
   ================================================================= */
-  var DESCRITORES_SAEB = {
-    LP: {
-      "6": {
-        "EF06LP01": "Identificar a função social de textos que circulam em campos da vida social dos quais participa cotidianamente (jornalístico/midiático, publicitário/consumo, científico).",
-        "EF06LP02": "Estabelecer relações entre partes do texto, identificando substituições lexicais que contribuem para a continuidade do texto.",
-        "EF06LP03": "Analisar textos literários de autores de literatura brasileira e africana, com especial atenção à literatura indígena.",
-        "EF06LP04": "Reconhecer a estrutura e elementos narrativos de diferentes contos: de fadas, de terror, de ficção científica.",
-        "EF06LP05": "Identificar o tema e a estrutura argumentativa de artigos de opinião.",
-        "EF06LP06": "Produzir textos em diferentes gêneros, considerando sua adequação ao contexto de produção.",
-        "EF06LP07": "Usar os conhecimentos sobre critérios de textualidade na avaliação de textos produzidos."
-      },
-      "7": {
-        "EF07LP01": "Identificar, em notícias, os fatos, suas causas e consequências, os agentes envolvidos e os diferentes pontos de vista.",
-        "EF07LP02": "Identificar marcas do discurso reportado (discurso direto e indireto) e o efeito de sentido que produz.",
-        "EF07LP03": "Reconhecer o uso de argumentos para defender um ponto de vista em artigos de opinião e cartas de leitor.",
-        "EF07LP04": "Analisar a estrutura e o funcionamento de diferentes sequências narrativas, descritivas e dialogais.",
-        "EF07LP05": "Produzir artigos de opinião e cartas de leitor respeitando as características dos gêneros.",
-        "EF07LP06": "Usar procedimentos de pesquisa e de seleção de informações em fontes diversas."
-      },
-      "8": {
-        "EF08LP01": "Identificar e analisar posicionamentos defendidos e refutados na estrutura de teses e argumentos.",
-        "EF08LP02": "Reconhecer a estrutura e os elementos composicionais do debate regrado e do seminário.",
-        "EF08LP03": "Analisar textos publicitários, identificando recursos de persuasão.",
-        "EF08LP04": "Identificar e analisar recursos linguístico-gramaticais presentes em diferentes tipos e gêneros textuais.",
-        "EF08LP05": "Produzir resenhas críticas, argumentando a favor ou contra a obra resenhada.",
-        "EF08LP06": "Usar a modalização para expressar diferentes graus de certeza em textos argumentativos."
-      },
-      "9": {
-        "EF09LP01": "Comparar dois ou mais textos que tratem do mesmo tema, identificando diferentes perspectivas e argumentos.",
-        "EF09LP02": "Interpretar, em textos de divulgação científica, dados apresentados em gráficos, tabelas e infográficos.",
-        "EF09LP03": "Produzir ensaio argumentativo (monografia) com tese clara, argumentação consistente e conclusão.",
-        "EF09LP04": "Reconhecer, em textos de diferentes gêneros, recursos de coesão e coerência textuais.",
-        "EF09LP05": "Analisar a estrutura e funcionamento de narrativas de ficção científica, comparando com outras.",
-        "EF09LP06": "Identificar e compreender a intertextualidade entre textos literários."
-      }
+  var HORARIO_MANHA = {
+    "1A": {
+      "2ª": ["CELINA", "MARCOS", "MARCOS", "CELINA", "ROBERTA", "EDIVANIA"],
+      "3ª": ["KIKO", "KIKO", "JOSÉ R.", "JOSÉ R.", "MARCOS", "EDIVANIA"],
+      "4ª": ["RENATO", "RENATO", "KALED", "MARCOS", "LUCIANA L.", "RAQUEL"],
+      "5ª": ["LUCIANA L.", "KALED", "LUCIANA L.", "JULIANA FIS.", "RICARDO MAT", "JULIANA FIS."],
+      "6ª": ["RAQUEL", "LUCIANA L.", "SANDRA", "SANDRA", "RICARDO ED.F", "ROBERTA"]
     },
-    MAT: {
-      "6": {
-        "EF06MA01": "Comparar, ordenar, ler e escrever números naturais e números racionais positivos.",
-        "EF06MA02": "Reconhecer que os números naturais e os inteiros negativos formam o conjunto dos números inteiros.",
-        "EF06MA03": "Resolver e elaborar problemas com números racionais positivos envolvendo as quatro operações.",
-        "EF06MA04": "Calcular o resultado de potências de números naturais e racionais.",
-        "EF06MA05": "Resolver e elaborar problemas que envolvem porcentagens.",
-        "EF06MA06": "Reconhecer figuras geométricas planas e identificar seus elementos.",
-        "EF06MA07": "Calcular área de figuras planas: quadrado, retângulo, paralelogramo e triângulo.",
-        "EF06MA08": "Compreender o conceito de ângulo e classificar ângulos em agudo, reto e obtuso.",
-        "EF06MA09": "Coletar, organizar e construir gráficos de barras e setores.",
-        "EF06MA10": "Calcular medidas de tendência central: média, moda e mediana."
-      },
-      "7": {
-        "EF07MA01": "Comparar e ordenar números inteiros em diferentes contextos, incluindo o de eixo de coordenadas.",
-        "EF07MA02": "Resolver e elaborar problemas com números inteiros — adição, subtração, multiplicação, divisão e potenciação.",
-        "EF07MA03": "Resolver e elaborar problemas que envolvem razão e proporção.",
-        "EF07MA04": "Calcular a porcentagem de um número e aplicar em situações do cotidiano.",
-        "EF07MA05": "Compreender o conceito de expressão algébrica e calcular seu valor numérico.",
-        "EF07MA06": "Resolver equações de 1º grau com uma incógnita.",
-        "EF07MA07": "Classificar triângulos pelos ângulos e pelos lados e reconhecer suas propriedades.",
-        "EF07MA08": "Calcular o perímetro e a área de figuras geométricas planas.",
-        "EF07MA09": "Construir e interpretar tabelas e gráficos incluindo histogramas."
-      },
-      "8": {
-        "EF08MA01": "Resolver e elaborar problemas com números racionais, incluindo operações com potências e raízes.",
-        "EF08MA02": "Resolver equações polinomiais do 2º grau por meio de fórmula.",
-        "EF08MA03": "Resolver sistemas de equações de 1º grau com duas incógnitas.",
-        "EF08MA04": "Reconhecer e utilizar o Teorema de Pitágoras para calcular medidas.",
-        "EF08MA05": "Calcular o volume de prismas retos com base em polígonos regulares.",
-        "EF08MA06": "Compreender o conceito de função e identificar funções do 1º grau.",
-        "EF08MA07": "Construir e interpretar gráficos de funções do 1º grau.",
-        "EF08MA08": "Calcular probabilidade de eventos simples e compostos."
-      },
-      "9": {
-        "EF09MA01": "Compreender os números irracionais e diferenciá-los dos números racionais.",
-        "EF09MA02": "Resolver equações e inequações do 1º e 2º grau e representar as soluções na reta numérica.",
-        "EF09MA03": "Reconhecer a função do 2º grau e representar seu gráfico (parábola).",
-        "EF09MA04": "Resolver problemas usando noções de trigonometria no triângulo retângulo.",
-        "EF09MA05": "Calcular medidas de superfície e volume de sólidos geométricos.",
-        "EF09MA06": "Construir e interpretar tabelas de frequência e gráficos estatísticos complexos.",
-        "EF09MA07": "Compreender e calcular probabilidade de eventos compostos independentes e dependentes."
-      }
+    "1B": {
+      "2ª": ["MARCOS", "CELINA", "JOSÉ R.", "MARCOS", "EDIVANIA", "CELINA"],
+      "3ª": ["RENATO", "EVELIN", "KIKO", "SANDRA", "KIKO", "JOSÉ R."],
+      "4ª": ["LUCIANA L.", "RAQUEL", "ROBERTA", "RENATO", "KALED", "ROBERTA"],
+      "5ª": ["KALED", "EDIVANIA", "SANDRA", "MARCOS", "LUCIANA L.", "LUCIANA L."],
+      "6ª": ["ANTONIO FIS.", "EVELIN", "MARCOS", "RAQUEL", "ANTONIO FIS.", "LUCIANA L."]
     },
-    CIE: {
-      "6": {
-        "EF06CI01": "Classificar como homogêneas ou heterogêneas misturas contendo duas ou mais substâncias.",
-        "EF06CI02": "Identificar evidências de reações químicas com base em critérios macroscópicos.",
-        "EF06CI03": "Selecionar métodos mais adequados para a separação de diferentes sistemas.",
-        "EF06CI04": "Associar a produção de medicamentos e outros materiais sintéticos ao desenvolvimento científico.",
-        "EF06CI05": "Discutir a ocorrência de distúrbios nutricionais como obesidade e desnutrição.",
-        "EF06CI06": "Relacionar a estrutura da célula aos processos vitais básicos."
-      },
-      "7": {
-        "EF07CI01": "Caracterizar os principais ecossistemas brasileiros quanto à biodiversidade e à ocupação humana.",
-        "EF07CI02": "Explicar a importância da preservação e recuperação de áreas degradadas.",
-        "EF07CI03": "Caracterizar os principais tipos de poluição ambiental.",
-        "EF07CI04": "Relacionar os fenômenos do dia a dia com conceitos de temperatura, calor e expansão térmica.",
-        "EF07CI05": "Distinguir temperatura, calor e sensação térmica.",
-        "EF07CI06": "Descrever o ciclo reprodutivo e identificar as características básicas dos vertebrados."
-      },
-      "8": {
-        "EF08CI01": "Identificar e relacionar as transformações químicas que ocorrem no cotidiano.",
-        "EF08CI02": "Classificar substâncias como ácidas, básicas ou neutras usando indicadores.",
-        "EF08CI03": "Explicar a formação das chuvas ácidas e suas consequências ambientais.",
-        "EF08CI04": "Relacionar a produção de luz e calor ao consumo de combustíveis.",
-        "EF08CI05": "Descrever o funcionamento dos sistemas digestório, circulatório e respiratório.",
-        "EF08CI06": "Compreender o processo de reprodução humana e doenças sexualmente transmissíveis.",
-        "EF08CI07": "Identificar os mecanismos de herança biológica e variabilidade genética."
-      },
-      "9": {
-        "EF09CI01": "Compreender o conceito de radioatividade e seus usos e riscos.",
-        "EF09CI02": "Analisar as formas de propagação de energia: condução, convecção e irradiação.",
-        "EF09CI03": "Compreender os conceitos de campo elétrico e magnético.",
-        "EF09CI04": "Calcular as grandezas elétricas em circuitos simples.",
-        "EF09CI05": "Compreender as relações entre astronomia e a vida cotidiana.",
-        "EF09CI06": "Discutir as teorias da origem do universo e da vida na Terra."
-      }
+    "1C": {
+      "2ª": ["JOSÉ R.", "GUILHERME", "LUCIANA L.", "JOSÉ R.", "MARCOS", "MARCOS"],
+      "3ª": ["MARCOS", "RENATO", "CELINA", "KIKO", "GUILHERME", "RAQUEL"],
+      "4ª": ["CELINA", "LUCIANA L.", "MARCOS", "JULIANA FIS.", "ROBERTA", "KALED"],
+      "5ª": ["KIKO", "JULIANA FIS.", "RENATO", "EVELIN", "EDIVANIA", "KALED"],
+      "6ª": ["LUCIANA L.", "ROBERTA", "RAQUEL", "LUCIANA L.", "EDIVANIA", "EVELIN"]
     },
-    GEO: {
-      "6": {
-        "EF06GE01": "Comparar modificações das paisagens nos lugares de vivência e da cidade para compreender o papel da natureza.",
-        "EF06GE02": "Analisar modificações de paisagens por diferentes tipos de sociedade.",
-        "EF06GE03": "Descrever os movimentos do planeta e suas implicações na vida.",
-        "EF06GE04": "Compreender as etapas do ciclo hidrológico e sua dinâmica.",
-        "EF06GE05": "Identificar os diferentes tipos de solos e sua importância.",
-        "EF06GE06": "Descrever os componentes da biosfera e relacionar os ecossistemas ao clima."
-      },
-      "7": {
-        "EF07GE01": "Avaliar, por meio de exemplos, a importância da biodiversidade para a manutenção da vida.",
-        "EF07GE02": "Analisar a influência dos oceanos no clima e na vida.",
-        "EF07GE03": "Explicar as diferentes formas de uso do solo e suas consequências.",
-        "EF07GE04": "Compreender os processos de formação e transformação do relevo.",
-        "EF07GE05": "Analisar a distribuição das populações pelo território brasileiro.",
-        "EF07GE06": "Comparar o processo de industrialização nas diferentes regiões do Brasil."
-      },
-      "8": {
-        "EF08GE01": "Relacionar as mudanças climáticas com os diferentes usos que as sociedades fazem dos recursos naturais.",
-        "EF08GE02": "Analisar a ação humana no processo de transformação da natureza.",
-        "EF08GE03": "Identificar e comparar aspectos demográficos dos continentes americano e africano.",
-        "EF08GE04": "Descrever o processo de formação socioeconômica da América Latina.",
-        "EF08GE05": "Comparar as matrizes energéticas utilizadas em diferentes regiões."
-      },
-      "9": {
-        "EF09GE01": "Analisar os impactos do processo de industrialização na transformação do espaço geográfico.",
-        "EF09GE02": "Relacionar o desenvolvimento tecnológico com as transformações do espaço geográfico.",
-        "EF09GE03": "Identificar as principais formas de interação econômica entre os países.",
-        "EF09GE04": "Analisar os conflitos geopolíticos e suas implicações globais.",
-        "EF09GE05": "Compreender os blocos econômicos regionais e sua dinâmica.",
-        "EF09GE06": "Discutir as questões ambientais globais e os acordos internacionais."
-      }
+    "1D": {
+      "2ª": ["RENATO", "EDIVANIA", "GUILHERME", "ROBERTA", "CELINA", "JOSÉ R."],
+      "3ª": ["EVELIN", "JOSÉ R.", "RENATO", "CELINA", "EVELIN", "GUILHERME"],
+      "4ª": ["RAQUEL", "KALED", "LUCIANA L.", "KALED", "JULIANA FIS.", "LUCIANA L."],
+      "5ª": ["EDIVANIA", "LUCIANA L.", "KIKO", "KIKO", "MARCOS", "MARCOS"],
+      "6ª": ["MARCOS", "RAQUEL", "JULIANA FIS.", "ROBERTA", "LUCIANA L.", "MARCOS"]
     },
-    HIS: {
-      "6": {
-        "EF06HI01": "Identificar diferentes formas de compreender o tempo, a partir de contextos históricos.",
-        "EF06HI02": "Identificar a gênese da produção do saber histórico e analisar o significado das fontes.",
-        "EF06HI03": "Conceituar 'História' e explicar as relações entre presente e passado.",
-        "EF06HI04": "Conhecer a história das sociedades da Antiguidade: Mesopotâmia, Egito, Grécia e Roma.",
-        "EF06HI05": "Caracterizar o processo de formação e expansão das polis gregas.",
-        "EF06HI06": "Compreender a organização da sociedade romana e a expansão do Império."
-      },
-      "7": {
-        "EF07HI01": "Explicar o significado de 'modernidade' e suas diferentes interpretações.",
-        "EF07HI02": "Identificar conexões entre a Renascença, a Reforma Protestante e o Humanismo.",
-        "EF07HI03": "Descrever as Grandes Navegações e seus impactos para europeus e americanos.",
-        "EF07HI04": "Identificar as formas de organização das sociedades ameríndias antes da conquista.",
-        "EF07HI05": "Analisar o processo de colonização da América pelos europeus.",
-        "EF07HI06": "Compreender o papel do tráfico de escravizados no processo de colonização."
-      },
-      "8": {
-        "EF08HI01": "Identificar os processos históricos que levaram à consolidação dos Estados nacionais.",
-        "EF08HI02": "Analisar as transformações econômicas da Revolução Industrial.",
-        "EF08HI03": "Identificar os movimentos revolucionários do século XVIII: Revolução Francesa e Americana.",
-        "EF08HI04": "Compreender o processo de independência do Brasil e as disputas políticas do período.",
-        "EF08HI05": "Analisar o processo de formação do Segundo Reinado e suas contradições."
-      },
-      "9": {
-        "EF09HI01": "Descrever e analisar os processos da Primeira e Segunda Guerras Mundiais.",
-        "EF09HI02": "Compreender a formação do sistema bipolar da Guerra Fria.",
-        "EF09HI03": "Analisar o processo de descolonização da África e da Ásia.",
-        "EF09HI04": "Identificar as principais características do regime militar brasileiro.",
-        "EF09HI05": "Compreender o processo de redemocratização e a Constituição de 1988.",
-        "EF09HI06": "Analisar o mundo contemporâneo: globalização, conflitos e desigualdades."
-      }
+    "2B": {
+      "2ª": ["SANDRA", "HÉLIO", "EVELIN", "EDIVANIA", "JULIANA", "GUILHERME"],
+      "3ª": ["CELINA", "CELINA", "ROBERTA", "GUILHERME", "EDIVANIA", "HÉLIO"],
+      "4ª": ["HÉLIO", "GUILHERME", "ANTONIO FIS.", "HÉLIO", "RAQUEL", "GUILHERME"],
+      "5ª": ["SANDRA", "SANDRA", "EVELIN", "RICARDO MAT", "SANDRA", "RICARDO MAT"],
+      "6ª": ["ROBERTA", "RICARDO MAT", "RICARDO MAT", "ANTONIO FIS.", "SANDRA", "JULIANA BIO"]
     },
-    ING: {
-      "6": {
-        "EF06LI01": "Identificar o assunto e informações principais de textos orais e escritos em língua inglesa.",
-        "EF06LI02": "Reconhecer palavras e expressões do cotidiano em diferentes gêneros textuais.",
-        "EF06LI03": "Produzir textos curtos em língua inglesa sobre temas do cotidiano.",
-        "EF06LI04": "Compreender e usar o presente simples e o presente contínuo."
-      },
-      "7": {
-        "EF07LI01": "Compreender textos mais longos em língua inglesa identificando ideias principais.",
-        "EF07LI02": "Usar o passado simples para narrar experiências e eventos passados.",
-        "EF07LI03": "Produzir textos narrativos curtos em inglês."
-      },
-      "8": {
-        "EF08LI01": "Compreender textos argumentativos simples em inglês.",
-        "EF08LI02": "Usar o futuro e o condicional para expressar hipóteses.",
-        "EF08LI03": "Produzir textos descritivos e argumentativos em inglês."
-      },
-      "9": {
-        "EF09LI01": "Compreender e analisar textos complexos em inglês de diferentes gêneros.",
-        "EF09LI02": "Usar diferentes tempos verbais e estruturas complexas em inglês.",
-        "EF09LI03": "Produzir textos formais e informais em inglês com coerência e coesão."
-      }
+    "2C/ADM": {
+      "2ª": ["EDIVANIA", "SANDRA", "ROBERTA", "SANDRA", "LUCIANA A.", "JULIANA"],
+      "3ª": ["ROBERTA", "MARCOS", "MARCOS", "RAQUEL", "HÉLIO", "KIKO"],
+      "4ª": ["JOSÉ R.", "HÉLIO", "LUCIANA A.", "LUCIANA A.", "MARCOS", "ERIKA"],
+      "5ª": ["ERIKA", "ERIKA", "ERIKA", "EDIVANIA", "KIKO", "LUCIANA A."],
+      "6ª": ["SANDRA", "ERIKA", "JOSÉ R.", "JULIANA BIO", "ERIKA", "ERIKA"]
+    },
+    "2D/ADM": {
+      "2ª": ["HÉLIO", "JOSÉ R.", "SANDRA", "JULIANA", "SANDRA", "HÉLIO"],
+      "3ª": ["ERIKA", "RAQUEL", "HÉLIO", "MARCOS", "ERIKA", "MARCOS"],
+      "4ª": ["LUCIANA A.", "JOSÉ R.", "HÉLIO", "GUILHERME", "LUCIANA A.", "LUCIANA A."],
+      "5ª": ["LUCIANA A.", "GUILHERME", "EDIVANIA", "SANDRA", "ERIKA", "ERIKA"],
+      "6ª": ["ERIKA", "MARCOS", "ERIKA", "ERIKA", "JULIANA BIO", "EDIVANIA"]
+    },
+    "2D.S.": {
+      "2ª": ["LEONARDO", "LEONARDO", "EDIVANIA", "HÉLIO", "ANTONIO FIS.", "SANDRA"],
+      "3ª": ["LEONARDO", "SANDRA", "SANDRA", "EDIVANIA", "ROBERTA", "ANTONIO H."],
+      "4ª": ["ERIKA", "ANTONIO FIS.", "ERIKA", "ERIKA", "ROBERTA", "JOSÉ R."],
+      "5ª": ["RAUL", "GUILHERME", "RAUL", "MARCOS", "ANTONIO FIS.", "ANTONIO FIS."],
+      "6ª": ["CRIS", "ANTONIO FIS.", "JOSÉ R.", "ANTONIO FIS.", "ANTONIO FIS.", "MARCOS"]
+    },
+    "3A": {
+      "2ª": ["GUILHERME", "LUCIANA L.", "HÉLIO", "LUCIANA L.", "EVELIN", "EVELIN"],
+      "3ª": ["JOSÉ R.", "ROBERTA", "GUILHERME", "LUCIANA L.", "RICARDO OM", "RICARDO OM"],
+      "4ª": ["ROBERTA", "CELINA", "RAQUEL", "JOSÉ R.", "GUILHERME", "JULIANA FIS."],
+      "5ª": ["HÉLIO", "CELINA", "ROBERTA", "JOSÉ R.", "JULIANA FIS.", "GUILHERME"],
+      "6ª": ["EVELIN", "JOSÉ R.", "LUCIANA L.", "EVELIN", "GUILHERME", "GUILHERME"]
+    },
+    "3B": {
+      "2ª": ["EVELIN", "RENATO", "RENATO", "GUILHERME", "LUCIANA L.", "LUCIANA L."],
+      "3ª": ["LUCIANA L.", "GUILHERME", "RICARDO PRG", "RICARDO PRG", "OR. MAT", "OR. MAT"],
+      "4ª": ["MARCOS", "MARCOS", "GUILHERME", "RAQUEL", "CELINA", "CELINA"],
+      "5ª": ["SILVIA", "ROBERTA", "GUILHERME", "LUCIANA L.", "EVELIN", "EVELIN"],
+      "6ª": ["GUILHERME", "EDIVANIA", "EDIVANIA", "GUILHERME", "EVELIN", "SILVIA"]
+    },
+    "3C": {
+      "2ª": ["LUCIANA L.", "EVELIN", "ANTONIO", "EVELIN", "GUILHERME", "ANTONIO FIS"],
+      "3ª": ["GUILHERME", "LUCIANA L.", "LUCIANA L.", "EVELIN", "JOSÉ R.", "EVELIN"],
+      "4ª": ["GUILHERME", "ROBERTA", "CELINA", "LUCIANA L.", "HÉLIO", "JOSÉ R."],
+      "5ª": ["ROBERTA", "RICARDO OM", "CELINA", "CRIS", "GUILHERME", "JOSÉ R."],
+      "6ª": ["HÉLIO", "GUILHERME", "GUILHERME", "JOSÉ R.", "ROBERTA", "RICARDO OM"]
+    },
+    "3ADM": {
+      "2ª": ["LUCIANA A.", "LUCIANA A.", "LUCIANA A.", "GIANE", "GIANE", "GIANE"],
+      "3ª": ["JULIANA", "ERIKA", "ERIKA", "ERIKA", "SANDRA", "SANDRA"],
+      "4ª": ["ERIKA", "JULIANA FIS.", "JOSÉ R.", "ERIKA", "ERIKA", "MARCOS"],
+      "5ª": ["MARCOS", "MARCOS", "CRIS", "ERIKA", "JOSÉ R.", "SANDRA"],
+      "6ª": ["LUCIANA A.", "LUCIANA A.", "LUCIANA A.", "GIANE", "GIANE", "GIANE"]
+    }
+  };
+
+  var HORARIO_TARDE = {
+    "6A": {
+      "2ª": ["RAUL", "GERSON", "MARCIA L", "MARCIA L", "GERSON", "ROSE"],
+      "3ª": ["NICOLE", "ROSE", "KALED", "MARCIA L", "MARCIA L", "RAUL"],
+      "4ª": ["EMERSON", "NICOLE", "NICOLE", "KIKO", "MARCIA L", "RAUL"],
+      "5ª": ["PAULO", "PAULO", "GERSON", "GERSON", "NICOLE", "KALED"],
+      "6ª": ["BERNADETE", "EMERSON", "BERNADETE", "KIKO", "GERSON", "GERSON"]
+    },
+    "6C": {
+      "2ª": ["GERSON", "RAUL", "RAUL", "KIKO", "MARCIA L", "MARCIA L"],
+      "3ª": ["RAUL", "NICOLE", "ROSE", "ROSE", "GERSON", "KALED"],
+      "4ª": ["BERNADETE", "BERNADETE", "MARCIA L", "MARCIA L", "KIKO", "EMERSON"],
+      "5ª": ["NICOLE", "NICOLE", "KALED", "WALERIA", "PAULO", "PAULO"],
+      "6ª": ["EMERSON", "GERSON", "GERSON", "MARCIA L", "GERSON", "GERSON"]
+    },
+    "7A": {
+      "2ª": ["SONIA", "ROSE", "WALERIA", "WALERIA", "KIKO", "KIKO"],
+      "3ª": ["PAULO", "RAUL", "PAULO", "BERNADETE", "KALED", "BERNADETE"],
+      "4ª": ["SONIA", "ROSE", "EMERSON", "RAUL", "RAUL", "BERNADETE"],
+      "5ª": ["BERNADETE", "GERSON", "GERSON", "BERNADETE", "KALED", "WALERIA"],
+      "6ª": ["WALERIA", "BERNADETE", "ROSE", "EMERSON", "ROSE", "BERNADETE"]
+    },
+    "7B": {
+      "2ª": ["PAULO", "PAULO", "KIKO", "GERSON", "RAUL", "RAUL"],
+      "3ª": ["KALED", "EMERSON", "GERSON", "WALERIA", "WALERIA", "GERSON"],
+      "4ª": ["KIKO", "EMERSON", "KALED", "BERNADETE", "GERSON", "MARCIA L"],
+      "5ª": ["GERSON", "BERNADETE", "WALERIA", "MARCIA L", "GERSON", "MARCIA L"],
+      "6ª": ["RAUL", "MARCIA L", "MARCIA L", "BERNADETE", "BERNADETE", "WALERIA"]
+    },
+    "8A": {
+      "2ª": ["GERSON", "MARCIA L", "GERSON", "NICOLE", "NICOLE", "WALERIA"],
+      "3ª": ["EMERSON", "MARCIA L", "MARCIA L", "KALED", "RAUL", "WALERIA"],
+      "4ª": ["ROSE", "MARCIA L", "KIKO", "ROSE", "EMERSON", "NICOLE"],
+      "5ª": ["RAUL", "RAUL", "RICARDO", "RICARDO", "BERNADETE", "BERNADETE"],
+      "6ª": ["KIKO", "ROSE", "RAUL", "WALERIA", "MARCIA L", "ROSE"]
+    },
+    "8B": {
+      "2ª": ["LUCIANA L", "LUCIANA L", "JULIANA", "RAUL", "JULIANA", "NICOLE"],
+      "3ª": ["RICARDO", "KALED", "WALERIA", "NICOLE", "NICOLE", "EMERSON"],
+      "4ª": ["RAUL", "JULIANA", "JULIANA", "GERSON", "WALERIA", "KIKO"],
+      "5ª": ["LUCIANA L", "LUCIANA L", "RAUL", "GERSON", "WALERIA", "RAUL"],
+      "6ª": ["RICARDO", "KIKO", "JULIANA", "RAUL", "RAUL", "EMERSON"]
+    },
+    "9A": {
+      "2ª": ["CIDO", "KIKO", "GERSON", "ROSE", "ROSE", "GERSON"],
+      "3ª": ["WALERIA", "WALERIA", "NICOLE", "RICARDO", "RICARDO", "MARCIA L"],
+      "4ª": ["CIDO", "KALED", "RICARDO", "NICOLE", "NICOLE", "WALERIA"],
+      "5ª": ["RICARDO", "MARCIA L", "GERSON", "RAUL", "RAUL", "GERSON"],
+      "6ª": ["GERSON", "RAUL", "RICARDO", "GERSON", "KIKO", "RAUL"]
+    },
+    "9B": {
+      "2ª": ["ROSE", "CIDO", "ROSE", "JULIANA", "MARGÔ", "MARGÔ"],
+      "3ª": ["KIKO", "KIKO", "RAUL", "RAUL", "PAULO", "PAULO"],
+      "4ª": ["JULIANA", "RAUL", "RAUL", "JULIANA", "ROSE", "ROSE"],
+      "5ª": ["CIDO", "KALED", "MARCIA L", "PAULO", "MARCIA L", "MARGÔ"],
+      "6ª": ["JULIANA", "JULIANA", "WALERIA", "ROSE", "WALERIA", "MARGÔ"]
+    }
+  };
+
+  var HORARIO_NOTURNO = {
+    "2A": {
+      "2ª": ["NICOLE", "NICOLE", "ALEXANDRE", "MARGÔ", "MARGÔ"],
+      "3ª": ["MARGÔ", "MANTOVANI", "MANTOVANI", "CLOVIS", "CLOVIS"],
+      "4ª": ["ALEXANDRE", "GIL", "GIL", "MANTOVANI", "MANTOVANI"],
+      "5ª": ["GIL", "GIL", "JOSE", "JOSE", "MARGÔ"],
+      "6ª": ["GIL", "GIL", "WALERIA", "WALERIA", "CLOVIS"]
+    },
+    "2C": {
+      "2ª": ["HÉLIO", "HÉLIO", "ADRIANA", "ADRIANA", "WALERIA"],
+      "3ª": ["CELINA", "CELINA", "ALEXANDRE", "BERNADETE", "BERNADETE"],
+      "4ª": ["RAUL", "RAUL", "ALEXANDRE", "BERNADETE", "BERNADETE"],
+      "5ª": ["BERNADETE", "BERNADETE", "ADRIANA", "ADRIANA", "WALERIA"],
+      "6ª": ["CLOVIS", "ADRIANA", "ADRIANA", "RAUL", "RAUL"]
+    },
+    "3D": {
+      "2ª": ["WALERIA", "WALERIA", "GIL", "MANTOVANI", "MANTOVANI"],
+      "3ª": ["JOSE", "JOSE", "MARGÔ", "ADRIANO", "ADRIANO"],
+      "4ª": ["MANTOVANI", "MANTOVANI", "ADRIANO", "HELOISA", "HELOISA"],
+      "5ª": ["MARGÔ", "MARGÔ", "GIL", "GIL", "ALEXANDRE"],
+      "6ª": ["ALEXANDRE", "MARGÔ", "CLOVIS", "CLOVIS", "GIL"]
+    },
+    "3E": {
+      "2ª": ["MANTOVANI", "MARGÔ", "WALERIA", "GIL", "GIL"],
+      "3ª": ["ADRIANO", "MARGÔ", "JOSE", "MANTOVANI", "MANTOVANI"],
+      "4ª": ["HELOISA", "HELOISA", "MANTOVANI", "ADRIANO", "ADRIANO"],
+      "5ª": ["JOSE", "CLOVIS", "CLOVIS", "MANTOVANI", "MANTOVANI"],
+      "6ª": ["MARGÔ", "WALERIA", "GIL", "GIL", "MARGÔ"]
+    },
+    "3F": {
+      "2ª": ["ALEXANDRE", "ALEXANDRE", "HÉLIO", "VICENTE", "VICENTE"],
+      "3ª": ["VICENTE", "VICENTE", "RAUL", "RAUL", "ALEXANDRE"],
+      "4ª": ["VICENTE", "BERNADETE", "BERNADETE", "ALEXANDRE", "ALEXANDRE"],
+      "5ª": ["HÉLIO", "CELINA", "CELINA", "ALEXANDRE", "BERNADETE"],
+      "6ª": ["VICENTE", "RAUL", "RAUL", "ADRIANA", "ADRIANA"]
+    },
+    "1TMA": {
+      "2ª": ["GIL", "GIL", "JOSE", "WALERIA", "MÁRCIO"],
+      "3ª": ["ELAINE", "ELAINE", "CELINA", "GERSON", "GERSON"],
+      "4ª": ["BERNADETE", "MÁRCIO", "MÁRCIO", "GIL", "GIL"],
+      "5ª": ["MANTOVANI", "MANTOVANI", "WALERIA", "CLOVIS", "GIL"],
+      "6ª": ["GERSON", "GERSON", "AILTON", "AILTON", "WALERIA"]
+    },
+    "3TMA": {
+      "2ª": ["JOSE", "MANTOVANI", "MANTOVANI", "MÁRCIO", "JOSE"],
+      "3ª": ["MÁRCIO", "ADRIANO", "ADRIANO", "JOSE", "MARGÔ"],
+      "4ª": ["ADRIANO", "ADRIANO", "ELAINE", "ELAINE", "MÁRCIO"],
+      "5ª": ["WALERIA", "WALERIA", "MANTOVANI", "MARGÔ", "CLOVIS"],
+      "6ª": ["BERNADETE", "AILTON", "MARGÔ", "MARGÔ", "AILTON"]
     }
   };
 
   /* =================================================================
-     DADOS DO MAPA DOCENTE
+     DADOS DO MAPA DOCENTE (Para inicialização dos seletores)
   ================================================================= */
   var TODAS_TURMAS_ESCOLA = [
     "1A","1B","1C","1D","2B","2C/ADM","2D/ADM","2D.S.","3A","3B","3C","3ADM",
@@ -1268,7 +799,7 @@
   ];
 
   var MAPA_DOCENTE = {
-    /* ===== PERÍODO DA MANHÃ ===== */
+    "ALESSANDRA": { "7º ano":["Língua Portuguesa"] },
     "ANTONIO":    { "3C":["Física"], "2D.S.":["Física"] },
     "CELINA":     { "1A":["A confirmar"], "1B":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
     "CRIS":       { "1A":["A confirmar"] },
@@ -1287,18 +818,16 @@
     "LUCIANA L.": { "3C":["A confirmar"], "3B":["A confirmar"], "1D":["A confirmar"], "1B":["A confirmar"], "2D/ADM":["A confirmar"] },
     "MARCOS":     { "1A":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"], "2D/ADM":["A confirmar"] },
     "RAQUEL":     { "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"] },
-    "RAUL":       { "3C":["A confirmar"] },
+    "RAUL":       { "6A":["Ciências"], "6C":["Ciências"], "7A":["Ciências"], "7B":["Ciências"], "8A":["Ciências"], "8B":["Ciências","Tecnologia"], "9A":["Ciências"], "9B":["Ciências"], "2C (Noturno)":["Biologia","Química"], "3F (Noturno)":["Biologia","Química"] },
     "RENATO":     { "1B":["A confirmar"], "3ADM":["A confirmar"], "3B":["A confirmar"] },
     "RICARDO":    { "1B":["Matemática","Programação","Oficina de Matemática"] },
     "ROBERTA":    { "1C":["A confirmar"], "3C":["A confirmar"], "1D":["A confirmar"], "2D.S.":["A confirmar"] },
     "SANDRA":     { "2B":["A confirmar"], "2D.S.":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
     "SILVIA":     { "2D/ADM":["A confirmar"] },
-    /* ===== PERÍODO NOTURNO ===== */
     "ADRIANA":    { "2º C (Noturno)":["Redação","Português"], "3º F (Noturno)":["Redação"] },
     "AILTON":     { "1º TMA (Noturno)":["Redação"], "3º TMA (Noturno)":["Redação"] },
     "ALEXANDRE":  { "2º A (Noturno)":["Física"], "2º C (Noturno)":["Física"], "3º D (Noturno)":["Física"], "3º F (Noturno)":["Matemática","Física"] },
     "BERNADETE":  { "6º Ano A":["OEM","Matemática","Tecnologia"], "6º Ano C":["OEM","Matemática","Tecnologia"], "7º Ano A":["Matemática","Tecnologia"], "7º Ano B":["Educação Financeira","Matemática","Tecnologia"], "8º Ano A":["Tecnologia"], "2º C (Noturno)":["Matemática"], "3º F (Noturno)":["OEM"], "1º TMA (Noturno)":["Educação Financeira"] },
-    "CELINA":     { "2º C (Noturno)":["História"], "3º F (Noturno)":["História"] },
     "CIDO":       { "9º Ano A":["Educação Física"], "9º Ano B":["Educação Física"] },
     "CLOVIS":     { "2º A (Noturno)":["Redação","Inglês"], "2º C (Noturno)":["Inglês"], "3º E (Noturno)":["Redação"], "1º TMA (Noturno)":["Inglês"], "3º TMA (Noturno)":["Inglês"] },
     "ELAINE":     { "1º TMA (Noturno)":["Química"], "3º TMA (Noturno)":["Química"] },
@@ -1306,32 +835,20 @@
     "GERSON":     { "6º Ano A":["Português","Redação"], "6º Ano C":["Português"], "7º Ano B":["Português"], "8º Ano B":["Redação"], "9º Ano A":["Português","Redação"], "1º TMA (Noturno)":["Português"] },
     "GIL":        { "2º A (Noturno)":["Matemática","Educação Física"], "3º D (Noturno)":["Matemática"], "3º E (Noturno)":["Matemática"], "1º TMA (Noturno)":["Matemática"] },
     "HELOISA":    { "3º D (Noturno)":["OEP"] },
-    "HÉLIO":      { "2º C (Noturno)":["Sociologia"], "3º F (Noturno)":["Geografia"] },
     "JOSE":       { "2º A (Noturno)":["História"], "3º D (Noturno)":["História"], "3º E (Noturno)":["História"], "1º TMA (Noturno)":["Filosofia"], "3º TMA (Noturno)":["Filosofia"] },
-    "JULIANA":    { "8º Ano B":["Matemática"], "9º Ano B":["Matemática"] },
-    "KALED":      { "6º Ano A":["Arte"], "6º Ano C":["Arte"], "7º Ano A":["Arte"], "7º Ano B":["Arte"], "8º Ano A":["Arte"], "8º Ano B":["Arte"], "9º Ano A":["Arte"], "9º Ano B":["Arte"] },
-    "KIKO":       { "6º Ano A":["Inglês"], "6º Ano C":["Inglês"], "7º Ano A":["Inglês"], "7º Ano B":["Inglês"], "8º Ano A":["Inglês"], "8º Ano B":["Inglês"], "9º Ano A":["Inglês"] },
-    "LUCIANA L":  { "8º Ano B":["Português"] },
     "MANTOVANI":  { "2º A (Noturno)":["Química","Biologia"], "3º D (Noturno)":["Biologia","Química"], "3º E (Noturno)":["Biologia","Química"], "1º TMA (Noturno)":["Biologia"], "3º TMA (Noturno)":["Biologia","Física"] },
     "MARCIA L":   { "6º Ano A":["Matemática"], "6º Ano C":["Matemática"], "7º Ano B":["Matemática"], "8º Ano A":["Matemática"], "9º Ano A":["OEM"], "9º Ano B":["OEM"] },
     "MARGÔ":      { "9º Ano B":["OEP","Redação"], "2º A (Noturno)":["Português"], "3º D (Noturno)":["Português"], "3º E (Noturno)":["Português"], "1º TMA (Noturno)":["Português"], "3º TMA (Noturno)":["Português"] },
     "MÁRCIO":     { "1º TMA (Noturno)":["Sociologia","Oratória e Liderança"], "3º TMA (Noturno)":["Sociologia","Oratória e Liderança"] },
     "NICOLE":     { "6º Ano A":["Geografia","Projeto de Vida"], "6º Ano C":["Geografia"], "8º Ano A":["História"], "8º Ano B":["História"], "9º Ano A":["História"], "2º A (Noturno)":["Sociologia"] },
     "PAULO":      { "6º Ano A":["História"], "6º Ano C":["História"], "7º Ano A":["História"], "7º Ano B":["História"], "9º Ano B":["História"] },
-    "RAUL":       { "6º Ano A":["Ciências"], "6º Ano C":["Ciências"], "7º Ano A":["Ciências"], "7º Ano B":["Ciências"], "8º Ano A":["Ciências"], "8º Ano B":["Ciências","Tecnologia"], "9º Ano A":["Ciências"], "9º Ano B":["Ciências"], "2º C (Noturno)":["Biologia","Química"], "3º F (Noturno)":["Biologia","Química"] },
-    "RICARDO":    { "8º Ano A":["Educação Financeira"], "8º Ano B":["Matemática","Educação Financeira"], "9º Ano A":["Matemática"] },
     "ROSE":       { "6º Ano A":["OEP"], "6º Ano C":["OEP"], "7º Ano A":["Português"], "7º Ano B":["Português"], "8º Ano A":["Português"], "9º Ano A":["OEP"], "9º Ano B":["Português"] },
     "SONIA":      { "7º Ano A":["Educação Financeira"] },
     "VICENTE":    { "3º F (Noturno)":["OEP","Português"] },
     "WALERIA":    { "6º Ano A":["Geografia","Projeto de Vida"], "6º Ano C":["Projeto de Vida"], "7º Ano A":["Geografia"], "7º Ano B":["Geografia","Projeto de Vida"], "8º Ano A":["Geografia"], "8º Ano B":["Geografia"], "9º Ano A":["Geografia"], "9º Ano B":["Geografia","Projeto de Vida"], "2º C (Noturno)":["Geografia"], "3º D (Noturno)":["Geografia"], "3º E (Noturno)":["Geografia"], "3º F (Noturno)":["Geografia"], "1º TMA (Noturno)":["Atualidades","Geografia"], "3º TMA (Noturno)":["Geografia"] }
   };
 
-  /* =================================================================
-     ESTADO GLOBAL DOS DESCRITORES SELECIONADOS
-  ================================================================= */
   var codigosSelecionados = [];
-  var todasHabilidades = [];   // habilidades retornadas pelo servidor
-  var modoFiltroHabilidades = 'nao-atingidas'; // 'nao-atingidas' | 'todas'
 
   /* =================================================================
      INICIALIZAÇÃO
@@ -1344,15 +861,8 @@
         document.querySelectorAll('.multiselect-options').forEach(function(el){ el.classList.remove('active'); });
       }
     });
-    // Data atual no cabeçalho
-    var hoje = new Date().toLocaleDateString('pt-BR', { year:'numeric', month:'long', day:'numeric' });
-    document.getElementById('cr-data-header').textContent = hoje;
-    document.getElementById('pl-data-header').textContent = hoje;
   });
 
-  /* =================================================================
-     PROFESSORES
-  ================================================================= */
   function inicializarProfessores(idSelect) {
     var select = document.getElementById(idSelect);
     select.innerHTML = '<option value="">-- Selecione o Professor(a) --</option>';
@@ -1378,12 +888,8 @@
       inputNovo.value = '';
       carregarTurmasProfessor(prefixo);
     }
-    atualizarMetaHeader(prefixo);
   }
 
-  /* =================================================================
-     TURMAS — MULTISELECT COM BADGES
-  ================================================================= */
   function carregarTurmasProfessor(prefixo) {
     var prof = document.getElementById(prefixo + '_professor').value;
     var container = document.getElementById(prefixo + '_turma_options');
@@ -1431,7 +937,6 @@
     btn.textContent = selecionados.length === 0 ? 'Selecione uma ou mais turmas' : selecionados.join(', ');
     renderBadgesTurmas(prefixo, selecionados);
     atualizarComponente(prefixo);
-    atualizarMetaHeader(prefixo);
   }
 
   function renderBadgesTurmas(prefixo, turmas) {
@@ -1446,9 +951,6 @@
     });
   }
 
-  /* =================================================================
-     COMPONENTE CURRICULAR
-  ================================================================= */
   function atualizarComponente(prefixo) {
     var profVal = document.getElementById(prefixo + '_professor').value;
     var compWrap = document.getElementById(prefixo + '_componente_wrap');
@@ -1456,11 +958,6 @@
 
     if (profVal === 'OUTRO') {
       compWrap.innerHTML = '<input type="text" id="' + prefixo + '_componente" placeholder="Digite o nome da disciplina...">';
-      var inp = document.getElementById(prefixo + '_componente');
-      if (inp) {
-        inp.addEventListener('input', function() { tentarCarregarAprendizagens(prefixo); atualizarMetaHeader(prefixo); });
-        inp.addEventListener('blur', function() { tentarCarregarAprendizagens(prefixo); atualizarMetaHeader(prefixo); });
-      }
       return;
     }
 
@@ -1476,11 +973,6 @@
 
     if (disciplinasSet.length === 0) {
       compWrap.innerHTML = '<input type="text" id="' + prefixo + '_componente" placeholder="Digite o nome da disciplina...">';
-      var inp = document.getElementById(prefixo + '_componente');
-      if (inp) {
-        inp.addEventListener('input', function() { tentarCarregarAprendizagens(prefixo); atualizarMetaHeader(prefixo); });
-        inp.addEventListener('blur', function() { tentarCarregarAprendizagens(prefixo); atualizarMetaHeader(prefixo); });
-      }
       return;
     }
 
@@ -1492,458 +984,82 @@
     compWrap.innerHTML = html;
 
     var sel = document.getElementById(prefixo + '_componente');
-    if (sel) {
-      if (disciplinasSet.length === 1) { sel.value = disciplinasSet[0]; }
-      sel.addEventListener('change', function() { tentarCarregarAprendizagens(prefixo); atualizarMetaHeader(prefixo); });
-      tentarCarregarAprendizagens(prefixo);
-      atualizarMetaHeader(prefixo);
-    }
+    if (sel && disciplinasSet.length === 1) { sel.value = disciplinasSet[0]; }
   }
 
   /* =================================================================
-     META HEADER — Atualiza informações no cabeçalho do documento
+     FUNÇÃO DE GERAR AULAS CRUZANDO A GRADE DO PROFESSOR
   ================================================================= */
-  function atualizarMetaHeader(prefixo) {
-    var prof = obterNomeProfessor(prefixo);
-    var comp = obterComponenteCurricular(prefixo);
-    var bim  = (document.getElementById(prefixo + '_bimestre') || {}).value || '';
+  function gerarAulasPorGradeHoraria() {
+    var prof = obterNomeProfessor('pl');
+    var turmas = coletarTurmasSelecionadas('pl');
+    var periodo = (document.getElementById('pl_periodo') || {}).value || '';
 
-    if (prefixo === 'cr') {
-      document.getElementById('cr-meta-prof').textContent = prof || '—';
-      document.getElementById('cr-meta-comp').textContent = comp || '—';
-      document.getElementById('cr-meta-bim').textContent  = bim  || '—';
-    } else {
-      document.getElementById('pl-meta-prof').textContent = prof || '—';
-      document.getElementById('pl-meta-comp').textContent = comp || '—';
-      document.getElementById('pl-meta-bim').textContent  = bim  || '—';
-    }
-  }
+    if (!prof) { alert('Selecione o professor primeiro.'); return; }
+    if (turmas.length === 0) { alert('Selecione pelo menos uma turma.'); return; }
 
-  /* =================================================================
-     SELETOR DE DESCRITORES SAEB/BNCC
-  ================================================================= */
-  function atualizarCodigosSAEB() {
-    var disc = document.getElementById('saeb_disciplina').value;
-    var ano  = document.getElementById('saeb_ano').value;
-    var sel  = document.getElementById('saeb_codigo');
-    sel.innerHTML = '<option value="">-- Selecione o código --</option>';
+    // Procura o horário do professor na tabela (Manhã, Tarde ou Noturno)
+    var mapaEncontrado = [];
 
-    if (!disc || !ano) return;
-    var dadosDisc = DESCRITORES_SAEB[disc];
-    if (!dadosDisc) return;
-    var dadosAno = dadosDisc[ano];
-    if (!dadosAno) {
-      sel.innerHTML = '<option value="">Nenhum código para este ano/disciplina</option>';
-      return;
-    }
-    Object.keys(dadosAno).forEach(function(cod) {
-      var opt = document.createElement('option');
-      opt.value = cod;
-      opt.textContent = cod + ' — ' + dadosAno[cod].substring(0, 60) + '...';
-      sel.appendChild(opt);
-    });
-  }
-
-  function adicionarDescritor() {
-    var disc  = document.getElementById('saeb_disciplina').value;
-    var ano   = document.getElementById('saeb_ano').value;
-    var cod   = document.getElementById('saeb_codigo').value;
-    if (!cod) { alert('Selecione um código para adicionar.'); return; }
-
-    // Verificar se já foi adicionado
-    if (codigosSelecionados.indexOf(cod) !== -1) {
-      alert('Este código já foi adicionado.'); return;
-    }
-
-    codigosSelecionados.push(cod);
-    renderTagsCodigos();
-
-    // Preencher textarea de objetivos
-    var desc = DESCRITORES_SAEB[disc][ano][cod];
-    var ta = document.getElementById('pl_objetivos');
-    var atual = ta.value.trim();
-    if (atual) {
-      ta.value = atual + '\n\n' + cod + ': ' + desc;
-    } else {
-      ta.value = cod + ': ' + desc;
-    }
-    ta.style.height = 'auto';
-    ta.style.height = ta.scrollHeight + 'px';
-
-    // Resetar seletor de código
-    document.getElementById('saeb_codigo').value = '';
-  }
-
-  function renderTagsCodigos() {
-    var container = document.getElementById('codigos-selecionados-tags');
-    container.innerHTML = '';
-    codigosSelecionados.forEach(function(cod) {
-      var tag = document.createElement('span');
-      tag.className = 'codigo-tag';
-      tag.innerHTML = cod + ' <span class="remove-tag" onclick="removerCodigo(\'' + cod + '\')">✕</span>';
-      container.appendChild(tag);
-    });
-  }
-
-  function removerCodigo(cod) {
-    codigosSelecionados = codigosSelecionados.filter(function(c) { return c !== cod; });
-    renderTagsCodigos();
-    // Reconstruir textarea apenas com os descritores ainda presentes
-    var ta = document.getElementById('pl_objetivos');
-    var linhas = ta.value.split('\n\n');
-    var novas = linhas.filter(function(l) { return l.indexOf(cod + ':') !== 0; });
-    ta.value = novas.join('\n\n').trim();
-  }
-
-  function limparDescritores() {
-    if (!confirm('Limpar todos os descritores adicionados?')) return;
-    codigosSelecionados = [];
-    renderTagsCodigos();
-    document.getElementById('pl_objetivos').value = '';
-  }
-
-  /* =================================================================
-     HABILIDADES PRIORIZADAS — Filtro por índice do Estado
-  ================================================================= */
-  function processarHabilidades(textoRaw) {
-    // Tenta parsear habilidades do texto retornado pelo servidor
-    // Formato esperado: linhas com padrão "EFXXYYXX: descrição [índice: XX%]"
-    // ou JSON com { codigo, descricao, indiceEstado, naoAtingida }
-    var habilidades = [];
-
-    if (!textoRaw || !textoRaw.trim()) return habilidades;
-
-    // Tentar parsear JSON primeiro
-    try {
-      var parsed = JSON.parse(textoRaw);
-      if (Array.isArray(parsed)) {
-        return parsed.map(function(h) {
-          return {
-            codigo: h.codigo || h.code || '',
-            descricao: h.descricao || h.description || h.habilidade || '',
-            indiceEstado: h.indiceEstado || h.indice || null,
-            naoAtingida: h.naoAtingida !== undefined ? h.naoAtingida : true
-          };
-        });
-      }
-    } catch(e) { /* não é JSON, tentar parsear como texto */ }
-
-    // Parsear como texto linha por linha
-    var linhas = textoRaw.split('\n');
-    linhas.forEach(function(linha) {
-      linha = linha.trim();
-      if (!linha) return;
-
-      // Padrão: "EF06CI01 - Descrição [75%]" ou "EF06CI01: Descrição"
-      var match = linha.match(/^(EF\d{2}[A-Z]{2}\d{2})[:\s\-–]+(.+?)(?:\s*\[(\d+(?:[,.]\d+)?)\s*%\s*\])?$/i);
-      if (match) {
-        var indice = match[3] ? parseFloat(match[3].replace(',', '.')) : null;
-        habilidades.push({
-          codigo: match[1].toUpperCase(),
-          descricao: match[2].trim(),
-          indiceEstado: indice,
-          naoAtingida: indice !== null ? indice < 50 : true  // abaixo de 50% = não atingiu
-        });
-      } else {
-        // Linha sem código estruturado — adicionar como genérica
-        habilidades.push({
-          codigo: '',
-          descricao: linha,
-          indiceEstado: null,
-          naoAtingida: true
-        });
-      }
-    });
-
-    return habilidades;
-  }
-
-  function renderHabilidadesVisuais(habilidades, modo) {
-    var lista = document.getElementById('habilidades-lista-visual');
-    var countEl = document.getElementById('habilidades-filtro-count');
-    if (!lista) return;
-
-    lista.style.display = habilidades.length > 0 ? 'flex' : 'none';
-    lista.innerHTML = '';
-
-    var filtradas = modo === 'nao-atingidas'
-      ? habilidades.filter(function(h) { return h.naoAtingida; })
-      : habilidades;
-
-    var naoAtingidas = habilidades.filter(function(h) { return h.naoAtingida; }).length;
-    countEl.textContent = modo === 'nao-atingidas'
-      ? '⚠️ ' + naoAtingidas + ' de ' + habilidades.length + ' não atingiram o índice'
-      : habilidades.length + ' habilidades totais (' + naoAtingidas + ' abaixo do índice)';
-
-    filtradas.forEach(function(h) {
-      var item = document.createElement('div');
-      item.className = 'habilidade-item ' + (h.naoAtingida ? 'nao-atingida' : 'atingida');
-
-      var badgeHtml = '';
-      if (h.naoAtingida) {
-        var pct = h.indiceEstado !== null ? ' (' + h.indiceEstado + '%)' : '';
-        badgeHtml = '<span class="habilidade-badge-status nao-atingida">⚠️ Abaixo do índice' + pct + '</span>';
-      } else {
-        var pct2 = h.indiceEstado !== null ? ' (' + h.indiceEstado + '%)' : '';
-        badgeHtml = '<span class="habilidade-badge-status atingida">✅ Atingida' + pct2 + '</span>';
-      }
-
-      item.innerHTML =
-        (h.codigo ? '<span class="habilidade-codigo">' + h.codigo + '</span>' : '') +
-        '<span class="habilidade-descricao">' + h.descricao + '</span>' +
-        badgeHtml;
-
-      lista.appendChild(item);
-    });
-
-    // Atualizar textarea com apenas as habilidades filtradas (não-atingidas em modo filtrado)
-    var textoPorModo = filtradas.map(function(h) {
-      return h.codigo ? h.codigo + ': ' + h.descricao : h.descricao;
-    }).join('\n');
-    document.getElementById('pl_habilidades').value = textoPorModo;
-  }
-
-  function filtrarHabilidades(modo) {
-    modoFiltroHabilidades = modo;
-    document.getElementById('btn-filtro-nao-atingidas').classList.toggle('ativo', modo === 'nao-atingidas');
-    document.getElementById('btn-filtro-todas').classList.toggle('ativo', modo === 'todas');
-    renderHabilidadesVisuais(todasHabilidades, modo);
-  }
-
-  /* =================================================================
-     ORGANIZADOR DE AULAS (14 DIAS ÚTEIS)
-  ================================================================= */
-  function obterProximosDiasUteis(dataInicioStr, quantidadeDias) {
-    var dias = [];
-    var data;
-    if (dataInicioStr) {
-      var partes = dataInicioStr.split('-');
-      if (partes.length === 3) {
-        data = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
-      } else {
-        data = new Date();
-      }
-    } else {
-      var valPer = (document.getElementById('pl_periodo') || {}).value || '';
-      var m = valPer.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-      if (m) {
-        data = new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
-      } else {
-        data = new Date();
-      }
-    }
-
-    var nomesDias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-
-    while (dias.length < quantidadeDias) {
-      var diaSem = data.getDay();
-      if (diaSem !== 0 && diaSem !== 6) { // Pula Sábado (6) e Domingo (0)
-        var diaFmt = String(data.getDate()).padStart(2, '0');
-        var mesFmt = String(data.getMonth() + 1).padStart(2, '0');
-        var anoFmt = data.getFullYear();
-        dias.push({
-          dataFmt: diaFmt + '/' + mesFmt + '/' + anoFmt,
-          diaSemana: nomesDias[diaSem],
-          numDia: dias.length + 1
-        });
-      }
-      data.setDate(data.getDate() + 1);
-    }
-    return dias;
-  }
-
-  function extrairTopicosConteudo(textoRaw) {
-    if (!textoRaw || !textoRaw.trim()) return [];
-
-    var texto = textoRaw
-      .replace(/\[\.\.\.texto cortado automaticamente.*$/g, '')
-      .replace(/\d+º\s*\d+º\s*\d+º\s*\d+º\s*\d+º\s*Habilidades Relacionadas.*/gi, '')
-      .replace(/De Olho na Prova Paulista.*/gi, '')
-      .replace(/De Olho no SARESP.*/gi, '')
-      .replace(/Não há\./gi, '');
-
-    var topicos = [];
-    var linhas = texto.split(/\n|•/);
-    linhas.forEach(function(l) {
-      var item = l.trim();
-      if (item && item.length > 5 && !item.match(/^Volume \d+/i) && !item.match(/^3º bim/i)) {
-        topicos.push(item);
-      }
-    });
-
-    if (topicos.length < 3) {
-      var frases = texto.split(/\.|\;/);
-      topicos = [];
-      frases.forEach(function(f) {
-        var item = f.trim();
-        if (item && item.length > 10) topicos.push(item);
-      });
-    }
-
-    return topicos;
-  }
-
-  function organizarConteudo14DiasUteis() {
-    var dataInicioInput = document.getElementById('org_data_inicio').value;
-    var ordAulaSel      = document.getElementById('org_ordem_aula').value || '1ª e 2ª Aulas';
-    var taConteudo       = document.getElementById('pl_conteudo');
-    var statusBadge      = document.getElementById('org_status_badge');
-
-    var textoAtual = taConteudo.value.trim();
-    if (!textoAtual) {
-      alert('Preencha ou carregue primeiro o conteúdo no campo antes de organizar.');
-      return;
-    }
-
-    var diasUteis = obterProximosDiasUteis(dataInicioInput, 14);
-    var topicos   = extrairTopicosConteudo(textoAtual);
-
-    if (topicos.length === 0) {
-      topicos = [textoAtual];
-    }
-
-    var resultadoLines = [];
-    resultadoLines.push('============================================================');
-    resultadoLines.push('📅 CRONOGRAMA DE AULAS — PERÍODO DE 14 DIAS ÚTEIS');
-    resultadoLines.push('============================================================\n');
-
-    for (var i = 0; i < 14; i++) {
-      var d = diasUteis[i];
-      var numAula = (i + 1) + 'ª Aula';
-      var ordemStr = ordAulaSel ? ' | ' + ordAulaSel : ' | ' + numAula;
-      var topicoDaAula = topicos[i % topicos.length];
-
-      resultadoLines.push('📅 DIA ' + d.numDia + ' — ' + d.dataFmt + ' (' + d.diaSemana + ')' + ordemStr);
-      resultadoLines.push('• Tema / Conteúdo: ' + topicoDaAula);
-      resultadoLines.push('');
-    }
-
-    taConteudo.value = resultadoLines.join('\n');
-    taConteudo.style.height = 'auto';
-    taConteudo.style.height = (taConteudo.scrollHeight + 10) + 'px';
-
-    if (statusBadge) {
-      statusBadge.style.display = 'flex';
-      statusBadge.innerHTML = '✅ Organizado com sucesso para 14 dias úteis (de ' + diasUteis[0].dataFmt + ' a ' + diasUteis[13].dataFmt + ')!';
-    }
-  }
-
-  /* =================================================================
-     CARREGAMENTO DO GUIA PRIORIZADO (4 campos)
-  ================================================================= */
-  function tentarCarregarAprendizagens(prefixo) {
-    if (prefixo !== 'pl') return;
-
-    var turmas   = coletarTurmasSelecionadas(prefixo);
-    var comp     = obterComponenteCurricular(prefixo);
-    var bimElem  = document.getElementById(prefixo + '_bimestre');
-    var bimestre = bimElem ? bimElem.value : '';
-
-    atualizarMetaHeader(prefixo);
-
-    if (turmas.length === 0 || !comp || !comp.trim() || !bimestre) return;
-
-    var loadBar  = document.getElementById('loading-aprendizagens');
-    var loadHab  = document.getElementById('loading-habilidades');
-    var badgeConteudo  = document.getElementById('badge-conteudo');
-    var badgeObjetivos = document.getElementById('badge-objetivos');
-    var badgeAp  = document.getElementById('badge-aprendizagens');
-    var badgeHab = document.getElementById('badge-habilidades');
-    var taConteudo  = document.getElementById('pl_conteudo');
-    var taObjetivos = document.getElementById('pl_objetivos');
-    var taAp     = document.getElementById('pl_aprendizagens');
-    var taHab    = document.getElementById('pl_habilidades');
-
-    loadBar.classList.add('ativo');
-    loadHab.classList.add('ativo');
-    [badgeConteudo, badgeObjetivos, badgeAp, badgeHab].forEach(function(b){ b.style.display = 'none'; });
-    taAp.disabled = true;
-    taHab.disabled = true;
-
-    var dadosBusca = { disciplina: comp, turma: turmas[0], bimestre: bimestre };
-
-    enviarServidor('buscarAprendizagens', dadosBusca,
-      function(r) {
-        loadBar.classList.remove('ativo');
-        loadHab.classList.remove('ativo');
-        taAp.disabled  = false;
-        taHab.disabled = false;
-
-        if (r && r.sucesso) {
-          if (r.conteudo)  {
-            taConteudo.value = r.conteudo;
-            badgeConteudo.style.display = 'inline-block';
-            organizarConteudo14DiasUteis();
-          }
-          if (r.objetivos) { taObjetivos.value = r.objetivos; badgeObjetivos.style.display = 'inline-block'; }
-          if (r.aprendizagens) { taAp.value = r.aprendizagens; badgeAp.style.display = 'inline-block'; }
-
-          if (r.habilidades) {
-            // Processar habilidades com filtro por índice do Estado
-            todasHabilidades = processarHabilidades(r.habilidades);
-            badgeHab.style.display = 'inline-block';
-
-            var areaFiltro = document.getElementById('habilidades-filtro-area');
-            var listaVisual = document.getElementById('habilidades-lista-visual');
-
-            if (todasHabilidades.length > 0) {
-              areaFiltro.style.display = 'flex';
-              listaVisual.style.display = 'flex';
-              renderHabilidadesVisuais(todasHabilidades, modoFiltroHabilidades);
-            } else {
-              // Fallback: exibir texto bruto
-              taHab.value = r.habilidades;
-              areaFiltro.style.display = 'none';
-              listaVisual.style.display = 'none';
-            }
-          }
-        } else {
-          todasHabilidades = [];
-          taAp.value = '';
-          taHab.value = '';
-          var msg = r ? r.mensagem : 'Erro desconhecido';
-          taAp.placeholder = '⚠️ Não foi possível carregar: ' + msg + '. Preencha manualmente.';
+    var buscarEmTurno = function(turnoNome, dataset) {
+      turmas.forEach(function(turma) {
+        if (dataset[turma]) {
+          var gradeTurma = dataset[turma];
+          Object.keys(gradeTurma).forEach(function(diaSem) {
+            var aulasDia = gradeTurma[diaSem];
+            aulasDia.forEach(function(profNaAula, idxAula) {
+              if (profNaAula && profNaAula.toUpperCase().indexOf(prof.toUpperCase()) !== -1) {
+                mapaEncontrado.push({
+                  turno: turnoNome,
+                  turma: turma,
+                  diaSemana: diaSem,
+                  numAula: (idxAula + 1) + 'ª Aula'
+                });
+              }
+            });
+          });
         }
-      },
-      function(e) {
-        loadBar.classList.remove('ativo');
-        loadHab.classList.remove('ativo');
-        taAp.disabled  = false;
-        taHab.disabled = false;
-        todasHabilidades = [];
-        var msgErro = (e && e.message) ? e.message : (typeof e === 'string' ? e : 'Falha na comunicação com o servidor');
-        taAp.placeholder = '⚠️ ' + msgErro + '. Preencha manualmente.';
-        console.error('Erro ao buscar aprendizagens/habilidades:', e);
-      }
-    );
+      });
+    };
+
+    buscarEmTurno('Manhã', HORARIO_MANHA);
+    buscarEmTurno('Tarde', HORARIO_TARDE);
+    buscarEmTurno('Noturno', HORARIO_NOTURNO);
+
+    var taMetodologia = document.getElementById('pl_metodologia');
+    var taConteudo    = document.getElementById('pl_conteudo');
+
+    if (mapaEncontrado.length === 0) {
+      alert('Não foram encontradas aulas cadastradas na grade para o professor ' + prof + ' na(s) turma(s) selecionada(s).');
+      return;
+    }
+
+    // Gerar estrutura de aulas por dia/horário da grade
+    var linhasMetodologia = [];
+    var totalAulasCount = mapaEncontrado.length;
+    document.getElementById('pl_qtdAulas').value = totalAulasCount;
+
+    linhasMetodologia.push('HORÁRIO / AULAS DO PROFESSOR (' + (periodo || 'Período indicado') + '):');
+    mapaEncontrado.forEach(function(item, idx) {
+      linhasMetodologia.push('- Aula ' + (idx + 1) + ' (' + item.diaSemana + '-feira - ' + item.numAula + ' - Turma ' + item.turma + '):');
+      linhasMetodologia.push('  Desenvolvimento da aula e estratégias pedagógicas...');
+      linhasMetodologia.push('');
+    });
+
+    taMetodologia.value = linhasMetodologia.join('\n');
+    taMetodologia.style.height = 'auto';
+    taMetodologia.style.height = (taMetodologia.scrollHeight + 10) + 'px';
+
+    alert('✅ ' + totalAulasCount + ' aula(s) mapeada(s) automaticamente a partir do horário do professor!');
   }
 
   /* =================================================================
-     HELPERS
-  ================================================================= */
-  function coletarTurmasSelecionadas(prefixo) {
-    var container = document.getElementById(prefixo + '_turma_options');
-    var res = [];
-    container.querySelectorAll('input[type="checkbox"]:checked').forEach(function(cb) { res.push(cb.value); });
-    return res;
-  }
-
-  function obterNomeProfessor(prefixo) {
-    var v = document.getElementById(prefixo + '_professor').value;
-    return v === 'OUTRO' ? document.getElementById(prefixo + '_professor_novo').value : v;
-  }
-
-  function obterComponenteCurricular(prefixo) {
-    var el = document.getElementById(prefixo + '_componente');
-    return el ? el.value : '';
-  }
-
-  /* =================================================================
-     SEMANAS — CRONOGRAMA (8 semanas)
+     CRONOGRAMA DE 8 SEMANAS (RESTAURADO)
   ================================================================= */
   (function() {
     var cores = ['w1','w2','w3','w4','w5','w6','w7','w8'];
     var cont = document.getElementById('semanas-container');
+    if (!cont) return;
     for (var i = 1; i <= 8; i++) {
       var c = cores[i-1];
       var div = document.createElement('div');
@@ -1967,51 +1083,68 @@
   }
 
   /* =================================================================
-     COLETA DE DADOS
+     HELPERS E ENVIOS
   ================================================================= */
+  function coletarTurmasSelecionadas(prefixo) {
+    var container = document.getElementById(prefixo + '_turma_options');
+    var res = [];
+    if (!container) return res;
+    container.querySelectorAll('input[type="checkbox"]:checked').forEach(function(cb) { res.push(cb.value); });
+    return res;
+  }
+
+  function obterNomeProfessor(prefixo) {
+    var el = document.getElementById(prefixo + '_professor');
+    if (!el) return '';
+    var v = el.value;
+    return v === 'OUTRO' ? (document.getElementById(prefixo + '_professor_novo') || {}).value : v;
+  }
+
+  function obterComponenteCurricular(prefixo) {
+    var el = document.getElementById(prefixo + '_componente');
+    return el ? el.value : '';
+  }
+
   function coletarCronograma() {
     var turmas = coletarTurmasSelecionadas('cr');
     var d = {
       professor:  obterNomeProfessor('cr'),
       componente: obterComponenteCurricular('cr'),
       turma:      turmas.join(', '),
-      bimestre:   document.getElementById('cr_bimestre').value
+      bimestre:   (document.getElementById('cr_bimestre') || {}).value || ''
     };
     for (var i = 1; i <= 8; i++) {
-      d['semana_'+i+'_conteudo']    = document.getElementById('s'+i+'_conteudo').value;
-      d['semana_'+i+'_habilidades'] = document.getElementById('s'+i+'_habilidades').value;
-      d['semana_'+i+'_metodologia'] = document.getElementById('s'+i+'_metodologia').value;
-      d['semana_'+i+'_avaliacao']   = document.getElementById('s'+i+'_avaliacao').value;
+      d['semana_'+i+'_conteudo']    = (document.getElementById('s'+i+'_conteudo') || {}).value || '';
+      d['semana_'+i+'_habilidades'] = (document.getElementById('s'+i+'_habilidades') || {}).value || '';
+      d['semana_'+i+'_metodologia'] = (document.getElementById('s'+i+'_metodologia') || {}).value || '';
+      d['semana_'+i+'_avaliacao']   = (document.getElementById('s'+i+'_avaliacao') || {}).value || '';
     }
     return d;
   }
 
   function coletarPlano() {
     var turmas = coletarTurmasSelecionadas('pl');
-    var valQtd = document.getElementById('pl_qtdAulas').value;
+    var valQtd = (document.getElementById('pl_qtdAulas') || {}).value || '';
     return {
       professor:            obterNomeProfessor('pl'),
       componente:           obterComponenteCurricular('pl'),
       turma:                turmas.join(', '),
-      bimestre:             document.getElementById('pl_bimestre').value,
+      bimestre:             (document.getElementById('pl_bimestre') || {}).value || '',
       quantidadeAulas:      valQtd,
       qtdAulas:             valQtd,
-      periodo:              document.getElementById('pl_periodo').value,
-      conteudo:             document.getElementById('pl_conteudo').value,
-      objetivos:            document.getElementById('pl_objetivos').value,
-      aprendizagens:        document.getElementById('pl_aprendizagens').value,
-      habilidades:          document.getElementById('pl_habilidades').value,
-      conhecimentosPrevios: document.getElementById('pl_conhecimentos').value,
-      recursos:             document.getElementById('pl_recursos').value,
-      metodologia:          document.getElementById('pl_metodologia').value,
-      avaliacao:            document.getElementById('pl_avaliacao').value,
-      observacao:           document.getElementById('pl_observacao').value
+      periodo:              (document.getElementById('pl_periodo') || {}).value || '',
+      conteudo:             (document.getElementById('pl_conteudo') || {}).value || '',
+      objetivos:            (document.getElementById('pl_objetivos') || {}).value || '',
+      aprendizagens:        (document.getElementById('pl_aprendizagens') || {}).value || '',
+      habilidades:          (document.getElementById('pl_habilidades') || {}).value || '',
+      conhecimentosPrevios: (document.getElementById('pl_conhecimentos') || {}).value || '',
+      recursos:             (document.getElementById('pl_recursos') || {}).value || '',
+      metodologia:          (document.getElementById('pl_metodologia') || {}).value || '',
+      avaliacao:            (document.getElementById('pl_avaliacao') || {}).value || '',
+      observacao:           (document.getElementById('pl_observacao') || {}).value || ''
     };
   }
 
-  /* =================================================================
-     TRANSPORTE — Google Apps Script
-  ================================================================= */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       var runner = google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro);
@@ -2039,28 +1172,12 @@
     }
   }
 
-  /* =================================================================
-     ENVIO DO CRONOGRAMA
-  ================================================================= */
   function enviarCronograma() {
     var status = document.getElementById('status-cr');
     var btn    = document.getElementById('btn-cr');
     var dados  = coletarCronograma();
     if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
     if (!dados.turma.trim())     { alert('Selecione pelo menos uma turma.'); return; }
-    if (!dados.componente.trim()){ alert('Selecione a disciplina.'); return; }
-    if (!dados.bimestre)         { alert('Selecione o bimestre.'); return; }
-
-    // Confirmação com turmas selecionadas
-    var turmas = coletarTurmasSelecionadas('cr');
-    var confirmMsg = '📅 Confirme os dados antes de gerar o PDF:\n\n' +
-      '👤 Professor(a): ' + dados.professor + '\n' +
-      '📋 Turma(s): ' + turmas.join(', ') + '\n' +
-      '📚 Componente: ' + dados.componente + '\n' +
-      '📌 Bimestre: ' + dados.bimestre + '\n\n' +
-      'Deseja continuar?';
-    if (!confirm(confirmMsg)) return;
-
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
@@ -2069,10 +1186,6 @@
       if (r && r.sucesso) {
         status.className = 'status-area success';
         status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! <a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
-        if (r.avisoPlanilha) {
-          status.className = 'status-area warning';
-          status.innerHTML += '<br>⚠️ ' + r.avisoPlanilha;
-        }
       } else {
         status.className = 'status-area error';
         status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
@@ -2080,27 +1193,12 @@
     }, function(e) { btn.disabled = false; status.className = 'status-area error'; status.innerHTML = '❌ ' + e; });
   }
 
-  /* =================================================================
-     ENVIO DO PLANO
-  ================================================================= */
   function enviarPlano() {
     var status = document.getElementById('status-pl');
     var btn    = document.getElementById('btn-pl');
     var dados  = coletarPlano();
     if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
     if (!dados.turma.trim())     { alert('Selecione pelo menos uma turma.'); return; }
-    if (!dados.componente.trim()){ alert('Selecione a disciplina.'); return; }
-
-    // Confirmação com turmas selecionadas
-    var turmas = coletarTurmasSelecionadas('pl');
-    var confirmMsg = '📝 Confirme os dados antes de gerar o PDF:\n\n' +
-      '👤 Professor(a): ' + dados.professor + '\n' +
-      '📋 Turma(s): ' + turmas.join(', ') + '\n' +
-      '📚 Componente: ' + dados.componente + '\n' +
-      '📌 Bimestre: ' + dados.bimestre + '\n\n' +
-      'Deseja continuar?';
-    if (!confirm(confirmMsg)) return;
-
     btn.disabled = true;
     status.className = 'status-area';
     status.innerHTML = '⏳ Gerando PDF e salvando no Google Drive...';
@@ -2109,10 +1207,6 @@
       if (r && r.sucesso) {
         status.className = 'status-area success';
         status.innerHTML = '✅ Salvo na pasta <b>"' + r.nomePasta + '"</b>! <a href="' + r.urlArquivo + '" target="_blank">📄 Abrir PDF</a>';
-        if (r.avisoPlanilha) {
-          status.className = 'status-area warning';
-          status.innerHTML += '<br>⚠️ ' + r.avisoPlanilha;
-        }
       } else {
         status.className = 'status-area error';
         status.innerHTML = '❌ Erro: ' + (r ? r.mensagem : 'Erro desconhecido');
