@@ -118,6 +118,7 @@
     .multiselect-options.active { display: block; }
     .multiselect-item {
       display: flex;
+
       align-items: center;
       gap: 8px;
       padding: 6px 8px;
@@ -238,6 +239,7 @@
       border-radius: 10px;
       font-weight: 700;
       letter-spacing: .3px;
+
     }
     .badge-auto.carregando {
       background: var(--navy-light);
@@ -358,6 +360,7 @@
 
       <div class="section-block">
         <div class="section-title">
+
           Objetivo(s)
           <span class="badge-auto" id="badge-objetivos" style="display:none">✅ Carregado do Guia</span>
         </div>
@@ -479,6 +482,7 @@
   "SANDRA": { "2B":["A confirmar"], "2D.S.":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
   "SILVIA": { "2D/ADM":["A confirmar"] },
 
+
   /* ===== PERÍODO NOTURNO (existente) ===== */
   "ADRIANA":   { "2º C (Noturno)":["Redação","Português"], "3º F (Noturno)":["Redação"] },
   "AILTON":    { "1º TMA (Noturno)":["Redação"], "3º TMA (Noturno)":["Redação"] },
@@ -598,6 +602,7 @@
   }
 
   function atualizarComponente(prefixo) {
+
     var profVal = document.getElementById(prefixo + '_professor').value;
     var compWrap = document.getElementById(prefixo + '_componente_wrap');
     var selecionados = coletarTurmasSelecionadas(prefixo);
@@ -718,6 +723,7 @@
   }
 
   function coletarTurmasSelecionadas(prefixo) {
+
     var container = document.getElementById(prefixo + '_turma_options');
     var res = [];
     container.querySelectorAll('input[type="checkbox"]:checked').forEach(function(cb) { res.push(cb.value); });
@@ -838,6 +844,7 @@
     var status = document.getElementById('status-cr');
     var btn    = document.getElementById('btn-cr');
     var dados  = coletarCronograma();
+
     if (!dados.professor.trim()) { alert('Selecione o professor(a).'); return; }
     if (!dados.turma.trim())     { alert('Selecione pelo menos uma turma.'); return; }
     if (!dados.componente.trim()){ alert('Selecione a disciplina.'); return; }
@@ -886,6 +893,75 @@
       }
     }, function(e) { btn.disabled = false; status.className = 'status-area error'; status.innerHTML = '❌ ' + e; });
   }
+
+
+/*
+ * Cole este bloco no fim do <script> do arquivo HTML do aplicativo.
+ * Ele complementa as funções existentes sem trocar MAPA_DOCENTE,
+ * tentarCarregarAprendizagens, geração de PDF ou demais campos.
+ */
+(function () {
+  var temporizadorPlano;
+
+  function dataInicialDoPeriodo() {
+    var campo = document.getElementById('pl_periodo');
+    var achado = campo && campo.value.match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/);
+    if (!achado) return '';
+    return achado[3] + '-' + ('0' + achado[2]).slice(-2) + '-' + ('0' + achado[1]).slice(-2);
+  }
+
+  function preencherPlanoQuinzenalAutomatico() {
+    var professor = obterNomeProfessor('pl');
+    var turmas = coletarTurmasSelecionadas('pl');
+    var componente = obterComponenteCurricular('pl');
+    var bimestre = document.getElementById('pl_bimestre').value;
+    if (!professor || turmas.length !== 1 || !componente || !bimestre) return;
+
+    var conteudo = document.getElementById('pl_conteudo');
+    var qtd = document.getElementById('pl_qtdAulas');
+    var periodo = document.getElementById('pl_periodo');
+    conteudo.disabled = true;
+    conteudo.placeholder = 'Consultando horários e Guias Priorizados...';
+
+    enviarServidor('buscarPlanoQuinzenalAutomatico', {
+      professor: professor,
+      turma: turmas[0],
+      componente: componente,
+      bimestre: bimestre,
+      dataInicio: dataInicialDoPeriodo()
+    }, function (resultado) {
+      conteudo.disabled = false;
+      if (!resultado || !resultado.sucesso) {
+        conteudo.placeholder = 'Não foi possível montar as aulas: ' +
+          ((resultado && resultado.mensagem) || 'erro desconhecido');
+        return;
+      }
+      conteudo.value = resultado.conteudo;
+      qtd.value = resultado.totalAulas + ' aula(s) — ' + resultado.totalMinutos + ' min';
+      periodo.value = resultado.periodo;
+      document.getElementById('badge-conteudo').style.display = 'inline-block';
+    }, function (erro) {
+      conteudo.disabled = false;
+      conteudo.placeholder = 'Falha ao consultar horários: ' + (erro.message || erro);
+    });
+  }
+
+  function agendarPlanoQuinzenalAutomatico() {
+    clearTimeout(temporizadorPlano);
+    temporizadorPlano = setTimeout(preencherPlanoQuinzenalAutomatico, 250);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('pl_professor').addEventListener('change', agendarPlanoQuinzenalAutomatico);
+    document.getElementById('pl_turma_options').addEventListener('change', agendarPlanoQuinzenalAutomatico);
+    document.getElementById('pl_bimestre').addEventListener('change', agendarPlanoQuinzenalAutomatico);
+    document.getElementById('pl_periodo').addEventListener('change', agendarPlanoQuinzenalAutomatico);
+    document.getElementById('pl_componente_wrap').addEventListener('change', agendarPlanoQuinzenalAutomatico);
+    document.getElementById('pl_componente_wrap').addEventListener('input', agendarPlanoQuinzenalAutomatico);
+  });
+})();
+
+
 </script>
 </body>
 </html>
