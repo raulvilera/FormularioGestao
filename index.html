@@ -810,15 +810,19 @@
      TRANSPORTE
      - buscarAprendizagens: payload pequeno → GET (evita o downgrade
        de método POST→GET que o Apps Script sofre em redirecionamento)
+     - buscarPlanoQuinzenalAutomatico: payload pequeno também → POST
+       (mais seguro contra limite de tamanho de URL se dataInicio/turma
+       tiverem caracteres especiais; o servidor já trata GET e POST)
      - plano/cronograma: payload grande → POST (GET estouraria o
        limite de tamanho de URL)
      ------------------------------------------------------- */
   function enviarServidor(acao, dados, callbackSucesso, callbackErro) {
     if (typeof google !== 'undefined' && google && google.script && google.script.run) {
       var runner = google.script.run.withSuccessHandler(callbackSucesso).withFailureHandler(callbackErro);
-      if (acao === 'cronograma')             runner.gerarPdfCronograma(dados);
-      else if (acao === 'plano')             runner.gerarPdfPlanoQuinzenal(dados);
-      else if (acao === 'buscarAprendizagens') runner.buscarAprendizagens(dados);
+      if (acao === 'cronograma')                          runner.gerarPdfCronograma(dados);
+      else if (acao === 'plano')                           runner.gerarPdfPlanoQuinzenal(dados);
+      else if (acao === 'buscarAprendizagens')             runner.buscarAprendizagens(dados);
+      else if (acao === 'buscarPlanoQuinzenalAutomatico')  runner.buscarPlanoQuinzenalAutomatico(dados);
       return;
     }
 
@@ -894,14 +898,13 @@
     }, function(e) { btn.disabled = false; status.className = 'status-area error'; status.innerHTML = '❌ ' + e; });
   }
 
-
-/*
- * Cole este bloco no fim do <script> do arquivo HTML do aplicativo.
- * Ele complementa as funções existentes sem trocar MAPA_DOCENTE,
- * tentarCarregarAprendizagens, geração de PDF ou demais campos.
- */
-(function () {
-  var temporizadorPlano;
+  /* -------------------------------------------------------
+     PREENCHIMENTO AUTOMÁTICO DO PLANO QUINZENAL/MENSAL
+     (Conteúdo/Aulas + Qtd. de aulas + Período), a partir do
+     horário do professor e do Guia Priorizado — buscarPlanoQuinzenalAutomatico
+     em HorariosQuinzenal.gs.
+     ------------------------------------------------------- */
+  var temporizadorPlanoAutomatico;
 
   function dataInicialDoPeriodo() {
     var campo = document.getElementById('pl_periodo');
@@ -947,8 +950,8 @@
   }
 
   function agendarPlanoQuinzenalAutomatico() {
-    clearTimeout(temporizadorPlano);
-    temporizadorPlano = setTimeout(preencherPlanoQuinzenalAutomatico, 250);
+    clearTimeout(temporizadorPlanoAutomatico);
+    temporizadorPlanoAutomatico = setTimeout(preencherPlanoQuinzenalAutomatico, 250);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -959,9 +962,6 @@
     document.getElementById('pl_componente_wrap').addEventListener('change', agendarPlanoQuinzenalAutomatico);
     document.getElementById('pl_componente_wrap').addEventListener('input', agendarPlanoQuinzenalAutomatico);
   });
-})();
-
-
 </script>
 </body>
 </html>
