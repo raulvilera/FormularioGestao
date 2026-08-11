@@ -432,7 +432,7 @@
 </div>
 
 <script>
-  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUKP_88HdBdH1r0k9nx6qte_GsW7lkD28tZIzLn0Tx-8Z3gBhGcWVTSyFHOTiqu53vKQ/exec";
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpJDflxXfNcQi-C2fT_F0XTv6iSNjKdmsu6oo8sgsr_qpr7x1VjzDAIbcYac1eS3Op/exec";
   var BANNER_CRONOGRAMA = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_dmEIYCdQI_iKemFP39LCt6_W-oCZIwyaj739FZ5fnm9qj9Yjcg7iG4VxuT8cabt1xtY-ufV9o7G-RmOeIyp5Vht8EM0706xWPxeL0-arHzauTFyjAG9GwCEBLgFCWKUJm37WLKnP771C-89ZVqJpN5gD7K3I_scmoztvQs4MWAuNQ-xUwfRvTiLqS3Qx/s1003/CABE%C3%87ALHO%20WANDA.PNG";
   var BANNER_PLANO      = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6-_gDlLXVxcBlr66NbmGN0BdBxkZWNgcNnK6cPs6TAGNLv8S9wWa9Bc7shBzGtW7Rqpb8x0YiNR6pUwpKwOjcO9oNw6wgZwOzAV5wKm0-kEh8qgS6JxVxmJMaYUcVqH3iuKeMLAUbosKDCDxuX3u8X85s_L4_JEu97TnD6atqNE5Sx2P2dhTlkt6EVgum/s1037/Logo%20S%C3%A3o.PNG";
 
@@ -459,64 +459,60 @@
   ];
 
   var MAPA_DOCENTE = {
+  /* ===== PROFESSORES COM AULAS DE MANHÃ E À NOITE (fundidos —
+     antes a chave aparecia duas vezes no objeto e a entrada da
+     manhã era sobrescrita silenciosamente pela da noite) ===== */
+  "CELINA MARIA BAPTISTA BARROS": { "1A":["A confirmar"], "1B":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"], "2º C (Noturno)":["História"], "3º F (Noturno)":["História"] },
+  "HELIO RODRIGUES DE SOUZA JUNIOR": { "3A":["A confirmar"], "2D.S.":["A confirmar"], "2º C (Noturno)":["Sociologia"], "3º F (Noturno)":["Geografia"] },
+  "JOSE RAIMUNDO DOS SANTOS": { "3C":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "2º A (Noturno)":["História"], "3º D (Noturno)":["História"], "3º E (Noturno)":["História"], "1º TMA (Noturno)":["Filosofia"], "3º TMA (Noturno)":["Filosofia"] },
+  "JULIANA DE FATIMA GREGORIO BENEDICTO": { "1A":["Física"], "3C":["Física", "Biologia"], "8º Ano B":["Matemática"], "9º Ano B":["Matemática"] },
+  "KALED ALEX MASSUD": { "1A":["A confirmar"], "3C":["A confirmar"], "2D.S.":["A confirmar"], "3B":["A confirmar"], "6º Ano A":["Arte"], "6º Ano C":["Arte"], "7º Ano A":["Arte"], "7º Ano B":["Arte"], "8º Ano A":["Arte"], "8º Ano B":["Arte"], "9º Ano A":["Arte"], "9º Ano B":["Arte"] },
+  "KIKO": { "1A":["A confirmar"], "1B":["A confirmar"], "2D.S.":["A confirmar"], "6º Ano A":["Inglês"], "6º Ano C":["Inglês"], "7º Ano A":["Inglês"], "7º Ano B":["Inglês"], "8º Ano A":["Inglês"], "8º Ano B":["Inglês"], "9º Ano A":["Inglês"] },
+  "RAUL PEREIRA VILERA JUNIOR": { "3C":["A confirmar"], "6º Ano A":["Ciências"], "6º Ano C":["Ciências"], "7º Ano A":["Ciências"], "7º Ano B":["Ciências"], "8º Ano A":["Ciências"], "8º Ano B":["Ciências","Tecnologia"], "9º Ano A":["Ciências"], "9º Ano B":["Ciências"], "2º C (Noturno)":["Biologia","Química"], "3º F (Noturno)":["Biologia","Química"] },
+  "RICARDO DOS SANTOS LIMA": { "1B":["Matemática", "Programação", "Oficina de Matemática"], "8º Ano A":["Educação Financeira"], "8º Ano B":["Matemática","Educação Financeira"], "9º Ano A":["Matemática"] },
+
   /* ===== PERÍODO DA MANHÃ ===== */
-  "ANTONIO": { "3C":["Física"], "2D.S.":["Física"] },
-  "CELINA": { "1A":["A confirmar"], "1B":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "CRIS": { "1A":["A confirmar"] },
-  "EDIVANIA": { "1A":["A confirmar"], "2B":["A confirmar"], "2D/ADM":["A confirmar"], "2D.S.":["A confirmar"] },
-  "ERIKA": { "1A":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"] },
-  "EVELIN": { "1B":["A confirmar"], "1C":["A confirmar"], "2C/ADM":["A confirmar"] },
-  "GIANE": { "1A":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "GUILHERME": { "1B":["A confirmar"], "1C":["A confirmar"], "3ADM":["A confirmar"], "3A":["A confirmar"] },
-  "HÉLIO": { "3A":["A confirmar"], "2D.S.":["A confirmar"] },
-  "JOSÉ R.": { "3C":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"] },
-  "JULIANA": { "1A":["Física"], "3C":["Física", "Biologia"] },
-  "KALED": { "1A":["A confirmar"], "3C":["A confirmar"], "2D.S.":["A confirmar"], "3B":["A confirmar"] },
-  "KIKO": { "1A":["A confirmar"], "1B":["A confirmar"], "2D.S.":["A confirmar"] },
-  "LEONARDO": { "2B":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "LUCIANA A.": { "1B":["A confirmar"], "3B":["A confirmar"], "2C/ADM":["A confirmar"] },
-  "LUCIANA L.": { "3C":["A confirmar"], "3B":["A confirmar"], "1D":["A confirmar"], "1B":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "MARCOS": { "1A":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "RAQUEL": { "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"] },
-  "RAUL": { "3C":["A confirmar"] },
-  "RENATO": { "1B":["A confirmar"], "3ADM":["A confirmar"], "3B":["A confirmar"] },
-  "RICARDO": { "1B":["Matemática", "Programação", "Oficina de Matemática"] },
-  "ROBERTA": { "1C":["A confirmar"], "3C":["A confirmar"], "1D":["A confirmar"], "2D.S.":["A confirmar"] },
-  "SANDRA": { "2B":["A confirmar"], "2D.S.":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
-  "SILVIA": { "2D/ADM":["A confirmar"] },
+  "ANTONIO HENRIQUE MONTEIRO DE FREITAS": { "3C":["Física"], "2D.S.":["Física"] },
+  "CRISTINA ROCHA DA SILVA FEITOSA": { "1A":["A confirmar"] },
+  "FRANCISCA EDIVANIA DE MORAIS COSTA": { "1A":["A confirmar"], "2B":["A confirmar"], "2D/ADM":["A confirmar"], "2D.S.":["A confirmar"] },
+  "ERIKA PEDRO DE ARAUJO": { "1A":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"] },
+  "EVELIN VALQUIRIA RODRIGUES CRUZ": { "1B":["A confirmar"], "1C":["A confirmar"], "2C/ADM":["A confirmar"] },
+  "GIANE PEREIRA DA SILVA": { "1A":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "2D/ADM":["A confirmar"] },
+  "GUILHERME SANTOS DE LIMA": { "1B":["A confirmar"], "1C":["A confirmar"], "3ADM":["A confirmar"], "3A":["A confirmar"] },
+  "LEONARDO SALES SENA": { "2B":["A confirmar"], "2D/ADM":["A confirmar"] },
+  "LUCIANA ALVES DE OLIVEIRA": { "1B":["A confirmar"], "3B":["A confirmar"], "2C/ADM":["A confirmar"] },
+  "LUCIANA LEMOS DOS SANTOS": { "3C":["A confirmar"], "3B":["A confirmar"], "1D":["A confirmar"], "1B":["A confirmar"], "2D/ADM":["A confirmar"] },
+  "MARCOS DA CRUZ LEITE": { "1A":["A confirmar"], "1B":["A confirmar"], "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"], "2D/ADM":["A confirmar"] },
+  "RAQUEL GOMES MALACHIAS": { "1C":["A confirmar"], "3C":["A confirmar"], "3B":["A confirmar"], "2D.S.":["A confirmar"] },
+  "RENATO JOSE DE OLIVEIRA": { "1B":["A confirmar"], "3ADM":["A confirmar"], "3B":["A confirmar"] },
+  "ROBERTA SERQUEIRA": { "1C":["A confirmar"], "3C":["A confirmar"], "1D":["A confirmar"], "2D.S.":["A confirmar"] },
+  "SANDRA APARECIDA VICENTE DE PAULA IERICH": { "2B":["A confirmar"], "2D.S.":["A confirmar"], "2C/ADM":["A confirmar"], "2D/ADM":["A confirmar"] },
+  "SILVIA PASCUI DOS SANTOS GOMES": { "2D/ADM":["A confirmar"] },
 
 
   /* ===== PERÍODO NOTURNO (existente) ===== */
-  "ADRIANA":   { "2º C (Noturno)":["Redação","Português"], "3º F (Noturno)":["Redação"] },
-  "AILTON":    { "1º TMA (Noturno)":["Redação"], "3º TMA (Noturno)":["Redação"] },
-  "ALEXANDRE": { "2º A (Noturno)":["Física"], "2º C (Noturno)":["Física"], "3º D (Noturno)":["Física"], "3º F (Noturno)":["Matemática","Física"] },
-  "BERNADETE": { "6º Ano A":["OEM","Matemática","Tecnologia"], "6º Ano C":["OEM","Matemática","Tecnologia"], "7º Ano A":["Matemática","Tecnologia"], "7º Ano B":["Educação Financeira","Matemática","Tecnologia"], "8º Ano A":["Tecnologia"], "2º C (Noturno)":["Matemática"], "3º F (Noturno)":["OEM"], "1º TMA (Noturno)":["Educação Financeira"] },
-  "CELINA":    { "2º C (Noturno)":["História"], "3º F (Noturno)":["História"] },
-  "CIDO":      { "9º Ano A":["Educação Física"], "9º Ano B":["Educação Física"] },
-  "CLOVIS":    { "2º A (Noturno)":["Redação","Inglês"], "2º C (Noturno)":["Inglês"], "3º E (Noturno)":["Redação"], "1º TMA (Noturno)":["Inglês"], "3º TMA (Noturno)":["Inglês"] },
-  "ELAINE":    { "1º TMA (Noturno)":["Química"], "3º TMA (Noturno)":["Química"] },
-  "EMERSON":   { "6º Ano A":["Educação Física"], "6º Ano C":["Educação Física"], "7º Ano A":["Educação Física"], "7º Ano B":["Educação Física"], "8º Ano A":["Educação Física"], "8º Ano B":["Educação Física"] },
-  "GERSON":    { "6º Ano A":["Português","Redação"], "6º Ano C":["Português"], "7º Ano B":["Português"], "8º Ano B":["Redação"], "9º Ano A":["Português","Redação"], "1º TMA (Noturno)":["Português"] },
-  "GIL":       { "2º A (Noturno)":["Matemática","Educação Física"], "3º D (Noturno)":["Matemática"], "3º E (Noturno)":["Matemática"], "1º TMA (Noturno)":["Matemática"] },
-  "HELOISA":   { "3º D (Noturno)":["OEP"] },
-  "HÉLIO":     { "2º C (Noturno)":["Sociologia"], "3º F (Noturno)":["Geografia"] },
-  "JOSE":      { "2º A (Noturno)":["História"], "3º D (Noturno)":["História"], "3º E (Noturno)":["História"], "1º TMA (Noturno)":["Filosofia"], "3º TMA (Noturno)":["Filosofia"] },
-  "JULIANA":   { "8º Ano B":["Matemática"], "9º Ano B":["Matemática"] },
-  "KALED":     { "6º Ano A":["Arte"], "6º Ano C":["Arte"], "7º Ano A":["Arte"], "7º Ano B":["Arte"], "8º Ano A":["Arte"], "8º Ano B":["Arte"], "9º Ano A":["Arte"], "9º Ano B":["Arte"] },
-  "KIKO":      { "6º Ano A":["Inglês"], "6º Ano C":["Inglês"], "7º Ano A":["Inglês"], "7º Ano B":["Inglês"], "8º Ano A":["Inglês"], "8º Ano B":["Inglês"], "9º Ano A":["Inglês"] },
+  "ADRIANA MENDES DE MIRANDA BARLATI": { "2º C (Noturno)":["Redação","Português"], "3º F (Noturno)":["Redação"] },
+  "AILTON RICARDO GOMES": { "1º TMA (Noturno)":["Redação"], "3º TMA (Noturno)":["Redação"] },
+  "ALEXANDRE PEREIRA NASCIMENTO": { "2º A (Noturno)":["Física"], "2º C (Noturno)":["Física"], "3º D (Noturno)":["Física"], "3º F (Noturno)":["Matemática","Física"] },
+  "BERNADETE APARECIDA DOS ANJOS": { "6º Ano A":["OEM","Matemática","Tecnologia"], "6º Ano C":["OEM","Matemática","Tecnologia"], "7º Ano A":["Matemática","Tecnologia"], "7º Ano B":["Educação Financeira","Matemática","Tecnologia"], "8º Ano A":["Tecnologia"], "2º C (Noturno)":["Matemática"], "3º F (Noturno)":["OEM"], "1º TMA (Noturno)":["Educação Financeira"] },
+  "CIDO": { "9º Ano A":["Educação Física"], "9º Ano B":["Educação Física"] },
+  "CLOVIS BENTO ALVES": { "2º A (Noturno)":["Redação","Inglês"], "2º C (Noturno)":["Inglês"], "3º E (Noturno)":["Redação"], "1º TMA (Noturno)":["Inglês"], "3º TMA (Noturno)":["Inglês"] },
+  "ELAINE MONSAO": { "1º TMA (Noturno)":["Química"], "3º TMA (Noturno)":["Química"] },
+  "EMERSON": { "6º Ano A":["Educação Física"], "6º Ano C":["Educação Física"], "7º Ano A":["Educação Física"], "7º Ano B":["Educação Física"], "8º Ano A":["Educação Física"], "8º Ano B":["Educação Física"] },
+  "GERSON MIGUEL MONTE PERES": { "6º Ano A":["Português","Redação"], "6º Ano C":["Português"], "7º Ano B":["Português"], "8º Ano B":["Redação"], "9º Ano A":["Português","Redação"], "1º TMA (Noturno)":["Português"] },
+  "GIL DEMETRIUS DOS SANTOS": { "2º A (Noturno)":["Matemática","Educação Física"], "3º D (Noturno)":["Matemática"], "3º E (Noturno)":["Matemática"], "1º TMA (Noturno)":["Matemática"] },
+  "ELOISA RAMOS DE OLIVEIRA": { "3º D (Noturno)":["OEP"] },
+  "ALECSANDRA APARECIDA MANTOVANI": { "2º A (Noturno)":["Química","Biologia"], "3º D (Noturno)":["Biologia","Química"], "3º E (Noturno)":["Biologia","Química"], "1º TMA (Noturno)":["Biologia"], "3º TMA (Noturno)":["Biologia","Física"] },
+  "MARCIA LUIZ PEDROSO DA SILVA": { "6º Ano A":["Matemática"], "6º Ano C":["Matemática"], "7º Ano B":["Matemática"], "8º Ano A":["Matemática"], "9º Ano A":["OEM"], "9º Ano B":["OEM"] },
+  "MARGARIDA BATISTA": { "9º Ano B":["OEP","Redação"], "2º A (Noturno)":["Português"], "3º D (Noturno)":["Português"], "3º E (Noturno)":["Português"], "1º TMA (Noturno)":["Português"], "3º TMA (Noturno)":["Português"] },
+  "MARCIO EDUARDO DA SILVA": { "1º TMA (Noturno)":["Sociologia","Oratória e Liderança"], "3º TMA (Noturno)":["Sociologia","Oratória e Liderança"] },
+  "NICOLE": { "6º Ano A":["Geografia","Projeto de Vida"], "6º Ano C":["Geografia"], "8º Ano A":["História"], "8º Ano B":["História"], "9º Ano A":["História"], "2º A (Noturno)":["Sociologia"] },
+  "PAULO": { "6º Ano A":["História"], "6º Ano C":["História"], "7º Ano A":["História"], "7º Ano B":["História"], "9º Ano B":["História"] },
   "LUCIANA L": { "8º Ano B":["Português"] },
-  "MANTOVANI": { "2º A (Noturno)":["Química","Biologia"], "3º D (Noturno)":["Biologia","Química"], "3º E (Noturno)":["Biologia","Química"], "1º TMA (Noturno)":["Biologia"], "3º TMA (Noturno)":["Biologia","Física"] },
-  "MARCIA L":  { "6º Ano A":["Matemática"], "6º Ano C":["Matemática"], "7º Ano B":["Matemática"], "8º Ano A":["Matemática"], "9º Ano A":["OEM"], "9º Ano B":["OEM"] },
-  "MARGÔ":     { "9º Ano B":["OEP","Redação"], "2º A (Noturno)":["Português"], "3º D (Noturno)":["Português"], "3º E (Noturno)":["Português"], "1º TMA (Noturno)":["Português"], "3º TMA (Noturno)":["Português"] },
-  "MÁRCIO":    { "1º TMA (Noturno)":["Sociologia","Oratória e Liderança"], "3º TMA (Noturno)":["Sociologia","Oratória e Liderança"] },
-  "NICOLE":    { "6º Ano A":["Geografia","Projeto de Vida"], "6º Ano C":["Geografia"], "8º Ano A":["História"], "8º Ano B":["História"], "9º Ano A":["História"], "2º A (Noturno)":["Sociologia"] },
-  "PAULO":     { "6º Ano A":["História"], "6º Ano C":["História"], "7º Ano A":["História"], "7º Ano B":["História"], "9º Ano B":["História"] },
-  "RAUL":      { "6º Ano A":["Ciências"], "6º Ano C":["Ciências"], "7º Ano A":["Ciências"], "7º Ano B":["Ciências"], "8º Ano A":["Ciências"], "8º Ano B":["Ciências","Tecnologia"], "9º Ano A":["Ciências"], "9º Ano B":["Ciências"], "2º C (Noturno)":["Biologia","Química"], "3º F (Noturno)":["Biologia","Química"] },
-  "RICARDO":   { "8º Ano A":["Educação Financeira"], "8º Ano B":["Matemática","Educação Financeira"], "9º Ano A":["Matemática"] },
-  "ROSE":      { "6º Ano A":["OEP"], "6º Ano C":["OEP"], "7º Ano A":["Português"], "7º Ano B":["Português"], "8º Ano A":["Português"], "9º Ano A":["OEP"], "9º Ano B":["Português"] },
-  "SONIA":     { "7º Ano A":["Educação Financeira"] },
-  "VICENTE":   { "3º F (Noturno)":["OEP","Português"] },
-  "WALERIA":   { "6º Ano A":["Geografia"], "6º Ano C":["Projeto de Vida"], "7º Ano A":["Geografia"], "7º Ano B":["Geografia","Projeto de Vida"], "8º Ano A":["Geografia"], "8º Ano B":["Geografia"], "9º Ano A":["Geografia"], "9º Ano B":["Geografia","Projeto de Vida"], "2º C (Noturno)":["Geografia"], "3º D (Noturno)":["Geografia"], "3º E (Noturno)":["Geografia"], "3º F (Noturno)":["Geografia"], "1º TMA (Noturno)":["Atualidades","Geografia"], "3º TMA (Noturno)":["Geografia"] }
+  "ROSE VIEIRA": { "6º Ano A":["OEP"], "6º Ano C":["OEP"], "7º Ano A":["Português"], "7º Ano B":["Português"], "8º Ano A":["Português"], "9º Ano A":["OEP"], "9º Ano B":["Português"] },
+  "SONIA": { "7º Ano A":["Educação Financeira"] },
+  "VICENTE DE PAULA DUARTE SILVA": { "3º F (Noturno)":["OEP","Português"] },
+  "WALERIA LEONARDO PANZA": { "6º Ano A":["Geografia"], "6º Ano C":["Projeto de Vida"], "7º Ano A":["Geografia"], "7º Ano B":["Geografia","Projeto de Vida"], "8º Ano A":["Geografia"], "8º Ano B":["Geografia"], "9º Ano A":["Geografia"], "9º Ano B":["Geografia","Projeto de Vida"], "2º C (Noturno)":["Geografia"], "3º D (Noturno)":["Geografia"], "3º E (Noturno)":["Geografia"], "3º F (Noturno)":["Geografia"], "1º TMA (Noturno)":["Atualidades","Geografia"], "3º TMA (Noturno)":["Geografia"] }
 };
 
   document.addEventListener('DOMContentLoaded', function() {
