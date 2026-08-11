@@ -396,7 +396,10 @@
       </div>
 
       <div class="section-block">
-        <div class="section-title">Conhecimentos Prévios</div>
+        <div class="section-title">
+          Conhecimentos Prévios
+          <span class="badge-auto" id="badge-conhecimentos" style="display:none">✅ Carregado do Guia</span>
+        </div>
         <div class="section-body"><textarea id="pl_conhecimentos" rows="3" placeholder="Indique os conhecimentos prévios..."></textarea></div>
       </div>
 
@@ -671,10 +674,12 @@
     var badgeObjetivos  = document.getElementById('badge-objetivos');
     var badgeAp   = document.getElementById('badge-aprendizagens');
     var badgeHab  = document.getElementById('badge-habilidades');
+    var badgeConhecimentos = document.getElementById('badge-conhecimentos');
     var taConteudo  = document.getElementById('pl_conteudo');
     var taObjetivos = document.getElementById('pl_objetivos');
     var taAp      = document.getElementById('pl_aprendizagens');
     var taHab     = document.getElementById('pl_habilidades');
+    var taConhecimentos = document.getElementById('pl_conhecimentos');
 
     loadBar.classList.add('ativo');
     loadHab.classList.add('ativo');
@@ -682,6 +687,7 @@
     badgeObjetivos.style.display = 'none';
     badgeAp.style.display  = 'none';
     badgeHab.style.display = 'none';
+    badgeConhecimentos.style.display = 'none';
     taAp.disabled = true;
     taHab.disabled = true;
 
@@ -703,6 +709,7 @@
           if (r.objetivos) { taObjetivos.value = r.objetivos; badgeObjetivos.style.display = 'inline-block'; }
           if (r.aprendizagens) { taAp.value  = r.aprendizagens; badgeAp.style.display  = 'inline-block'; }
           if (r.habilidades)   { taHab.value = r.habilidades;   badgeHab.style.display = 'inline-block'; }
+          if (r.conhecimentosPrevios) { taConhecimentos.value = r.conhecimentosPrevios; badgeConhecimentos.style.display = 'inline-block'; }
         } else {
           taAp.value  = '';
           taHab.value = '';
